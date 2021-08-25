@@ -19,7 +19,7 @@ public class Controller {
 		System.out.println("Going to Register page.");
 		Parent root = FXMLLoader.load(getClass().getResource("Register.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
+		scene = new Scene(root,800,600);
 		stage.setScene(scene);
 		String css = getClass().getResource("application.css").toExternalForm();
 		scene.getStylesheets().add(css);
@@ -32,7 +32,7 @@ public class Controller {
 		System.out.println("Going to Login page.");
 		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
+		scene = new Scene(root,800,600);
 		stage.setScene(scene);
 		String css = getClass().getResource("application.css").toExternalForm();
 		scene.getStylesheets().add(css);
@@ -43,7 +43,7 @@ public class Controller {
 		System.out.println("Going to Home page.");
 		Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
+		scene = new Scene(root,800,600);
 		stage.setScene(scene);
 		String css = getClass().getResource("application.css").toExternalForm();
 		scene.getStylesheets().add(css);
