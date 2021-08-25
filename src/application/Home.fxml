@@ -71,6 +71,7 @@
                         <TextField fx:id="textFieldUsername" layoutX="310.0" layoutY="170.0" prefHeight="24.0" prefWidth="200.0" />
                         <TextField fx:id="textFieldPassword" layoutX="310.0" layoutY="200.0" prefHeight="24.0" prefWidth="200.0" />
                         <TextField fx:id="textFieldConfirmPassword" layoutX="310.0" layoutY="230.0" prefHeight="24.0" prefWidth="200.0" />
+                        <Label fx:id="notification" layoutX="269.0" layoutY="270.0" prefHeight="16.0" prefWidth="526.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

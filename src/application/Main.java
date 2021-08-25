@@ -23,7 +23,7 @@ public class Main extends Application {
 		}
 		System.out.println("Connected to database.");
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/Home.fxml"));
 			Scene scene = new Scene(root,800,600);
 			
 			String css = getClass().getResource("application.css").toExternalForm();
