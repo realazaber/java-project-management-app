@@ -30,6 +30,24 @@ public class Controller {
 	
 	public void MoveToLogin(ActionEvent event) throws IOException {
 		System.out.println("Going to Login page.");
+		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		String css = getClass().getResource("application.css").toExternalForm();
+		scene.getStylesheets().add(css);
+		stage.show();
+	}
+	
+	public void MoveToHome(ActionEvent event) throws IOException {
+		System.out.println("Going to Home page.");
+		Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		String css = getClass().getResource("application.css").toExternalForm();
+		scene.getStylesheets().add(css);
+		stage.show();
 	}
 	
 	public void Quit(ActionEvent event) {
