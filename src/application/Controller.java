@@ -13,7 +13,6 @@ public class Controller {
 	
 	private Stage stage;
 	private Scene scene;
-	private Parent parent;
 	
 	public void MoveToRegister(ActionEvent event) throws IOException {
 		System.out.println("Going to Register page.");
