@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Button;
 import java.awt.TextField;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,13 +14,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.*;
 
+
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
+
 import java.sql.*;
 
 public class Controller {
 	
 	private Stage stage;
 	private Scene scene;
-	
+
 	public void Register(ActionEvent event) throws Exception {
 		System.out.println("Registered.");
 		

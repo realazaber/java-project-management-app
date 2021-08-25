@@ -34,6 +34,7 @@ public class Main extends Application {
 			
 		} catch(Exception e) {
 			System.out.println("GUI error.");
+			System.out.println("Error code: " + e);
 			System.exit(0);
 		}
 		System.out.println("Loaded GUI.");
