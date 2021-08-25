@@ -1,10 +1,12 @@
 package application;
 
+import java.awt.TextField;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +20,10 @@ public class Controller {
 	private Stage stage;
 	private Scene scene;
 	
-	
+	public void Register(ActionEvent event) throws Exception {
+		System.out.println("Registered.");
+		
+	}
 	
 
 	public void MoveToHome(ActionEvent event) throws IOException {

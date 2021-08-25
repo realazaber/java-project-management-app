@@ -40,27 +40,37 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btn_register" layoutX="350.0" layoutY="314.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Register" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
+                        <Button fx:id="btn_register" layoutX="350.0" layoutY="314.0" mnemonicParsing="false" onAction="#Register" prefHeight="30.0" prefWidth="100.0" text="Register" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
                         <Label layoutX="190.0" layoutY="170.0" text="Username:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="191.0" layoutY="199.0" text="Password:">
+                        <Label layoutX="190.0" layoutY="200.0" text="Password:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="187.0" layoutY="108.0" text="First Name:">
+                        <Label layoutX="190.0" layoutY="110.0" text="First Name:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="187.0" layoutY="137.0" text="Last Name:">
+                        <Label layoutX="190.0" layoutY="140.0" text="Last Name:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="textFieldFName" layoutX="310.0" layoutY="110.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="textFieldLName" layoutX="310.0" layoutY="140.0" prefHeight="24.0" prefWidth="200.0" />
+                        <Label layoutX="113.0" layoutY="230.0" text="Confirm password:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldUsername" layoutX="310.0" layoutY="170.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="textFieldPassword" layoutX="310.0" layoutY="200.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="textFieldConfirmPassword" layoutX="310.0" layoutY="230.0" prefHeight="24.0" prefWidth="200.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
