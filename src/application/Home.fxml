@@ -4,7 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
@@ -19,6 +21,16 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
+                        <Label layoutX="184.0" layoutY="90.0" prefHeight="25.0" prefWidth="120.0" text="Username:" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="496.0" AnchorPane.topAnchor="90.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font></Label>
+                        <Label layoutX="184.0" layoutY="142.0" prefHeight="25.0" prefWidth="120.0" text="Password:" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="496.0" AnchorPane.topAnchor="142.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font></Label>
+                        <TextField layoutX="333.0" layoutY="90.0" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
+                        <TextField layoutX="310.0" layoutY="138.0" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
