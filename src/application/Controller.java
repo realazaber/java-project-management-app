@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import com.mysql.cj.x.protobuf.MysqlxCursor.Open;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +22,6 @@ import javafx.scene.control.*;
 import java.sql.*;
 
 public class Controller {
-	
 	
 	
 	private Stage stage;
