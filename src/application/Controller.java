@@ -60,10 +60,15 @@ public class Controller {
     @FXML
     private Label loginStatus;
     
+    private static File tmpProfile;
+    
     public void uploadImage(ActionEvent event) throws Exception {
     	
     	System.out.println("Uploading image.");
-    	
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Open Resource File");
+    	tmpProfile = fileChooser.showOpenDialog(stage);
+    	System.out.println("File chosen: " + tmpProfile);
 
     	
     	
@@ -83,10 +88,26 @@ public class Controller {
 				System.out.println("Password: " + textFieldPassword.getText());
 				System.out.println("Confirm password: " + textFieldConfirmPassword.getText());
 				
-				Statement query_Register = myConnection.createStatement();
-				query_Register.execute("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `path_to_profile`) "
-						+ "VALUES (NULL, '"+ textFieldFName.getText() +"', '"+ textFieldLName.getText() +"', '"+ textFieldUsername.getText() +"', '"+ textFieldPassword.getText() +"', '');");
+					
 				
+				try {
+					
+					PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+					ps.setString(1, textFieldFName.getText());
+					ps.setString(2, textFieldLName.getText());
+					ps.setString(3, textFieldUsername.getText());
+					ps.setString(4, textFieldPassword.getText());
+					
+					FileInputStream input = new FileInputStream(tmpProfile);
+					
+					ps.setBinaryStream(5, input);
+					
+					ps.execute();
+				}
+				catch (Exception e) {
+					System.out.println("Error: " + e);
+				}
+
 				notification.setText("Successfully registered!");
 			}
 			else {
