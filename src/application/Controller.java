@@ -71,6 +71,9 @@ public class Controller {
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
 
+    	
+
+
     }
 
 	public void Register(ActionEvent event) throws Exception {
@@ -87,7 +90,15 @@ public class Controller {
 				System.out.println("Password: " + textFieldPassword.getText());
 				System.out.println("Confirm password: " + textFieldConfirmPassword.getText());
 				
+				//
+				//Check if user already exists.
+				//
+				
 				try {
+					
+					//
+					//If no image is uploaded use the default.
+					//
 					
 					PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
 					ps.setString(1, textFieldFName.getText());
