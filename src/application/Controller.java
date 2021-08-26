@@ -62,6 +62,7 @@ public class Controller {
     
     private static File tmpProfile;
     
+    
     public void uploadImage(ActionEvent event) throws Exception {
     	
     	System.out.println("Uploading image.");
@@ -70,8 +71,6 @@ public class Controller {
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
 
-    	
-    	
     }
 
 	public void Register(ActionEvent event) throws Exception {
@@ -87,8 +86,6 @@ public class Controller {
 				System.out.println("Username: " + textFieldUsername.getText());
 				System.out.println("Password: " + textFieldPassword.getText());
 				System.out.println("Confirm password: " + textFieldConfirmPassword.getText());
-				
-					
 				
 				try {
 					
@@ -115,17 +112,13 @@ public class Controller {
 				notification.setText("Please fill in all fields.");
 			}
 			
-
 		}
 		else {
 			System.out.println(textFieldPassword.getText() + " does not match " + textFieldConfirmPassword.getText());
 			notification.setText("Passwords do not match!");
 		}
-		
-		
-		
+			
 	}
-	
 
 	public void MoveToHome(ActionEvent event) throws IOException {
 		System.out.println("Going to Home page.");

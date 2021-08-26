@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -46,7 +47,10 @@
                         <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="202.0" layoutX="428.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
                            <viewport>
                               <Rectangle2D />
-                           </viewport></ImageView>
+                           </viewport>
+                           <image>
+                              <Image url="@default_profile.png" />
+                           </image></ImageView>
                      </children></AnchorPane>
             </content>
           </Tab>
