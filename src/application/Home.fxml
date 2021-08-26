@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -22,17 +23,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
-                        <Label layoutX="184.0" layoutY="90.0" prefHeight="25.0" prefWidth="120.0" text="Username:" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="496.0" AnchorPane.topAnchor="90.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font></Label>
-                        <Label layoutX="184.0" layoutY="142.0" prefHeight="25.0" prefWidth="120.0" text="Password:" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="496.0" AnchorPane.topAnchor="142.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font></Label>
-                        <TextField layoutX="333.0" layoutY="90.0" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
-                        <TextField layoutX="310.0" layoutY="138.0" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
+                        <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
+                        <TextField fx:id="LoginUsername" layoutX="333.0" layoutY="90.0" promptText="Username" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
+                        <TextField fx:id="LoginPassword" layoutX="310.0" layoutY="138.0" promptText="Password" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
+                        <Label fx:id="loginStatus" layoutX="-2.0" layoutY="222.0" prefHeight="16.0" prefWidth="388.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -41,37 +35,14 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btn_register" layoutX="350.0" layoutY="314.0" mnemonicParsing="false" onAction="#Register" prefHeight="30.0" prefWidth="100.0" text="Register" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
-                        <Label layoutX="190.0" layoutY="170.0" text="Username:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="190.0" layoutY="200.0" text="Password:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="190.0" layoutY="110.0" text="First Name:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="190.0" layoutY="140.0" text="Last Name:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="textFieldFName" layoutX="310.0" layoutY="110.0" prefHeight="24.0" prefWidth="200.0" />
-                        <TextField fx:id="textFieldLName" layoutX="310.0" layoutY="140.0" prefHeight="24.0" prefWidth="200.0" />
-                        <Label layoutX="113.0" layoutY="230.0" text="Confirm password:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="textFieldUsername" layoutX="310.0" layoutY="170.0" prefHeight="24.0" prefWidth="200.0" />
-                        <TextField fx:id="textFieldPassword" layoutX="310.0" layoutY="200.0" prefHeight="24.0" prefWidth="200.0" />
-                        <TextField fx:id="textFieldConfirmPassword" layoutX="310.0" layoutY="230.0" prefHeight="24.0" prefWidth="200.0" />
+                        <TextField fx:id="textFieldFName" layoutX="213.0" layoutY="84.0" prefHeight="24.0" prefWidth="200.0" promptText="FIrst name" />
+                        <TextField fx:id="textFieldLName" layoutX="213.0" layoutY="114.0" prefHeight="24.0" prefWidth="200.0" promptText="Last name" />
+                        <TextField fx:id="textFieldUsername" layoutX="213.0" layoutY="144.0" prefHeight="24.0" prefWidth="200.0" promptText="Username" />
+                        <TextField fx:id="textFieldPassword" layoutX="213.0" layoutY="174.0" prefHeight="24.0" prefWidth="200.0" promptText="Password" />
+                        <TextField fx:id="textFieldConfirmPassword" layoutX="213.0" layoutY="204.0" prefHeight="24.0" prefWidth="200.0" promptText="Confirm password" />
                         <Label fx:id="notification" layoutX="269.0" layoutY="270.0" prefHeight="16.0" prefWidth="526.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button fx:id="btn_imageUpload" layoutX="209.0" layoutY="234.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="24.0" prefWidth="204.0" text="Upload image" />
+                        <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="202.0" layoutX="428.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" />
                      </children></AnchorPane>
             </content>
           </Tab>

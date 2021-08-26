@@ -1,24 +1,26 @@
 package application;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
-
+import com.mysql.cj.x.protobuf.MysqlxCursor.Open;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.*;
 
 
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
-
 import java.sql.*;
 
 public class Controller {
@@ -46,13 +48,34 @@ public class Controller {
     @FXML
     private Label notification;
     
+    @FXML 
+    private Button btn_imageUpload;
     
+    @FXML 
+    public static ImageView imageView;
+
+    @FXML
+    private TextField LoginUsername;
+    
+    @FXML 
+    private TextField LoginPassword;
+    
+    @FXML
+    private Label loginStatus;
+    
+    public void uploadImage(ActionEvent event) throws Exception {
+    	
+    	System.out.println("Uploading image.");
+    	
+
+    	
+    	
+    }
 
 	public void Register(ActionEvent event) throws Exception {
 		
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
-		
-		
+				
 		
 		if (textFieldPassword.getText().equals(textFieldConfirmPassword.getText()) && !textFieldPassword.getText().equals("")) { //Passwords match.
 			
@@ -70,12 +93,14 @@ public class Controller {
 				notification.setText("Successfully registered!");
 			}
 			else {
-				notification.setText("Please fill in all fields");
+				System.out.println("Some data is not filled in.");
+				notification.setText("Please fill in all fields.");
 			}
 			
 
 		}
 		else {
+			System.out.println(textFieldPassword.getText() + " does not match " + textFieldConfirmPassword.getText());
 			notification.setText("Passwords do not match!");
 		}
 		
@@ -93,6 +118,21 @@ public class Controller {
 		String css = getClass().getResource("application.css").toExternalForm();
 		scene.getStylesheets().add(css);
 		stage.show();
+	}
+	
+	public void Login(ActionEvent event) throws IOException, SQLException {
+		System.out.println("Checking for user");
+		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
+		Statement query_Login = myConnection.createStatement();
+		ResultSet rs = query_Login.executeQuery("SELECT * FROM `users` WHERE `username` = '" + LoginUsername.getText() + "' AND `password` = '" + LoginPassword.getText() + "'");
+        if (rs.next()) {
+			System.out.println("User exists.");
+			loginStatus.setText("Logging in!");
+		}
+        else {
+        	System.out.println("User does not exist.");
+        	loginStatus.setText("Invalid username or password.");
+        }
 	}
 	
 	public void Quit(ActionEvent event) {
