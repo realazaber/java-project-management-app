@@ -52,6 +52,7 @@ public class Controller {
     @FXML 
     public static ImageView imageView;
 
+
     @FXML
     private TextField LoginUsername;
     
@@ -67,17 +68,23 @@ public class Controller {
     
     public void uploadImage(ActionEvent event) throws Exception {
     	
+    	
+    	
+    	
     	System.out.println("Uploading image.");
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Open Resource File");
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
+    	Image selectedImage = new Image(getClass().getResourceAsStream(tmpProfile.toString()));
+    	imageView.setImage(selectedImage);
     	
-
-
     }
 
 	public void Register(ActionEvent event) throws Exception {
+		
+//	    Image image_defaultImage = imageView.getImage();
+//	    File file_defaultImage = new File(image_defaultImage.getUrl());
 		
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 			
@@ -86,7 +93,7 @@ public class Controller {
 		if (tmpProfile == null) {//Set default profile if user has not selected an image.
 			try {
 				
-				input = new BufferedInputStream(new FileInputStream("default_profile.png"));
+				//input = new BufferedInputStream(new FileInputStream(file_defaultImage));
 				System.out.println("Using default profile.");
 			} catch (Exception e) {
 				System.out.println("Default image not found: " + e);
@@ -105,7 +112,6 @@ public class Controller {
 				System.out.println("Password: " + textFieldPassword.getText());
 				System.out.println("Confirm password: " + textFieldConfirmPassword.getText());
 				
-				//
 				//Check if user already exists.
 				PreparedStatement ps_checkUsers = myConnection.prepareStatement("SELECT * FROM `users` WHERE `first_name` = ? AND `last_name` = ?");
 				ps_checkUsers.setString(1, textFieldFName.getText());
@@ -121,19 +127,26 @@ public class Controller {
 					
 					try {
 						
+						PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+						
 						//
 						//If no image is uploaded use the default.
-						//
+						if (tmpProfile == null) {
+							System.out.println("No image has been added.");
+							//Upload default
+//							input = new BufferedInputStream(new FileInputStream(file_defaultImage));
+//							System.out.println("Default image " + file_defaultImage + " uploading.");
+							
+						}
+						else {
+							System.out.println("Photo " + tmpProfile + " is being uploaded.");
+							ps.setBinaryStream(5, input);
+						}					
 						
-						PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
 						ps.setString(1, textFieldFName.getText());
 						ps.setString(2, textFieldLName.getText());
 						ps.setString(3, textFieldUsername.getText());
-						ps.setString(4, textFieldPassword.getText());
-						
-						
-						
-						ps.setBinaryStream(5, input);
+						ps.setString(4, textFieldPassword.getText());															
 						
 						ps.execute();
 					}
@@ -145,9 +158,7 @@ public class Controller {
 						notification.setText("Successfully registered!");
 					}
 		        }
-				
-
-				
+								
 			}
 			else {
 				System.out.println("Some data is not filled in.");
