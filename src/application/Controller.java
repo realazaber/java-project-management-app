@@ -4,9 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,8 +63,9 @@ public class Controller {
     @FXML
     private Label loginStatus;
     
-    private static File tmpProfile;
+    private static File tmpProfile = null;
     
+
     
     public void uploadImage(ActionEvent event) throws Exception {
     	
@@ -71,15 +75,26 @@ public class Controller {
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
 
-    	
-
-
     }
 
 	public void Register(ActionEvent event) throws Exception {
 		
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
+			
+		BufferedInputStream input = null;
+		
+		if (tmpProfile == null) {//Set default profile if user has not selected an image.
+			try {
 				
+				input = new BufferedInputStream(new FileInputStream("default_profile.png"));
+				System.out.println("Using default profile.");
+			} catch (Exception e) {
+				System.out.println("Default image not found: " + e);
+			}
+		}
+		else {//Set the selected image as profile.
+			input = new BufferedInputStream(new FileInputStream(tmpProfile));
+		}
 		
 		if (textFieldPassword.getText().equals(textFieldConfirmPassword.getText()) && !textFieldPassword.getText().equals("")) { //Passwords match.
 			
@@ -106,7 +121,7 @@ public class Controller {
 					ps.setString(3, textFieldUsername.getText());
 					ps.setString(4, textFieldPassword.getText());
 					
-					FileInputStream input = new FileInputStream(tmpProfile);
+					
 					
 					ps.setBinaryStream(5, input);
 					
@@ -115,8 +130,12 @@ public class Controller {
 				catch (Exception e) {
 					System.out.println("Error: " + e);
 				}
-
-				notification.setText("Successfully registered!");
+				
+				if(input != null) {
+					notification.setText("Successfully registered!");
+				}
+				
+				
 			}
 			else {
 				System.out.println("Some data is not filled in.");
