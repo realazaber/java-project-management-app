@@ -3,14 +3,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +11,15 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.*;
-
-
 import javafx.scene.control.*;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+
 import java.sql.*;
 
 public class Controller {
@@ -74,6 +72,8 @@ public class Controller {
     	fileChooser.setTitle("Open Resource File");
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
+    	
+
 
     }
 
@@ -107,34 +107,46 @@ public class Controller {
 				
 				//
 				//Check if user already exists.
-				//
+				PreparedStatement ps_checkUsers = myConnection.prepareStatement("SELECT * FROM `users` WHERE `first_name` = ? AND `last_name` = ?");
+				ps_checkUsers.setString(1, textFieldFName.getText());
+				ps_checkUsers.setString(2, textFieldLName.getText());
 				
-				try {
-					
+				ResultSet rs_checkUsers = ps_checkUsers.executeQuery();
+		        if (rs_checkUsers.next()) {
+					System.out.println("User already exists.");
+					notification.setText("Account has already been created!");
+				}
+		        else {
 					//
-					//If no image is uploaded use the default.
-					//
 					
-					PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
-					ps.setString(1, textFieldFName.getText());
-					ps.setString(2, textFieldLName.getText());
-					ps.setString(3, textFieldUsername.getText());
-					ps.setString(4, textFieldPassword.getText());
+					try {
+						
+						//
+						//If no image is uploaded use the default.
+						//
+						
+						PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+						ps.setString(1, textFieldFName.getText());
+						ps.setString(2, textFieldLName.getText());
+						ps.setString(3, textFieldUsername.getText());
+						ps.setString(4, textFieldPassword.getText());
+						
+						
+						
+						ps.setBinaryStream(5, input);
+						
+						ps.execute();
+					}
+					catch (Exception e) {
+						System.out.println("Error: " + e);
+					}
 					
-					
-					
-					ps.setBinaryStream(5, input);
-					
-					ps.execute();
-				}
-				catch (Exception e) {
-					System.out.println("Error: " + e);
-				}
+					if(input != null) {
+						notification.setText("Successfully registered!");
+					}
+		        }
 				
-				if(input != null) {
-					notification.setText("Successfully registered!");
-				}
-				
+
 				
 			}
 			else {

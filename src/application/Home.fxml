@@ -19,7 +19,7 @@
          <font>
             <Font size="30.0" />
          </font></Label>
-      <TabPane prefHeight="494.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="494.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <tabs>
           <Tab text="Login">
             <content>
