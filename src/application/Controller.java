@@ -3,6 +3,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,7 +54,7 @@ public class Controller {
     private Button btn_imageUpload;
     
     @FXML 
-    public static ImageView imageView;
+    public static ImageView imageView = new ImageView();
 
 
     @FXML
@@ -69,48 +70,47 @@ public class Controller {
     
 
     
-    public void uploadImage(ActionEvent event) throws Exception {
-    	
-    	
-    	
+    public void uploadImage(ActionEvent event) throws Exception {  	
     	
     	System.out.println("Uploading image.");
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Open Resource File");
+    	
+    	//Add filters so only images can be added.
+        FileChooser.ExtensionFilter JPG_Filter = new FileChooser.ExtensionFilter("JPG images (*.JPG)", "*.JPG");
+        FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter jpeg_Filter = new FileChooser.ExtensionFilter("jpeg images (*.jpeg)", "*.jpeg");
+        FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
+        FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
+        
+    	
+    	fileChooser.getExtensionFilters().addAll(JPG_Filter, jpg_Filter, jpeg_Filter, PNG_Filter, png_Filter);
+    	fileChooser.setTitle("Select image");
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
-    	Image selectedImage = new Image(getClass().getResourceAsStream(tmpProfile.toString()));
-    	imageView.setImage(selectedImage);
-    	
+
+    	try {
+    		BufferedImage bufferedImage = ImageIO.read(tmpProfile);
+        	Image selectedImage = SwingFXUtils.toFXImage(bufferedImage, null);
+        	System.out.println("Set " + tmpProfile + " as preview.");
+        	imageView.setImage(selectedImage);
+		} catch (Exception e) {
+			System.out.println("Error uploading custom profile: " + e);
+			System.out.println("Image url: " + tmpProfile);
+		}
+
     }
 
 	public void Register(ActionEvent event) throws Exception {
 		
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		BufferedInputStream file_defaultImage = (BufferedInputStream) classLoader.getResourceAsStream("default_profile.png");
-		InputStream testinput = classLoader.getResourceAsStream("default_profile.png");
-
-		
-		try {
-		   Image testImage = new Image(testinput);
-		   BufferedImage image = ImageIO.read(testinput);
-		   System.out.println("OIOIOIUOIUOIUOIUOIUOIU");
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-
-		
-
-	    
-		
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 			
 		BufferedInputStream input = null;
 		
 		if (tmpProfile == null) {//Set default profile if user has not selected an image.
 			try {
-				
-				//input = new BufferedInputStream(new FileInputStream(file_defaultImage));
+				//Set the image to upload as the default image.
 				input = file_defaultImage;
 				System.out.println("Using default profile.");
 			} catch (Exception e) {
@@ -159,7 +159,6 @@ public class Controller {
 						}
 						else {
 							System.out.println("Photo " + tmpProfile + " is being uploaded.");
-							ps.setBinaryStream(5, input);
 						}					
 						
 						ps.setString(1, textFieldFName.getText());
@@ -174,6 +173,11 @@ public class Controller {
 					}
 					
 					if(input != null) {
+						textFieldFName.setText("");
+						textFieldLName.setText("");
+						textFieldUsername.setText("");
+						textFieldPassword.setText("");
+						textFieldConfirmPassword.setText("");
 						notification.setText("Successfully registered!");
 					}
 		        }
