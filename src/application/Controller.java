@@ -89,10 +89,10 @@ public class Controller {
     	System.out.println("File chosen: " + tmpProfile);
 
     	try {
-    		BufferedImage bufferedImage = ImageIO.read(tmpProfile);
-        	Image selectedImage = SwingFXUtils.toFXImage(bufferedImage, null);
-        	System.out.println("Set " + tmpProfile + " as preview.");
-        	imageView.setImage(selectedImage);
+    		Image selectedImage = new Image(tmpProfile.toURI().toString());
+    		
+    		imageView.setImage(selectedImage);
+    		System.out.println("Set " + tmpProfile + " as preview.");
 		} catch (Exception e) {
 			System.out.println("Error uploading custom profile: " + e);
 			System.out.println("Image url: " + tmpProfile);

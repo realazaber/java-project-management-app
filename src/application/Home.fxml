@@ -19,13 +19,13 @@
          <font>
             <Font size="30.0" />
          </font></Label>
-      <TabPane prefHeight="494.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <tabs>
           <Tab text="Login">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
+                        <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="310.0" />
                         <TextField fx:id="LoginUsername" layoutX="333.0" layoutY="90.0" prefHeight="30.0" prefWidth="489.0" promptText="Username" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
                         <TextField fx:id="LoginPassword" layoutX="310.0" layoutY="138.0" promptText="Password" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
                         <Label fx:id="loginStatus" layoutX="-2.0" layoutY="222.0" prefHeight="16.0" prefWidth="388.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -44,7 +44,7 @@
                         <TextField fx:id="textFieldConfirmPassword" layoutX="213.0" layoutY="204.0" prefHeight="24.0" prefWidth="200.0" promptText="Confirm password" />
                         <Label fx:id="notification" layoutX="269.0" layoutY="270.0" prefHeight="16.0" prefWidth="526.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                         <Button fx:id="btn_imageUpload" layoutX="209.0" layoutY="234.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="24.0" prefWidth="204.0" text="Upload image" />
-                        <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="202.0" layoutX="428.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="202.0" layoutX="428.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="428.0" AnchorPane.rightAnchor="195.0">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
