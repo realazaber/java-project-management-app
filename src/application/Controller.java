@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.scene.control.*;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +22,8 @@ import java.io.InputStream;
 import java.nio.file.Path;
 
 import java.sql.*;
+
+import javax.imageio.ImageIO;
 
 public class Controller {
 	
@@ -83,8 +86,22 @@ public class Controller {
 
 	public void Register(ActionEvent event) throws Exception {
 		
-//	    Image image_defaultImage = imageView.getImage();
-//	    File file_defaultImage = new File(image_defaultImage.getUrl());
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		BufferedInputStream file_defaultImage = (BufferedInputStream) classLoader.getResourceAsStream("default_profile.png");
+		InputStream testinput = classLoader.getResourceAsStream("default_profile.png");
+
+		
+		try {
+		   Image testImage = new Image(testinput);
+		   BufferedImage image = ImageIO.read(testinput);
+		   System.out.println("OIOIOIUOIUOIUOIUOIUOIU");
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+
+		
+
+	    
 		
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 			
@@ -94,6 +111,7 @@ public class Controller {
 			try {
 				
 				//input = new BufferedInputStream(new FileInputStream(file_defaultImage));
+				input = file_defaultImage;
 				System.out.println("Using default profile.");
 			} catch (Exception e) {
 				System.out.println("Default image not found: " + e);
@@ -134,8 +152,9 @@ public class Controller {
 						if (tmpProfile == null) {
 							System.out.println("No image has been added.");
 							//Upload default
-//							input = new BufferedInputStream(new FileInputStream(file_defaultImage));
-//							System.out.println("Default image " + file_defaultImage + " uploading.");
+							input = file_defaultImage;
+							System.out.println("Default image " + file_defaultImage + " uploading.");
+							
 							
 						}
 						else {
@@ -147,7 +166,7 @@ public class Controller {
 						ps.setString(2, textFieldLName.getText());
 						ps.setString(3, textFieldUsername.getText());
 						ps.setString(4, textFieldPassword.getText());															
-						
+						ps.setBinaryStream(5, input);
 						ps.execute();
 					}
 					catch (Exception e) {

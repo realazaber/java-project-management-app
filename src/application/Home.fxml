@@ -49,7 +49,7 @@
                               <Rectangle2D />
                            </viewport>
                            <image>
-                              <Image url="@default_profile.png" />
+                              <Image url="@../../resources/default_profile.png" />
                            </image></ImageView>
                      </children></AnchorPane>
             </content>
