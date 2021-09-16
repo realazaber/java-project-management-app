@@ -60,11 +60,12 @@ public class Controller {
     @FXML
     private TextField LoginUsername;
     
-    @FXML 
-    private TextField LoginPassword;
+    @FXML
+    private PasswordField passwordField;
     
     @FXML
     private Label loginStatus;
+    
     
     private static File tmpProfile = null;
     
@@ -211,7 +212,7 @@ public class Controller {
 		System.out.println("Checking for user");
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 		Statement query_Login = myConnection.createStatement();
-		ResultSet rs = query_Login.executeQuery("SELECT * FROM `users` WHERE `username` = '" + LoginUsername.getText() + "' AND `password` = '" + LoginPassword.getText() + "'");
+		ResultSet rs = query_Login.executeQuery("SELECT * FROM `users` WHERE `username` = '" + LoginUsername.getText() + "' AND `password` = '" + passwordField.getText() + "'");
         if (rs.next()) {
 			System.out.println("User exists.");
 			loginStatus.setText("Logging in!");
@@ -220,6 +221,7 @@ public class Controller {
         	System.out.println("User does not exist.");
         	loginStatus.setText("Invalid username or password.");
         }
+        System.out.println("PASSWORD FIELD: " + passwordField.getText());
 	}
 	
 	public void Quit(ActionEvent event) {
