@@ -91,6 +91,7 @@ public class Controller {
 
     	try {
     		Image selectedImage = new Image(tmpProfile.toURI().toString());
+    		System.out.println("Chosen image " + selectedImage);
     		
     		imageView.setImage(selectedImage);
     		System.out.println("Set " + tmpProfile + " as preview.");
