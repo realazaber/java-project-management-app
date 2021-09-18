@@ -14,9 +14,11 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		
-	
+		//Try to connect to database, if connection can not be made then 
+		//close the program.
 		try {
 			Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
+			System.out.println("Connected to database.");
 			
 		} 
 		catch (Exception e) {
@@ -24,25 +26,26 @@ public class Main extends Application {
 			System.out.println("Error code: " + e);
 			System.exit(0);
 		}
-		System.out.println("Connected to database.");
+		
+		//Load the GUI, if there is an error end the program.
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Home.fxml"));
 			Scene scene = new Scene(root,800,600);
-			
 			String css = getClass().getResource("application.css").toExternalForm();
-			scene.getStylesheets().add(css);
 			
+			scene.getStylesheets().add(css);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
-		} catch(Exception e) {
+			System.out.println("Loaded GUI.");
+		} 
+		catch(Exception e) {
 			System.out.println("GUI error.");
 			System.out.println("Error code: " + e);
 			System.exit(0);
-		}
-		System.out.println("Loaded GUI.");
+		}	
 	}
 	
+	//Run the program
 	public static void main(String[] args) {
 		launch(args);
 	}
