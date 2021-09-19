@@ -22,24 +22,48 @@ public class dao {
 		}
 	}
 	
-	public boolean userExists() {
-		connect();
+	public boolean userExists(String username, String firstName, String lastName) {
+		
 		return false;
 	}
 	
 	public void addUser(String firstName, String lastName, String username, String password, File profileImage) {
-		connect();
+		
 	}
 	
-	public void addProject(int user_id, String projectName) {
-		connect();
+	public void addProject(int userID, String projectName) {
+		
 	}
 	
-	public void addTask(int taskID, int projectID, String taskName, Date dueDate, String description) {
-		connect();
+	public void saveProjectChanges(String projectName) {
+		
 	}
 	
-	public void addTaskItem() {
-		connect();
+	public void deleteProject(int projectID) {
+		
+	}
+	
+	public void addTaskColumn(int taskID, int projectID, String taskName, Date dueDate, String description) {
+		
+	}
+	
+	public void saveTaskColumnChanges(String taskName, Date dueDate, String description) {
+		
+	}
+	
+	public void deleteTaskColumn(int taskID) {
+		
+	}
+	
+	public void addTask(int taskID, String description, boolean completed) {
+		
+	}
+	
+	public void saveTaskChanges(String description, boolean completed) {
+		
+	}
+	
+	public void deleteTask(int taskItemID) {
+		
 	}
 }
