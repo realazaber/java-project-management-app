@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomeController">
    <children>
       <Button fx:id="btn_quit" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="306.0" mnemonicParsing="false" onAction="#Quit" prefHeight="40.0" prefWidth="120.0" text="Quit" textAlignment="CENTER" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0">
       </Button>
@@ -44,7 +44,7 @@
                         <TextField fx:id="textFieldPassword" layoutX="213.0" layoutY="174.0" prefHeight="24.0" prefWidth="200.0" promptText="Password" />
                         <TextField fx:id="textFieldConfirmPassword" layoutX="213.0" layoutY="204.0" prefHeight="24.0" prefWidth="200.0" promptText="Confirm password" />
                         <Label fx:id="notification" layoutX="269.0" layoutY="270.0" prefHeight="16.0" prefWidth="526.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <Button fx:id="btn_imageUpload" layoutX="209.0" layoutY="234.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="24.0" prefWidth="204.0" text="Upload image" />
+                        <Button fx:id="btn_imageUpload" layoutX="209.0" layoutY="234.0" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="24.0" prefWidth="204.0" text="Upload image" />
                         <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="202.0" layoutX="428.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="428.0" AnchorPane.rightAnchor="195.0">
                            <viewport>
                               <Rectangle2D />

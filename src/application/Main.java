@@ -14,19 +14,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		
-		//Try to connect to database, if connection can not be made then 
-		//close the program.
-		try {
-			Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
-			System.out.println("Connected to database.");
-			
-		} 
-		catch (Exception e) {
-			System.out.println("Can't connect to database.");
-			System.out.println("Error code: " + e);
-			System.exit(0);
-		}
-		
 		//Load the GUI, if there is an error end the program.
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Home.fxml"));
@@ -47,6 +34,8 @@ public class Main extends Application {
 	
 	//Run the program
 	public static void main(String[] args) {
+		dao dao = new dao();
+		dao.connect();
 		launch(args);
 	}
 }

@@ -3,7 +3,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,11 +25,11 @@ import java.sql.*;
 
 import javax.imageio.ImageIO;
 
-public class Controller {
+public class HomeController {
 	
 	
 	private Stage stage;
-	private Scene scene;
+	
 	
     @FXML
     private TextField textFieldFName;
@@ -66,12 +65,11 @@ public class Controller {
     @FXML
     private Label loginStatus;
     
-    
     private static File tmpProfile = null;
     
-
     
-    public void uploadImage(ActionEvent event) throws Exception {  	
+    
+    public void chooseProfile(ActionEvent event) throws Exception {  	
     	
     	System.out.println("Uploading image.");
     	FileChooser fileChooser = new FileChooser();
@@ -103,6 +101,8 @@ public class Controller {
     }
 
 	public void Register(ActionEvent event) throws Exception {
+		
+		
 		
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		BufferedInputStream file_defaultImage = (BufferedInputStream) classLoader.getResourceAsStream("default_profile.png");
@@ -144,20 +144,15 @@ public class Controller {
 				}
 		        else {
 					//
-					
 					try {
-						
 						PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
-						
 						//
 						//If no image is uploaded use the default.
 						if (tmpProfile == null) {
 							System.out.println("No image has been added.");
 							//Upload default
 							input = file_defaultImage;
-							System.out.println("Default image " + file_defaultImage + " uploading.");
-							
-							
+							System.out.println("Default image " + file_defaultImage + " uploading.");						
 						}
 						else {
 							System.out.println("Photo " + tmpProfile + " is being uploaded.");
@@ -196,17 +191,6 @@ public class Controller {
 			notification.setText("Passwords do not match!");
 		}
 			
-	}
-
-	public void MoveToHome(ActionEvent event) throws IOException {
-		System.out.println("Going to Home page.");
-		Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root,800,600);
-		stage.setScene(scene);
-		String css = getClass().getResource("application.css").toExternalForm();
-		scene.getStylesheets().add(css);
-		stage.show();
 	}
 	
 	public void Login(ActionEvent event) throws IOException, SQLException {
