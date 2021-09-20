@@ -13,13 +13,13 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
-public class Main extends Application {
+public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		
 		//Load the GUI, if there is an error end the program.
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/application/Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/controllers/Home.fxml"));
 			Scene scene = new Scene(root,800,600);
 			String css = getClass().getResource("application.css").toExternalForm();
 			

@@ -1,4 +1,5 @@
-package application;
+package application.controllers;
+
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +26,9 @@ import java.sql.*;
 
 import javax.imageio.ImageIO;
 
-public class HomeController {
+import application.dao.userDAO;
+
+public class HomeController extends userDAO{
 	
 	
 	private Stage stage;

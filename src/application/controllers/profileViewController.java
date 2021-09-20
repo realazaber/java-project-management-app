@@ -1,10 +1,11 @@
-package application;
+package application.controllers;
 
+import application.dao.userDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class profileViewController {
+public class profileViewController extends userDAO {
 	
     @FXML
     private TextField firstName;
