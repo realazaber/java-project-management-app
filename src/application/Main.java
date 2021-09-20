@@ -1,10 +1,13 @@
-package application;
-	
+package application;	
+
+import application.dao.*;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +37,8 @@ public class Main extends Application {
 	
 	//Run the program
 	public static void main(String[] args) {
-		dao dao = new dao();
-		dao.connect();
+		dao mainDao = new dao();
+		mainDao.connect();
 		launch(args);
 	}
 }
