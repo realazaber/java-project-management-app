@@ -21,7 +21,7 @@ public class dao {
 			System.exit(0);
 		}
 	}
-	
+
 	public boolean userExists(String username, String firstName, String lastName) {
 		
 		return false;
