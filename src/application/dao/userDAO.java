@@ -11,4 +11,8 @@ public class userDAO extends dao {
 	public void addUser(String firstName, String lastName, String username, String password, File profileImage) {
 		connect();
 	}
+	
+	public void saveProfileChanges(String firstName, String lastName, File newProfile) {
+		
+	}
 }

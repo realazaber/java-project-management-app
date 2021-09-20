@@ -30,7 +30,6 @@ import application.dao.userDAO;
 
 public class HomeController extends userDAO{
 	
-	
 	private Stage stage;
 	
 	
@@ -58,7 +57,6 @@ public class HomeController extends userDAO{
     @FXML 
     public static ImageView imageView = new ImageView();
 
-
     @FXML
     private TextField LoginUsername;
     
@@ -70,8 +68,7 @@ public class HomeController extends userDAO{
     
     private static File tmpProfile = null;
     
-    
-    
+    //Open file explorer and let user choose profile image.
     public void chooseProfile(ActionEvent event) throws Exception {  	
     	
     	System.out.println("Uploading image.");
@@ -103,6 +100,7 @@ public class HomeController extends userDAO{
 
     }
 
+    //If user is not in database yet then upload new user.
 	public void Register(ActionEvent event) throws Exception {
 		
 		
@@ -196,6 +194,7 @@ public class HomeController extends userDAO{
 			
 	}
 	
+	//Check user details and login to dashboard.
 	public void Login(ActionEvent event) throws IOException, SQLException {
 		System.out.println("Checking for user");
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
@@ -212,6 +211,7 @@ public class HomeController extends userDAO{
         System.out.println("PASSWORD FIELD: " + passwordField.getText());
 	}
 	
+	//Close application.
 	public void Quit(ActionEvent event) {
 		System.out.println("Quiting Application.");
 		System.exit(0);
