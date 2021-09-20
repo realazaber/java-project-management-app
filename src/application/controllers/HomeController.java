@@ -14,17 +14,11 @@ import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.scene.control.*;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-
 import java.sql.*;
-
-import javax.imageio.ImageIO;
 
 import application.dao.userDAO;
 
@@ -196,13 +190,34 @@ public class HomeController extends userDAO{
 	
 	//Check user details and login to dashboard.
 	public void Login(ActionEvent event) throws IOException, SQLException {
+		
+		
+		
 		System.out.println("Checking for user");
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 		Statement query_Login = myConnection.createStatement();
 		ResultSet rs = query_Login.executeQuery("SELECT * FROM `users` WHERE `username` = '" + LoginUsername.getText() + "' AND `password` = '" + passwordField.getText() + "'");
         if (rs.next()) {
-			System.out.println("User exists.");
+        	
+        	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+        	Parent root = dashboardScene.load();
+        	
+        	
+        	
+        	dashboardController dashboardController = dashboardScene.getController();
+        	dashboardController.setUserID(rs.getInt(1));
+			
+        	System.out.println("User exists.");
 			loginStatus.setText("Logging in!");
+			
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			
+			
+			
+			
 		}
         else {
         	System.out.println("User does not exist.");

@@ -3,6 +3,7 @@ package application.dao;
 import java.sql.Date;
 
 public class projectDAO extends dao {
+	
 	public void addProject(int userID, String projectName) {
 		
 	}
@@ -15,11 +16,11 @@ public class projectDAO extends dao {
 		
 	}
 	
-	public void addTaskColumn(int taskID, int projectID, String taskName, Date dueDate, String description) {
+	public void addTaskColumn(int taskColumnID, int projectID, String taskName, Date dueDate, String description) {
 		
 	}
 	
-	public void saveTaskColumnChanges(String taskName, Date dueDate, String description) {
+	public void saveTaskColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) {
 		
 	}
 	
@@ -31,7 +32,7 @@ public class projectDAO extends dao {
 		
 	}
 	
-	public void saveTaskChanges(String description, boolean completed) {
+	public void saveTaskChanges(int taskID, String description, boolean completed) {
 		
 	}
 	
