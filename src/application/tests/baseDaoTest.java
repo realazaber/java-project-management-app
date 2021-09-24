@@ -6,11 +6,12 @@ import org.junit.Test;
 
 import application.dao.baseDao;
 
-public class test {
+public class baseDaoTest {
 
 	@Test
 	public void dbconnection() {
 		baseDao testDao = new baseDao();
+		testDao.connect();
 	}
 
 }
