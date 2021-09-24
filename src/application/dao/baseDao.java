@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 
-public class dao {
+public class baseDao {
 	
 	public void connect() {
 		//Try to connect to database, if connection can not be made then 

@@ -2,7 +2,7 @@ package application.dao;
 
 import java.sql.Date;
 
-public class projectDAO extends dao {
+public class projectDAO extends baseDao {
 	
 	public void addProject(int userID, String projectName) {
 		
