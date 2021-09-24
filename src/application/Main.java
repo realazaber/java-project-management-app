@@ -21,9 +21,6 @@ public class Main extends Application{
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/controllers/Home.fxml"));
 			Scene scene = new Scene(root,800,600);
-			String css = getClass().getResource("application.css").toExternalForm();
-			
-			scene.getStylesheets().add(css);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			System.out.println("Loaded GUI.");

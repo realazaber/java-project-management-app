@@ -192,7 +192,6 @@ public class HomeController extends userDAO{
 	public void Login(ActionEvent event) throws IOException, SQLException {
 		
 		
-		
 		System.out.println("Checking for user");
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 		Statement query_Login = myConnection.createStatement();
@@ -206,6 +205,7 @@ public class HomeController extends userDAO{
         	
         	dashboardController dashboardController = dashboardScene.getController();
         	dashboardController.setUserID(rs.getInt(1));
+        	dashboardController.setWelcomeMessage(rs.getString(2));
 			
         	System.out.println("User exists.");
 			loginStatus.setText("Logging in!");
