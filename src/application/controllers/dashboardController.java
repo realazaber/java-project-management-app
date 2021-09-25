@@ -2,6 +2,7 @@ package application.controllers;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Random;
 
 import application.dao.projectDAO;
 import javafx.event.ActionEvent;
@@ -15,15 +16,24 @@ import javafx.stage.Stage;
 
 public class dashboardController extends projectDAO {
 	
+	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad"};
+	
 	private Stage stage;
 	
 	@FXML
-	private Label label_fname;
+	private Label lbl_fname;
+	
+	@FXML
+	private Label lbl_inspirationalQuote;
 	
 	int userId;
 	String username;
 	String firstName;
 	
+	public void setQuote() {
+		int randomInt = new Random().nextInt(quotes.length);
+		lbl_inspirationalQuote.setText(quotes[randomInt]);
+	}
 	
 	public void setUserID(int userID) {
 		this.userId = userID;
@@ -39,7 +49,7 @@ public class dashboardController extends projectDAO {
 	
 	
 	public void setWelcomeMessage(String firstName) {
-		label_fname.setText(firstName);
+		lbl_fname.setText(firstName);
 	}
 	
 	

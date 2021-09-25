@@ -26,13 +26,13 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="label_fname" alignment="BASELINE_LEFT" layoutX="297.0" layoutY="21.0" prefHeight="25.0" prefWidth="305.0" text="lbl_firstName">
+                        <Label fx:id="lbl_fname" alignment="BASELINE_LEFT" layoutX="297.0" layoutY="21.0" prefHeight="25.0" prefWidth="305.0" text="lbl_firstName">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                         <Button fx:id="btn_logout" layoutX="269.0" layoutY="293.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="84.0" text="lbl_inspirationalQuote" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Label fx:id="lbl_inspirationalQuote" alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="84.0" text="lbl_inspirationalQuote" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>
