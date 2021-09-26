@@ -14,7 +14,7 @@
 <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.dashboardController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0" />
-      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tab_mainTab" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <tabs>
           <Tab text="Dashboard">
             <content>
@@ -26,7 +26,7 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbl_fname" alignment="BASELINE_LEFT" layoutX="399.0" layoutY="21.0" prefHeight="25.0" prefWidth="203.0" text="lbl_firstName">
+                        <Label fx:id="lbl_fname" alignment="BASELINE_LEFT" layoutX="409.0" layoutY="21.0" prefHeight="25.0" prefWidth="193.0" text="lbl_firstName">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -45,7 +45,8 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ButtonBar layoutX="400.0" layoutY="329.0" prefHeight="40.0" prefWidth="200.0" />
-                        <Button layoutX="611.0" layoutY="31.0" mnemonicParsing="false" text="Create new project" AnchorPane.bottomAnchor="499.0" AnchorPane.leftAnchor="611.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="31.0" />
+                        <Button layoutX="611.0" layoutY="31.0" mnemonicParsing="false" onAction="#addProject" text="Create new project" AnchorPane.bottomAnchor="499.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="31.0" />
+                        <TabPane fx:id="tab_projects" layoutY="77.0" prefHeight="492.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>

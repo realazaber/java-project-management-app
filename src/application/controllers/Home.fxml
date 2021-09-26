@@ -28,7 +28,7 @@
                      <children>
                         <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="310.0" />
                         <TextField fx:id="LoginUsername" layoutX="333.0" layoutY="90.0" prefHeight="30.0" prefWidth="489.0" promptText="Username" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
-                        <Label fx:id="loginStatus" layoutX="-2.0" layoutY="222.0" prefHeight="16.0" prefWidth="388.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Label fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="222.0" prefHeight="16.0" prefWidth="388.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                         <PasswordField fx:id="passwordField" layoutX="315.0" layoutY="226.0" promptText="Password" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
                      </children></AnchorPane>
             </content>

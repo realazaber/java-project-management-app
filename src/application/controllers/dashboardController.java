@@ -12,6 +12,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class dashboardController extends projectDAO {
@@ -19,6 +23,9 @@ public class dashboardController extends projectDAO {
 	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad"};
 	
 	private Stage stage;
+	
+	@FXML
+	private TabPane tab_projects;
 	
 	@FXML
 	private Label lbl_fname;
@@ -29,6 +36,17 @@ public class dashboardController extends projectDAO {
 	int userId;
 	String username;
 	String firstName;
+	
+	
+	
+	public void loadProject(int projectId) {
+		
+		
+		String tmpString = Integer.toString(projectId);
+		 Tab tab = new Tab();
+		 tab.setText(tmpString);
+		 tab_projects.getTabs().add(tab);
+	}
 	
 	public void setQuote() {
 		int randomInt = new Random().nextInt(quotes.length);
@@ -57,8 +75,10 @@ public class dashboardController extends projectDAO {
 		
 	}
 	
-	public void addProject(ActionEvent event, int userID, String projectName) {
-		
+	public void addProject(ActionEvent event) {
+		 Tab tab = new Tab();
+		 tab.setText("Example");
+		 tab_projects.getTabs().add(tab);
 	}
 	
 	public void saveProjectChanges(ActionEvent event, int projectID, String projectName) {
