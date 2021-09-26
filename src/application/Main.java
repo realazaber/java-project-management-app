@@ -36,7 +36,10 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		baseDao mainDao = new baseDao();
 		mainDao.connect();
-
+		
+		projectDAO tmp = new projectDAO();
+		tmp.deleteProject(2);
+		
 		launch(args);
 	}
 }

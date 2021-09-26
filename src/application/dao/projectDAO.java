@@ -26,7 +26,16 @@ public class projectDAO extends baseDao {
 	}
 	
 	public void deleteProject(int projectID) {
-		
+		try {
+			Connection connection = connect();
+			String query =  "DELETE FROM `projects` WHERE `projects`.`project_id` = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, projectID);
+			statement.execute();
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
 	}
 	
 	public void addTaskColumn(int taskColumnID, int projectID, String taskName, Date dueDate, String description) {
