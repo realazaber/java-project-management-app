@@ -36,6 +36,7 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		baseDao mainDao = new baseDao();
 		mainDao.connect();
+
 		launch(args);
 	}
 }

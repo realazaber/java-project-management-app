@@ -1,18 +1,17 @@
 package application.dao;
 
-import java.io.File;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 
 public class baseDao {
 	
-	public void connect() {
+	public Connection connect() {
 		//Try to connect to database, if connection can not be made then 
 		//close the program.
 		try {
 			Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 			System.out.println("Connected to database.");
+			return myConnection;
 			
 		} 
 		catch (Exception e) {
@@ -20,6 +19,7 @@ public class baseDao {
 			System.out.println("Error code: " + e);
 			System.exit(0);
 		}
+		return null;
 	}
 
 
