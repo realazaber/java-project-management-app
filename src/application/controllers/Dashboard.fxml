@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="416.0" minWidth="601.0" prefHeight="416.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.dashboardController">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.dashboardController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0" />
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Dashboard">
             <content>
@@ -26,12 +26,12 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbl_fname" alignment="BASELINE_LEFT" layoutX="297.0" layoutY="21.0" prefHeight="25.0" prefWidth="305.0" text="lbl_firstName">
+                        <Label fx:id="lbl_fname" alignment="BASELINE_LEFT" layoutX="389.0" layoutY="21.0" prefHeight="25.0" prefWidth="213.0" text="lbl_firstName">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btn_logout" layoutX="269.0" layoutY="293.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                        <Button fx:id="btn_logout" layoutX="374.0" layoutY="285.0" mnemonicParsing="false" onAction="#logout" text="Logout" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="360.0" AnchorPane.topAnchor="290.0" />
                         <Label fx:id="lbl_inspirationalQuote" alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="84.0" text="lbl_inspirationalQuote" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
@@ -42,7 +42,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ButtonBar layoutX="400.0" layoutY="329.0" prefHeight="40.0" prefWidth="200.0" />
-                        <Button layoutX="429.0" layoutY="14.0" mnemonicParsing="false" text="Create new project" />
+                        <Button layoutX="635.0" layoutY="55.0" mnemonicParsing="false" text="Create new project" AnchorPane.bottomAnchor="470.0" AnchorPane.leftAnchor="610.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="60.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -51,13 +51,13 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="profilePIc" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField fx:id="txtFieldFName" layoutX="25.0" layoutY="35.0" promptText="First name" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="35.0" />
-                        <TextField fx:id="txtFieldLName" layoutX="25.0" layoutY="65.0" promptText="Last name" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="65.0" />
-                        <TextField fx:id="txtFieldusername" layoutX="25.0" layoutY="95.0" promptText="Username" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="95.0" />
-                        <Button layoutX="346.0" layoutY="197.0" mnemonicParsing="false" text="Upload Profile Picture" />
-                        <Button layoutX="246.0" layoutY="286.0" mnemonicParsing="false" text="Save changes" />
-                        <PasswordField fx:id="passwordField" layoutX="70.0" layoutY="137.0" promptText="Password" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="125.0" />
+                        <ImageView fx:id="profilePIc" fitHeight="150.0" fitWidth="200.0" layoutX="536.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextField fx:id="txtFieldFName" layoutX="25.0" layoutY="35.0" prefHeight="37.0" prefWidth="371.0" promptText="First name" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="35.0" />
+                        <TextField fx:id="txtFieldLName" layoutX="25.0" layoutY="88.0" prefHeight="33.0" prefWidth="325.0" promptText="Last name" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="85.0" />
+                        <TextField fx:id="txtFieldusername" layoutX="29.0" layoutY="169.0" prefHeight="38.0" prefWidth="371.0" promptText="Username" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="135.0" />
+                        <Button layoutX="556.0" layoutY="207.0" mnemonicParsing="false" text="Upload Profile Picture" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="200.0" />
+                        <Button layoutX="346.0" layoutY="285.0" mnemonicParsing="false" text="Save changes" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="300.0" />
+                        <PasswordField fx:id="passwordField" layoutX="450.0" layoutY="344.0" prefHeight="32.0" prefWidth="371.0" promptText="Password" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="185.0" />
                      </children>
                   </AnchorPane>
                </content>
