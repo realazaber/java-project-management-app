@@ -1,8 +1,10 @@
 package application.controllers;
 
 import java.io.IOException;
-
+import java.sql.SQLException;
+import application.User;
 import application.dao.projectDAO;
+import application.dao.userDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +36,8 @@ public class newProjectController extends projectDAO {
 		return userId;
 	}
 	
-	public void back(ActionEvent event) throws IOException {
+	public void back(ActionEvent event) throws IOException, SQLException {
+		userDAO userDAO = new userDAO();
 		System.out.println("Back to dashboard");
 		
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
@@ -42,7 +45,12 @@ public class newProjectController extends projectDAO {
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
 		dashboardController.setUserID(userId);
-		dashboardController.setWelcomeMessage("First name");
+		User user = userDAO.getUser(userId);
+		
+		
+		dashboardController.setWelcomeMessage(user.getFirstName());
+		
+		
 		
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);

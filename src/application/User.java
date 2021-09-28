@@ -6,6 +6,7 @@ public class User {
 	int userId;
 	String firstName;
 	String lastName;
+	String username;
 	String password;
 	File profilePicture;
 	
@@ -33,6 +34,14 @@ public class User {
 		return lastName;
 	}
 
+	public void setUsername(String username) {
+		username = this.username;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
