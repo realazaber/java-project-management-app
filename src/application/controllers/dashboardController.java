@@ -99,7 +99,7 @@ public class dashboardController extends projectDAO {
 	//Open the window for adding the new project.
 	public void addProjectWindow(ActionEvent event) throws IOException {
 		System.out.println("Opening add project window.");
-		
+		System.out.println("User ID: " + userId);
 		
 		FXMLLoader newProjectScene = new FXMLLoader(getClass().getResource("NewProject.fxml"));
 		Parent root = newProjectScene.load();
@@ -108,6 +108,7 @@ public class dashboardController extends projectDAO {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+		setUserID(userId);
 	}
 	
 	//Add project to database
@@ -119,7 +120,7 @@ public class dashboardController extends projectDAO {
 		}
 		else {
 			lbl_notification.setText("Project successfully added!");
-			System.out.println(textFieldProjectName.getText() + " added to database.");
+			System.out.println(textFieldProjectName.getText() + " added to database under user id: " + userId);
 		}
 	}
 	
