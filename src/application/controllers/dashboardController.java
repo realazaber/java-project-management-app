@@ -34,31 +34,18 @@ public class dashboardController extends projectDAO {
 	
 	@FXML
 	private Label lbl_inspirationalQuote;
-	
-	@FXML
-	private TextField textFieldProjectName;
+
 	
 	@FXML
 	private Button btn_createProject;
 	
-	@FXML
-	private Label lbl_notification;
+
 	
 	int userId;
 	String username;
 	String firstName;
 	
-	public void back(ActionEvent event) throws IOException {
-		System.out.println("Back to dashboard");
-		
-		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
-		Parent root = dashboardScene.load();
-		
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
+
 	
 	public void loadProject(int projectId) {
 		
@@ -104,25 +91,20 @@ public class dashboardController extends projectDAO {
 		FXMLLoader newProjectScene = new FXMLLoader(getClass().getResource("NewProject.fxml"));
 		Parent root = newProjectScene.load();
 		
+		newProjectController newProjectController = newProjectScene.getController();
+		newProjectController.setUserID(userId);
+		
+		
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		setUserID(userId);
+		
+		
+
 	}
 	
-	//Add project to database
-	public void addProject(ActionEvent event) {
-		
-		if (addProject(userId, textFieldProjectName.getText()) == false) {
-			lbl_notification.setText("Project already exists!");
-			System.out.println(textFieldProjectName.getText() + " already exists");
-		}
-		else {
-			lbl_notification.setText("Project successfully added!");
-			System.out.println(textFieldProjectName.getText() + " added to database under user id: " + userId);
-		}
-	}
+
 	
 	public void saveProjectChanges(ActionEvent event, int projectID, String projectName) {
 		
