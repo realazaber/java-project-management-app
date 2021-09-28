@@ -13,7 +13,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="textFieldProjectName" layoutX="165.0" layoutY="90.0" promptText="Project name" />
+      <TextField fx:id="textFieldProjectName" layoutX="215.0" layoutY="88.0" promptText="Project name" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="214.0" />
       <Button fx:id="btn_createProject" layoutX="189.0" layoutY="188.0" mnemonicParsing="false" onAction="#addProject" prefHeight="34.0" prefWidth="127.0" text="Create Project" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" />
       <Label fx:id="lbl_notification" layoutX="209.0" layoutY="140.0" prefHeight="16.0" prefWidth="220.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" />
       <Button layoutX="187.0" layoutY="264.0" mnemonicParsing="false" onAction="#back" prefHeight="34.0" prefWidth="127.0" text="Back to dashboard" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" />

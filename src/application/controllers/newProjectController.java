@@ -39,6 +39,10 @@ public class newProjectController extends projectDAO {
 		
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
 		Parent root = dashboardScene.load();
+		dashboardController dashboardController = dashboardScene.getController();
+		dashboardController.setQuote();
+		dashboardController.setUserID(userId);
+		dashboardController.setWelcomeMessage("First name");
 		
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
