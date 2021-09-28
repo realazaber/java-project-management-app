@@ -48,7 +48,17 @@ public class dashboardController extends projectDAO {
 	String username;
 	String firstName;
 	
-	
+	public void back(ActionEvent event) throws IOException {
+		System.out.println("Back to dashboard");
+		
+		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+		Parent root = dashboardScene.load();
+		
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 	
 	public void loadProject(int projectId) {
 		
