@@ -45,7 +45,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ButtonBar layoutX="400.0" layoutY="329.0" prefHeight="40.0" prefWidth="200.0" />
-                        <Button layoutX="611.0" layoutY="31.0" mnemonicParsing="false" onAction="#addProject" text="Create new project" AnchorPane.bottomAnchor="499.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="31.0" />
+                        <Button layoutX="611.0" layoutY="31.0" mnemonicParsing="false" onAction="#addProjectWindow" text="Create new project" AnchorPane.bottomAnchor="499.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="31.0" />
                         <TabPane fx:id="tab_projects" layoutY="77.0" prefHeight="492.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>

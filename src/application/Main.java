@@ -37,8 +37,7 @@ public class Main extends Application{
 		baseDao mainDao = new baseDao();
 		mainDao.connect();
 		
-		projectDAO tmp = new projectDAO();
-		tmp.deleteProject(2);
+
 		
 		launch(args);
 	}

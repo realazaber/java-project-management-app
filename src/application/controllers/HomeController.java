@@ -207,7 +207,8 @@ public class HomeController extends userDAO{
         	dashboardController.setUserID(rs.getInt(1));
         	dashboardController.setWelcomeMessage(rs.getString(2));
         	dashboardController.setQuote();
-
+        	System.out.println("Logging in...");
+        	System.out.println("User id: " + dashboardController.getUserId());
         	
 			
         	System.out.println("User exists.");

@@ -11,9 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -32,6 +34,15 @@ public class dashboardController extends projectDAO {
 	
 	@FXML
 	private Label lbl_inspirationalQuote;
+	
+	@FXML
+	private TextField textFieldProjectName;
+	
+	@FXML
+	private Button btn_createProject;
+	
+	@FXML
+	private Label lbl_notification;
 	
 	int userId;
 	String username;
@@ -75,10 +86,31 @@ public class dashboardController extends projectDAO {
 		
 	}
 	
+	//Open the window for adding the new project.
+	public void addProjectWindow(ActionEvent event) throws IOException {
+		System.out.println("Opening add project window.");
+		
+		
+		FXMLLoader newProjectScene = new FXMLLoader(getClass().getResource("NewProject.fxml"));
+		Parent root = newProjectScene.load();
+		
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	//Add project to database
 	public void addProject(ActionEvent event) {
-		 Tab tab = new Tab();
-		 tab.setText("Example");
-		 tab_projects.getTabs().add(tab);
+		
+		if (addProject(userId, textFieldProjectName.getText()) == false) {
+			lbl_notification.setText("Project already exists!");
+			System.out.println(textFieldProjectName.getText() + " already exists");
+		}
+		else {
+			lbl_notification.setText("Project successfully added!");
+			System.out.println(textFieldProjectName.getText() + " added to database.");
+		}
 	}
 	
 	public void saveProjectChanges(ActionEvent event, int projectID, String projectName) {
