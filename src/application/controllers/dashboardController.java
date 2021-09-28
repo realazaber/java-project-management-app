@@ -79,10 +79,6 @@ public class dashboardController extends projectDAO {
 	}
 	
 	
-	public void goToProfile(ActionEvent event) {
-		
-	}
-	
 	//Open the window for adding the new project.
 	public void addProjectWindow(ActionEvent event) throws IOException {
 		System.out.println("Opening add project window.");
@@ -99,8 +95,6 @@ public class dashboardController extends projectDAO {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		
-		
 
 	}
 	
