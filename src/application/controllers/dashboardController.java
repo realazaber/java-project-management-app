@@ -9,6 +9,7 @@ import java.util.Random;
 import application.Project;
 import application.dao.projectDAO;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -61,6 +62,24 @@ public class dashboardController extends projectDAO {
 			Tab tab = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
 			tab.setContent(scrollPane);
+			Label lbl_notification = new Label();
+			Button deleteButton = new Button("Delete Project");
+			
+			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent arg0) {
+					
+					deleteProject(project.getProjectID());
+					lbl_notification.setText(project.getProjectName() + " has been deleted!");
+				
+					
+					
+				}
+			});
+			
+			tab.setContent(lbl_notification);
+			tab.setContent(deleteButton);
 			tab_projects.getTabs().add(tab);
 		}
 		

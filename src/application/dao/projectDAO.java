@@ -79,15 +79,15 @@ public class projectDAO extends baseDao {
 		}
 	}
 	
-	public void addTaskColumn(int taskColumnID, int projectID, String taskName, Date dueDate, String description) {
+	public void addColumn(int taskColumnID, int projectID, String taskName, Date dueDate, String description) {
 		
 	}
 	
-	public void saveTaskColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) {
+	public void saveColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) {
 		
 	}
 	
-	public void deleteTaskColumn(int taskID) {
+	public void deleteColumn(int taskID) {
 		
 	}
 	
