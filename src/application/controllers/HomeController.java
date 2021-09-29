@@ -18,6 +18,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 
 import application.dao.userDAO;
@@ -82,7 +83,8 @@ public class HomeController extends userDAO{
     	System.out.println("File chosen: " + tmpProfile);
 
     	try {
-    		Image selectedImage = new Image(tmpProfile.toURI().toString());
+    		InputStream fileInputStream = new FileInputStream(tmpProfile);
+    		Image selectedImage = new Image(fileInputStream);
     		System.out.println("Chosen image " + selectedImage);
     		
     		imageView.setImage(selectedImage);
