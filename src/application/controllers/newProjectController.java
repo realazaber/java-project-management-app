@@ -61,8 +61,6 @@ public class newProjectController extends projectDAO {
 	//Add project to database
 	public void addProject(ActionEvent event) {
 		
-		System.out.println("OIJIIJ " + userId);
-		
 		if (textFieldProjectName.getText() != "") {
 			if (addProject(userId, textFieldProjectName.getText()) == false) {
 				lbl_notification.setText("Project already exists!");
