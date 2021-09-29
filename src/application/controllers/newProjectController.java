@@ -36,7 +36,7 @@ public class newProjectController extends projectDAO {
 		return userId;
 	}
 	
-	public void back(ActionEvent event) throws IOException, SQLException {
+	public void back(ActionEvent event) throws Exception {
 		userDAO userDAO = new userDAO();
 		System.out.println("Back to dashboard");
 		
@@ -49,6 +49,7 @@ public class newProjectController extends projectDAO {
 		
 		
 		dashboardController.setWelcomeMessage(user.getFirstName());
+		dashboardController.showProjects(userId);
 		
 		
 		

@@ -11,11 +11,11 @@ public class userDAO extends baseDao {
 	
 	
 	public User getUser(int userID) throws SQLException {
-		connect();
 		User user = new User();
 		
 		Statement getUserStatement = connect().createStatement();
-		ResultSet rs = getUserStatement.executeQuery("SELECT `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'");
+		String query = "SELECT `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'";
+		ResultSet rs = getUserStatement.executeQuery(query);
 		
 		while (rs.next()) {
 			user.setFirstName(rs.getString(1));

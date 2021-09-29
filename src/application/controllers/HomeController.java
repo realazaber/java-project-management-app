@@ -191,7 +191,7 @@ public class HomeController extends userDAO{
 	}
 	
 	//Check user details and login to dashboard.
-	public void Login(ActionEvent event) throws IOException, SQLException {
+	public void Login(ActionEvent event) throws Exception {
 		
 		
 		System.out.println("Checking for user");
@@ -209,6 +209,8 @@ public class HomeController extends userDAO{
         	dashboardController.setUserID(rs.getInt(1));
         	dashboardController.setWelcomeMessage(rs.getString(2));
         	dashboardController.setQuote();
+        	dashboardController.showProjects(rs.getInt(1));
+        	
         	System.out.println("Logging in...");
         	System.out.println("User id: " + dashboardController.getUserId());
         	

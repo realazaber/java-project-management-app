@@ -2,8 +2,11 @@ package application.controllers;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 
+import application.Project;
 import application.dao.projectDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,15 +50,21 @@ public class dashboardController extends projectDAO {
 	
 
 	
-	public void loadProject(int projectId) {
+	public void showProjects(int userID) throws Exception {
+		ArrayList<Project> userProjects = loadProjects(userID);
+		
+		for (Project project : userProjects) {
+			System.out.println("BAAAAAAAAAA" + project.getProjectName());
+			Tab tab = new Tab(project.getProjectName());
+			
+			tab_projects.getTabs().add(tab);
+		}
 		
 		
-		String tmpString = Integer.toString(projectId);
-		 Tab tab = new Tab();
-		 tab.setText(tmpString);
-		 tab_projects.getTabs().add(tab);
+
 	}
 	
+	//Creates an inspirational quote.
 	public void setQuote() {
 		int randomInt = new Random().nextInt(quotes.length);
 		lbl_inspirationalQuote.setText(quotes[randomInt]);

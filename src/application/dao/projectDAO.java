@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import application.Project;
+import application.controllers.newProjectController;
 
 public class projectDAO extends baseDao {
 	
@@ -31,7 +36,30 @@ public class projectDAO extends baseDao {
 		return false;
 	}
 	
-	
+	public ArrayList<Project> loadProjects(int userID) throws SQLException {
+		System.out.println("Loading projects for user: " + userID);
+		ArrayList<Project> projects = new ArrayList<Project>();
+		Project tmpProject = new Project();
+		Statement loadProjectStatement = connect().createStatement();
+		String query = "SELECT `project_id`, `user_id`, `project_name` FROM `projects` WHERE `user_id` = '" + userID + "'";
+		ResultSet rs = loadProjectStatement.executeQuery(query);
+		
+		while (rs.next()) {
+			tmpProject.setProjectID(rs.getInt(1));
+			tmpProject.setUserID(rs.getInt(2));
+			tmpProject.setProjectName(rs.getString(3));
+			projects.add(tmpProject);
+			
+			System.out.println("=============================");
+			System.out.println("Project ID: " + tmpProject.getProjectID());
+			System.out.println("Project Name: " + tmpProject.getProjectName());
+			System.out.println("Project user ID: " + tmpProject.getUserID());
+		}
+		
+		
+		return projects;
+		
+	}
 	
 	public void saveProjectChanges(String projectName) {
 		
