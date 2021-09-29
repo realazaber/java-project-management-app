@@ -53,8 +53,12 @@ public class dashboardController extends projectDAO {
 	public void showProjects(int userID) throws Exception {
 		ArrayList<Project> userProjects = loadProjects(userID);
 		
+		
+		
 		for (Project project : userProjects) {
-			System.out.println("BAAAAAAAAAA" + project.getProjectName());
+
+			
+			
 			Tab tab = new Tab(project.getProjectName());
 			
 			tab_projects.getTabs().add(tab);

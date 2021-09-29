@@ -39,12 +39,13 @@ public class projectDAO extends baseDao {
 	public ArrayList<Project> loadProjects(int userID) throws SQLException {
 		System.out.println("Loading projects for user: " + userID);
 		ArrayList<Project> projects = new ArrayList<Project>();
-		Project tmpProject = new Project();
+		
 		Statement loadProjectStatement = connect().createStatement();
 		String query = "SELECT `project_id`, `user_id`, `project_name` FROM `projects` WHERE `user_id` = '" + userID + "'";
 		ResultSet rs = loadProjectStatement.executeQuery(query);
 		
 		while (rs.next()) {
+			Project tmpProject = new Project();
 			tmpProject.setProjectID(rs.getInt(1));
 			tmpProject.setUserID(rs.getInt(2));
 			tmpProject.setProjectName(rs.getString(3));
