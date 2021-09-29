@@ -80,9 +80,7 @@ public class dashboardController extends projectDAO {
 		        	
 		        	try {
 			        	Parent root = dashboardScene.load();
-			        	
-			        	
-			        	
+			        				        	
 			        	dashboardController dashboardController = dashboardScene.getController();
 			        	dashboardController.setUserID(userID);
 			        	dashboardController.setWelcomeMessage(firstName);
