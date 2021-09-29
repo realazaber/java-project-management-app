@@ -32,6 +32,9 @@ public class dashboardController extends projectDAO {
 	private Stage stage;
 	
 	@FXML
+	private TabPane tabpane_mainTab;
+	
+	@FXML
 	private TabPane tab_projects;
 	
 	@FXML
@@ -73,10 +76,37 @@ public class dashboardController extends projectDAO {
 					deleteProject(project.getProjectID());
 					lbl_notification.setText(project.getProjectName() + " has been deleted!");
 				
+		        	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+		        	
+		        	try {
+			        	Parent root = dashboardScene.load();
+			        	
+			        	
+			        	
+			        	dashboardController dashboardController = dashboardScene.getController();
+			        	dashboardController.setUserID(userID);
+			        	dashboardController.setWelcomeMessage(firstName);
+			        	dashboardController.setQuote();
+			        	dashboardController.showProjects(userID);
+			        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						Scene scene = new Scene(root);
+						stage.setScene(scene);
+						stage.show();
+						
+			        	
+					} catch (Exception e) {
+						System.out.println("Error: " + e);
+					}
+		        	
+					
+
 					
 					
 				}
 			});
+			
+			
 			
 			tab.setContent(lbl_notification);
 			tab.setContent(deleteButton);
