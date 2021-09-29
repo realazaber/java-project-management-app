@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -56,11 +57,10 @@ public class dashboardController extends projectDAO {
 		
 		
 		for (Project project : userProjects) {
-
-			
 			
 			Tab tab = new Tab(project.getProjectName());
-			
+			ScrollPane scrollPane = new ScrollPane();
+			tab.setContent(scrollPane);
 			tab_projects.getTabs().add(tab);
 		}
 		
