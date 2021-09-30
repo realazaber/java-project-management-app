@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import application.Project;
+import application.User;
 import application.dao.projectDAO;
+import application.dao.userDAO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -67,6 +69,9 @@ public class dashboardController extends projectDAO {
 			tab.setContent(scrollPane);
 			Label lbl_notification = new Label();
 			Button deleteButton = new Button("Delete Project");
+			deleteButton.setLayoutX(100);
+			deleteButton.setLayoutY(100);
+			
 			
 			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 				
@@ -83,7 +88,11 @@ public class dashboardController extends projectDAO {
 			        				        	
 			        	dashboardController dashboardController = dashboardScene.getController();
 			        	dashboardController.setUserID(userID);
-			        	dashboardController.setWelcomeMessage(firstName);
+			        	System.out.println("OIJIOJOIJ " + firstName);
+			        	userDAO userDAO = new userDAO();
+			        	User tmpUser = userDAO.getUser(userID);
+			        	
+			        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
 			        	dashboardController.setQuote();
 			        	dashboardController.showProjects(userID);
 			        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
@@ -96,11 +105,6 @@ public class dashboardController extends projectDAO {
 					} catch (Exception e) {
 						System.out.println("Error: " + e);
 					}
-		        	
-					
-
-					
-					
 				}
 			});
 			
@@ -130,8 +134,22 @@ public class dashboardController extends projectDAO {
 	}
 	
 	public void setUsername(String username) {
-		
+		this.username = username;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	
 	
 	
 	public void setWelcomeMessage(String firstName) {
