@@ -45,23 +45,18 @@ public class dashboardController extends projectDAO {
 	@FXML
 	private Label lbl_inspirationalQuote;
 
-	
 	@FXML
 	private Button btn_createProject;
-	
-
-	
+		
 	int userId;
 	String username;
 	String firstName;
 	
-
 	
+	//Show all of the user's projects.
 	public void showProjects(int userID) throws Exception {
 		ArrayList<Project> userProjects = loadProjects(userID);
-		
-		
-		
+						
 		for (Project project : userProjects) {
 			
 			Tab tab = new Tab(project.getProjectName());
@@ -75,28 +70,34 @@ public class dashboardController extends projectDAO {
 			
 			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 				
+				//Delete project.
 				@Override
 				public void handle(ActionEvent arg0) {
 					
+					//Deletes the project and notifies the user.
 					deleteProject(project.getProjectID());
 					lbl_notification.setText(project.getProjectName() + " has been deleted!");
-				
-		        	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
-		        	
+						        	
+		            //Refreshes the page on the same tab.
 		        	try {
+		        		//Prepare to load dashboard.
+		        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
 			        	Parent root = dashboardScene.load();
-			        				        	
 			        	dashboardController dashboardController = dashboardScene.getController();
-			        	dashboardController.setUserID(userID);
-			        	System.out.println("OIJIOJOIJ " + firstName);
+			        	
+			        	//Prepare user details.
+			        	dashboardController.setUserID(userID);			     
 			        	userDAO userDAO = new userDAO();
 			        	User tmpUser = userDAO.getUser(userID);
 			        	
+			        	//Apply parameters to dashboard controller so appropriate name and projects are shown.
 			        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
 			        	dashboardController.setQuote();
 			        	dashboardController.showProjects(userID);
 			        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						
+			        	//Load the dashboard.
+			        	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
 						Scene scene = new Scene(root);
 						stage.setScene(scene);
 						stage.show();
@@ -109,8 +110,7 @@ public class dashboardController extends projectDAO {
 			});
 			
 			
-			
-			tab.setContent(lbl_notification);
+			//Display delete button.
 			tab.setContent(deleteButton);
 			tab_projects.getTabs().add(tab);
 		}
