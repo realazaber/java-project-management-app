@@ -21,9 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 
+import application.Model;
 import application.dao.userDAO;
 
-public class HomeController extends userDAO{
+public class HomeController {
 	
 	private Stage stage;
 	
@@ -63,6 +64,9 @@ public class HomeController extends userDAO{
     
     private static File tmpProfile = null;
     
+    private Model model = new Model();
+    
+
     //Open file explorer and let user choose profile image.
     public void chooseProfile(ActionEvent event) throws Exception {  	
     	
@@ -130,19 +134,20 @@ public class HomeController extends userDAO{
 				System.out.println("Confirm password: " + textFieldConfirmPassword.getText());
 				
 				//Check if user already exists.
-				PreparedStatement ps_checkUsers = myConnection.prepareStatement("SELECT * FROM `users` WHERE `first_name` = ? AND `last_name` = ?");
-				ps_checkUsers.setString(1, textFieldFName.getText());
-				ps_checkUsers.setString(2, textFieldLName.getText());
 				
-				ResultSet rs_checkUsers = ps_checkUsers.executeQuery();
-		        if (rs_checkUsers.next()) {
+				Boolean userExists = model.getUserDAO().userExists(textFieldFName.getText(), textFieldLName.getText());
+				PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `firstPreparedStatement ps = myConnection.prepareStatement(\"INSERT INTO `users` (`id`, `firstPreparedStatement ps = myConnection.prepareStatement(\"INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)\");_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)\");_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+				
+				
+		        if (userExists) {
 					System.out.println("User already exists.");
 					notification.setText("Account has already been created!");
 				}
+
 		        else {
 					//
 					try {
-						PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+						
 						//
 						//If no image is uploaded use the default.
 						if (tmpProfile == null) {
@@ -155,12 +160,9 @@ public class HomeController extends userDAO{
 							System.out.println("Photo " + tmpProfile + " is being uploaded.");
 						}					
 						
-						ps.setString(1, textFieldFName.getText());
-						ps.setString(2, textFieldLName.getText());
-						ps.setString(3, textFieldUsername.getText());
-						ps.setString(4, textFieldPassword.getText());															
-						ps.setBinaryStream(5, input);
-						ps.execute();
+
+						
+						model.getUserDAO().addUser(textFieldFName.getText(), textFieldLName.getText(), textFieldUsername.getText(), textFieldPassword.getText(), input);
 					}
 					catch (Exception e) {
 						System.out.println("Error: " + e);

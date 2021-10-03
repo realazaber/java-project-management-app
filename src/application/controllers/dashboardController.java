@@ -148,10 +148,7 @@ public class dashboardController extends projectDAO {
 	public String getFirstName() {
 		return firstName;
 	}
-	
-	
-	
-	
+		
 	public void setWelcomeMessage(String firstName) {
 		lbl_fname.setText(firstName);
 	}
@@ -159,16 +156,19 @@ public class dashboardController extends projectDAO {
 	
 	//Open the window for adding the new project.
 	public void addProjectWindow(ActionEvent event) throws IOException {
+		//Print log of opening add project window.
 		System.out.println("Opening add project window.");
 		System.out.println("User ID: " + userId);
 		
+		//Prepare new project scene.
 		FXMLLoader newProjectScene = new FXMLLoader(getClass().getResource("NewProject.fxml"));
 		Parent root = newProjectScene.load();
 		
+		//Apply parameters to the newproject scene.
 		newProjectController newProjectController = newProjectScene.getController();
 		newProjectController.setUserID(userId);
 		
-		
+		//Load the new project window.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -187,10 +187,14 @@ public class dashboardController extends projectDAO {
 	}
 	
 	public void logout(ActionEvent event) throws IOException {
+		//Print log of logging out.
 		System.out.println("logging out.");
+		
+		//Prepare home scene.
 		FXMLLoader homeScene = new FXMLLoader(getClass().getResource("Home.fxml"));
 		Parent root = homeScene.load();
 		
+		//Load home scene.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
