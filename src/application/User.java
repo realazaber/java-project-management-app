@@ -1,6 +1,7 @@
 package application;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class User {
 	int userId;
@@ -8,7 +9,7 @@ public class User {
 	String lastName;
 	String username;
 	String password;
-	File profilePicture;
+	InputStream profilePicture;
 	
 	public User() {
 		
@@ -54,11 +55,11 @@ public class User {
 		this.password = password;
 	}
 
-	public File getProfilePicture() {
+	public InputStream getProfilePicture() {
 		return profilePicture;
 	}
 
-	public void setProfilePicture(File profilePicture) {
-		this.profilePicture = profilePicture;
+	public void setProfilePicture(InputStream inputStream) {
+		this.profilePicture = inputStream;
 	}
 }

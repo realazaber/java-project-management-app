@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.sql.*;
 
 import application.Model;
+import application.User;
 import application.dao.userDAO;
 
 public class HomeController {
@@ -102,9 +103,7 @@ public class HomeController {
 
     //If user is not in database yet then upload new user.
 	public void Register(ActionEvent event) throws Exception {
-		
-		
-		
+				
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		BufferedInputStream file_defaultImage = (BufferedInputStream) classLoader.getResourceAsStream("default_profile.png");
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
@@ -197,21 +196,22 @@ public class HomeController {
 		
 		
 		System.out.println("Checking for user");
-		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
-		Statement query_Login = myConnection.createStatement();
-		ResultSet rs = query_Login.executeQuery("SELECT * FROM `users` WHERE `username` = '" + LoginUsername.getText() + "' AND `password` = '" + passwordField.getText() + "'");
-        if (rs.next()) {
-        	
+		
+		User currentUser = model.getUserDAO().loginUser(LoginUsername.getText(), passwordField.getText());
+		
+		
+		if (currentUser != null) {	
+			
         	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
         	Parent root = dashboardScene.load();
         	
         	
         	
         	dashboardController dashboardController = dashboardScene.getController();
-        	dashboardController.setUserID(rs.getInt(1));
-        	dashboardController.setWelcomeMessage(rs.getString(2));
+        	dashboardController.setUserID(currentUser.getUserID());
+        	dashboardController.setWelcomeMessage(currentUser.getFirstName());
         	dashboardController.setQuote();
-        	dashboardController.showProjects(rs.getInt(1));
+        	dashboardController.showProjects(currentUser.getUserID());
         	
         	System.out.println("Logging in...");
         	System.out.println("User id: " + dashboardController.getUserId());
@@ -219,6 +219,7 @@ public class HomeController {
 			
         	System.out.println("User exists.");
 			loginStatus.setText("Logging in!");
+			
 			
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			Scene scene = new Scene(root);
