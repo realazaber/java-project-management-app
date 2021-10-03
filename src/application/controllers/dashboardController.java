@@ -55,19 +55,19 @@ public class dashboardController extends projectDAO {
 	
 	//Show all of the user's projects.
 	public void showProjects(int userID) throws Exception {
+		//Load all projects into userProjects ArrayList.
 		ArrayList<Project> userProjects = loadProjects(userID);
 						
 		for (Project project : userProjects) {
 			
+			//Create a tab for each project.
 			Tab tab = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
 			tab.setContent(scrollPane);
 			Label lbl_notification = new Label();
 			Button deleteButton = new Button("Delete Project");
-			deleteButton.setLayoutX(100);
-			deleteButton.setLayoutY(100);
 			
-			
+			//Add behaviour to delete button
 			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 				
 				//Delete project.
