@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import application.Model;
 import application.Project;
 import application.User;
 import application.dao.projectDAO;
@@ -27,7 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class dashboardController extends projectDAO {
+public class dashboardController {
 	
 	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad"};
 	
@@ -52,11 +53,13 @@ public class dashboardController extends projectDAO {
 	String username;
 	String firstName;
 	
+	private Model model = new Model();
+	
 	
 	//Show all of the user's projects.
 	public void showProjects(int userID) throws Exception {
 		//Load all projects into userProjects ArrayList.
-		ArrayList<Project> userProjects = loadProjects(userID);
+		ArrayList<Project> userProjects = model.getProjectDAO().loadProjects(userID);
 						
 		for (Project project : userProjects) {
 			
@@ -75,7 +78,12 @@ public class dashboardController extends projectDAO {
 				public void handle(ActionEvent arg0) {
 					
 					//Deletes the project and notifies the user.
-					deleteProject(project.getProjectID());
+					try {
+						model.getProjectDAO().deleteProject(project.getProjectID());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}					
 					lbl_notification.setText(project.getProjectName() + " has been deleted!");
 						        	
 		            //Refreshes the page on the same tab.
@@ -87,8 +95,8 @@ public class dashboardController extends projectDAO {
 			        	
 			        	//Prepare user details.
 			        	dashboardController.setUserID(userID);			     
-			        	userDAO userDAO = new userDAO();
-			        	User tmpUser = userDAO.getUser(userID);
+			        				        
+			        	User tmpUser = model.getUserDAO().getUser(userID);
 			        	
 			        	//Apply parameters to dashboard controller so appropriate name and projects are shown.
 			        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());

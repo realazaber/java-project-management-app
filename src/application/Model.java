@@ -8,6 +8,7 @@ public class Model {
 	
 	public Model() {
 		userDAO = new userDAOImpl();
+		projectDAO = new projectDAOImpl();
 	}
 	
 	public userDAO getUserDAO() {

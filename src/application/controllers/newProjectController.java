@@ -1,7 +1,11 @@
 package application.controllers;
 
 import java.io.IOException;
+
+
 import java.sql.SQLException;
+
+import application.Model;
 import application.User;
 import application.dao.projectDAO;
 import application.dao.userDAO;
@@ -15,11 +19,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class newProjectController extends projectDAO {
+
+public class newProjectController {
 	
 	private Stage stage;
 	
 	int userId;
+
+	private Model model = new Model();
 	
 	@FXML
 	private TextField textFieldProjectName;
@@ -37,7 +44,6 @@ public class newProjectController extends projectDAO {
 	}
 	
 	public void back(ActionEvent event) throws Exception {
-		userDAO userDAO = new userDAO();
 		System.out.println("Back to dashboard");
 		
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
@@ -45,8 +51,7 @@ public class newProjectController extends projectDAO {
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
 		dashboardController.setUserID(userId);
-		User user = userDAO.getUser(userId);
-		
+		User user = model.getUserDAO().getUser(userId);
 		
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userId);
@@ -60,10 +65,10 @@ public class newProjectController extends projectDAO {
 	}
 	
 	//Add project to database
-	public void addProject(ActionEvent event) {
+	public void addProject(ActionEvent event) throws SQLException {
 		
 		if (textFieldProjectName.getText() != "") {
-			if (addProject(userId, textFieldProjectName.getText()) == false) {
+			if (model.getProjectDAO().addProject(userId, textFieldProjectName.getText()) == false) {
 				lbl_notification.setText("Project already exists!");
 				System.out.println(textFieldProjectName.getText() + " already exists");
 			}

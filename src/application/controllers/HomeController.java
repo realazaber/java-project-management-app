@@ -135,7 +135,6 @@ public class HomeController {
 				//Check if user already exists.
 				
 				Boolean userExists = model.getUserDAO().userExists(textFieldFName.getText(), textFieldLName.getText());
-				PreparedStatement ps = myConnection.prepareStatement("INSERT INTO `users` (`id`, `firstPreparedStatement ps = myConnection.prepareStatement(\"INSERT INTO `users` (`id`, `firstPreparedStatement ps = myConnection.prepareStatement(\"INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)\");_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)\");_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
 				
 				
 		        if (userExists) {
