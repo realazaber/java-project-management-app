@@ -36,7 +36,7 @@ public class User {
 	}
 
 	public void setUsername(String username) {
-		username = this.username;
+		this.username = username;
 	}
 	
 	public String getUsername() {

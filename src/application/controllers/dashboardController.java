@@ -27,6 +27,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -63,7 +65,10 @@ public class dashboardController {
     private TextField txtFieldusername;
     
     @FXML
-    private PasswordField passwordField;
+    private TextField txtFieldPassword;
+    
+    @FXML
+    private ImageView profilePic;
     
     @FXML
     private File newProfile;
@@ -81,8 +86,14 @@ public class dashboardController {
 	//Load user details in profile tab.
 	public void loadUser(User currentUser) {
 		this.currentUser = currentUser;
+		
+		
 		txtFieldFName.setText(currentUser.getFirstName());
 		txtFieldLName.setText(currentUser.getLastName());
+		txtFieldusername.setText(currentUser.getUsername());
+		txtFieldPassword.setText(currentUser.getPassword());
+		Image profile = new Image(currentUser.getProfilePicture());
+		profilePic.setImage(profile);
 		
 		
 	}
@@ -90,7 +101,7 @@ public class dashboardController {
     //Get the input fields and update the user details with them.
 	public void saveProfileChanges(ActionEvent event) throws Exception {  	
 		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());
-		model.getUserDAO().saveProfileChanges(currentUser.getUserID(), currentUser.getFirstName(), currentUser.getLastName(), passwordField.getText(), null);
+		model.getUserDAO().saveProfileChanges(currentUser.getUserID(), currentUser.getFirstName(), currentUser.getLastName(), txtFieldPassword.getText(), null);
 	}
 	
 	
