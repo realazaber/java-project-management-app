@@ -60,7 +60,7 @@
                         <TextField fx:id="txtFieldLName" layoutX="25.0" layoutY="88.0" prefHeight="33.0" prefWidth="325.0" promptText="Last name" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="85.0" />
                         <TextField fx:id="txtFieldusername" layoutX="29.0" layoutY="169.0" prefHeight="38.0" prefWidth="371.0" promptText="Username" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="135.0" />
                         <Button layoutX="556.0" layoutY="207.0" mnemonicParsing="false" text="Upload Profile Picture" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="200.0" />
-                        <Button layoutX="346.0" layoutY="285.0" mnemonicParsing="false" text="Save changes" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="300.0" />
+                        <Button layoutX="346.0" layoutY="285.0" mnemonicParsing="false" onAction="#saveProfileChanges" text="Save changes" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="300.0" />
                         <PasswordField fx:id="passwordField" layoutX="450.0" layoutY="344.0" prefHeight="32.0" prefWidth="371.0" promptText="Password" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="185.0" />
                      </children>
                   </AnchorPane>

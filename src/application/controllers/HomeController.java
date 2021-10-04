@@ -208,9 +208,11 @@ public class HomeController {
         	
         	dashboardController dashboardController = dashboardScene.getController();
         	dashboardController.setUserID(currentUser.getUserID());
+        	dashboardController.loadUser(currentUser);
         	dashboardController.setWelcomeMessage(currentUser.getFirstName());
         	dashboardController.setQuote();
         	dashboardController.showProjects(currentUser.getUserID());
+        	
         	
         	System.out.println("Logging in...");
         	System.out.println("User id: " + dashboardController.getUserId());

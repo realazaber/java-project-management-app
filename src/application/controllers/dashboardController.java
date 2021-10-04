@@ -1,6 +1,8 @@
 package application.controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -49,11 +52,47 @@ public class dashboardController {
 	@FXML
 	private Button btn_createProject;
 		
+	
+    @FXML
+    private TextField txtFieldFName;
+    
+    @FXML
+    private TextField txtFieldLName;
+    
+    @FXML
+    private TextField txtFieldusername;
+    
+    @FXML
+    private PasswordField passwordField;
+    
+    @FXML
+    private File newProfile;
+	
+	
 	int userId;
 	String username;
 	String firstName;
 	
+	public User currentUser = new User();
+	
 	private Model model = new Model();
+	
+	
+	//Load user details in profile tab.
+	public void loadUser(User currentUser) {
+		this.currentUser = currentUser;
+		txtFieldFName.setText(currentUser.getFirstName());
+		txtFieldLName.setText(currentUser.getLastName());
+		
+		
+	}
+	
+    //Get the input fields and update the user details with them.
+	public void saveProfileChanges(ActionEvent event) throws Exception {  	
+		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());
+		model.getUserDAO().saveProfileChanges(currentUser.getUserID(), currentUser.getFirstName(), currentUser.getLastName(), passwordField.getText(), null);
+	}
+	
 	
 	
 	//Show all of the user's projects.

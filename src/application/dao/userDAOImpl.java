@@ -86,7 +86,14 @@ public class userDAOImpl implements userDAO {
 	}
 	
 	@Override
-	public void saveProfileChanges(String firstName, String lastName, File newProfile) {
+	public void saveProfileChanges(int user_id, String firstName, String lastName, String password, InputStream newProfile) throws SQLException {
+		PreparedStatement ps_saveProfileChanges = baseDao.connect().prepareStatement("UPDATE `users` SET `first_name` = ?, `last_name` = ?, `profile` = ? WHERE `id` = ? AND `password` = ?");
+		ps_saveProfileChanges.setString(1, firstName);
+		ps_saveProfileChanges.setString(2, lastName);
+		ps_saveProfileChanges.setBinaryStream(3, newProfile);
+		ps_saveProfileChanges.setInt(4, user_id);
+		ps_saveProfileChanges.setString(5, password);
+		ps_saveProfileChanges.execute();
 		
 	}
 

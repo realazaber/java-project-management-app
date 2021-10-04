@@ -8,7 +8,7 @@ import application.User;
 public interface userDAO {
 	public User getUser(int userID) throws SQLException; 
 	
-	public void saveProfileChanges(String firstName, String lastName, File newProfile) throws SQLException;
+	public void saveProfileChanges(int user_id, String firstName, String lastName, String password, InputStream newProfile) throws SQLException;
 
 	boolean userExists(String firstName, String lastName) throws SQLException;
 
