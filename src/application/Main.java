@@ -35,10 +35,7 @@ public class Main extends Application{
 	//Run the program
 	public static void main(String[] args) {
 		baseDao mainDao = new baseDao();
-		mainDao.connect();
-		
-
-		
+		mainDao.connect();	
 		launch(args);
 	}
 }
