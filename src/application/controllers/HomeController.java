@@ -202,7 +202,7 @@ public class HomeController {
 		if (currentUser != null) {	
 			
         	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
-        	Parent root = dashboardScene.load();
+        	Parent root = dashboardScene.load();      	
         	
         	
         	
