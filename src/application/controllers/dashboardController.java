@@ -31,6 +31,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -163,19 +164,22 @@ public class dashboardController {
 		ArrayList<Project> userProjects = model.getProjectDAO().loadProjects(userID);
 						
 		for (Project project : userProjects) {
-			
+				
 			//Create a tab for each project.
 			Tab tab = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
 			tab.setContent(scrollPane);
-			Pane tabContent = new Pane();
 			
+			Pane tabContent = new Pane();
 			Label lbl_notification = new Label();
 			lbl_notification.setLayoutX(100);
 			lbl_notification.setLayoutY(100);
 			Button deleteButton = new Button("Delete Project");
 			deleteButton.setLayoutX(10);
 			deleteButton.setLayoutY(10);
+			Button addColumnButton = new Button("New Column");
+			addColumnButton.setLayoutX(130);
+			addColumnButton.setLayoutY(10);
 			
 			//Add behaviour to delete button
 			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -224,12 +228,51 @@ public class dashboardController {
 				}
 			});
 			
+			addColumnButton.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent arg0) {
+					//Print log of opening add project window.
+					System.out.println("Opening add task window.");
+					System.out.println("User ID: " + userId);
+					System.out.println("Project ID: " + project.getProjectID());
+					
+					//Prepare new project scene.
+					FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("newColumn.fxml"));
+					
+					try {
+						Parent root = newColumnScene.load();
+						
+						//Apply parameters to the newcolumn scene.
+						newColumnController newColumnController = newColumnScene.getController();
+						newColumnController.setProjectID(project.getProjectID());
+						newColumnController.setUserID(userID);
+						//Load the new project window.
+						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						Scene scene = new Scene(root);
+						stage.setScene(scene);
+						stage.show();
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+
+
+				}
+				
+			});
+			
+			
+			
 			
 			//Display delete button.
-			lbl_notification.setText("fat");
-			tabContent.getChildren().addAll(lbl_notification, deleteButton);
+			
+			tabContent.getChildren().addAll(lbl_notification, addColumnButton, deleteButton);
 			tab.setContent(tabContent);
 			tab_projects.getTabs().add(tab);
+			
 		}
 		
 		

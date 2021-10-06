@@ -85,8 +85,8 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
-	public void addColumn(int taskColumnID, int projectID, String taskName, Date dueDate, String description) throws SQLException {
-		
+	public boolean addColumn(int projectID, String columnName, Date dueDate, String description) throws SQLException {
+		return false;
 	}
 	
 	public void saveColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) throws SQLException {
@@ -97,7 +97,7 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
-	public void addTask(int taskID, String description, boolean completed) throws SQLException {
+	public boolean addTask(int taskID, String description, boolean completed) throws SQLException {
 		
 	}
 	
