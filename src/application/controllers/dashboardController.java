@@ -142,9 +142,11 @@ public class dashboardController {
 		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());
 		
 		if (newProfile == null) {
+			System.out.println("Saving changes with no new profile picture.");
 			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), currentUser.getProfilePicture());
 		}
 		else {
+			System.out.println("Saving changes and uploading new profile picture.");
 			BufferedInputStream newProfileStream = new BufferedInputStream(new FileInputStream(newProfile));
 			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), newProfileStream);
 		}
