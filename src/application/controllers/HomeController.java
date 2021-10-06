@@ -173,6 +173,7 @@ public class HomeController {
 						textFieldPassword.setText("");
 						textFieldConfirmPassword.setText("");
 						notification.setText("Successfully registered!");
+						tmpProfile = null;
 					}
 		        }
 								

@@ -1,6 +1,8 @@
 package application.controllers;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -31,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class dashboardController {
@@ -71,7 +74,7 @@ public class dashboardController {
     private ImageView profilePic;
     
     @FXML
-    private File newProfile;
+    private File newProfile = null;
 	
 	
 	int userId;
@@ -81,6 +84,42 @@ public class dashboardController {
 	public User currentUser = new User();
 	
 	private Model model = new Model();
+	
+	
+	
+    //Open file explorer and let user choose profile image.
+    public void chooseProfile(ActionEvent event) throws Exception {  	
+    	
+    	System.out.println("Uploading image.");
+    	FileChooser fileChooser = new FileChooser();
+    	
+    	//Add filters so only images can be added.
+        FileChooser.ExtensionFilter JPG_Filter = new FileChooser.ExtensionFilter("JPG images (*.JPG)", "*.JPG");
+        FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter jpeg_Filter = new FileChooser.ExtensionFilter("jpeg images (*.jpeg)", "*.jpeg");
+        FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
+        FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
+        
+    	
+    	fileChooser.getExtensionFilters().addAll(JPG_Filter, jpg_Filter, jpeg_Filter, PNG_Filter, png_Filter);
+    	fileChooser.setTitle("Select image");
+    	newProfile = fileChooser.showOpenDialog(stage);
+    	System.out.println("File chosen: " + newProfile);
+
+    	try {
+    		InputStream fileInputStream = new FileInputStream(newProfile);
+    		Image selectedImage = new Image(fileInputStream);
+    		System.out.println("Chosen image " + selectedImage);
+    		
+    		profilePic.setImage(selectedImage);
+    		System.out.println("Set " + newProfile + " as preview.");
+		} catch (Exception e) {
+			System.out.println("Error uploading custom profile: " + e);
+			System.out.println("Image url: " + newProfile);
+		}
+
+    }
+	
 	
 	
 	//Load user details in profile tab.
@@ -101,7 +140,16 @@ public class dashboardController {
     //Get the input fields and update the user details with them.
 	public void saveProfileChanges(ActionEvent event) throws Exception {  	
 		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());
-		model.getUserDAO().saveProfileChanges(currentUser.getUserID(), currentUser.getFirstName(), currentUser.getLastName(), txtFieldPassword.getText(), null);
+		
+		if (newProfile == null) {
+			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), currentUser.getProfilePicture());
+		}
+		else {
+			BufferedInputStream newProfileStream = new BufferedInputStream(new FileInputStream(newProfile));
+			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), newProfileStream);
+		}
+		
+		
 	}
 	
 	
