@@ -31,6 +31,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -167,8 +168,14 @@ public class dashboardController {
 			Tab tab = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
 			tab.setContent(scrollPane);
+			Pane tabContent = new Pane();
+			
 			Label lbl_notification = new Label();
+			lbl_notification.setLayoutX(100);
+			lbl_notification.setLayoutY(100);
 			Button deleteButton = new Button("Delete Project");
+			deleteButton.setLayoutX(10);
+			deleteButton.setLayoutY(10);
 			
 			//Add behaviour to delete button
 			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -219,7 +226,9 @@ public class dashboardController {
 			
 			
 			//Display delete button.
-			tab.setContent(deleteButton);
+			lbl_notification.setText("fat");
+			tabContent.getChildren().addAll(lbl_notification, deleteButton);
+			tab.setContent(tabContent);
 			tab_projects.getTabs().add(tab);
 		}
 		
