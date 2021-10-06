@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import application.Model;
-import application.User;
+import application.objects.User;
 import application.dao.projectDAO;
 import application.dao.userDAO;
 import javafx.event.ActionEvent;

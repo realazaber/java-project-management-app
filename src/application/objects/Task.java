@@ -1,4 +1,4 @@
-package application;
+package application.objects;
 
 public class Task {
 	int taskID;

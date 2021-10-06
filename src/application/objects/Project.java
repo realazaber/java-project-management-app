@@ -1,4 +1,4 @@
-package application;
+package application.objects;
 
 public class Project {
 	int projectID;

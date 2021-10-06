@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.sql.*;
 
 import application.Model;
-import application.User;
+import application.objects.User;
 import application.dao.userDAO;
 
 public class HomeController {

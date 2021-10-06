@@ -1,4 +1,4 @@
-package application;
+package application.objects;
 
 import java.io.File;
 import java.io.InputStream;

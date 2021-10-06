@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import application.Model;
-import application.Project;
-import application.User;
+import application.objects.Project;
+import application.objects.User;
 import application.dao.projectDAO;
 import application.dao.userDAO;
 import javafx.event.ActionEvent;

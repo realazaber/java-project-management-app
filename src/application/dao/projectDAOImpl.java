@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import application.Project;
+import application.objects.Project;
 import application.controllers.newProjectController;
 
 public class projectDAOImpl implements projectDAO {

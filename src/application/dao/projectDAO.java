@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import application.Project;
+import application.objects.Project;
 
 public interface projectDAO {
 	

@@ -3,7 +3,7 @@ package application.dao;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.SQLException;
-import application.User;
+import application.objects.User;
 
 public interface userDAO {
 	public User getUser(int userID) throws SQLException; 
