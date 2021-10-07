@@ -74,11 +74,21 @@ public class projectDAOImpl implements projectDAO {
 	
 	public void deleteProject(int projectID) throws SQLException {
 		try {
+			//Connect to database
 			Connection connection = baseDao.connect();
-			String query =  "DELETE FROM `projects` WHERE `projects`.`project_id` = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1, projectID);
-			statement.execute();
+			
+			//Delete project
+			String queryDeleteProject =  "DELETE FROM `projects` WHERE `projects`.`project_id` = ?";
+			PreparedStatement statementDeleteProject = connection.prepareStatement(queryDeleteProject);
+			statementDeleteProject.setInt(1, projectID);
+			statementDeleteProject.execute();
+			
+			//Delete columns
+			String queryDeleteColumns = "DELETE FROM `columns` WHERE `project_id` = ?";
+			PreparedStatement statementDeleteColumns = connection.prepareStatement(queryDeleteColumns);
+			statementDeleteColumns.setInt(1, projectID);
+			statementDeleteColumns.execute();
+			
 		} catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
