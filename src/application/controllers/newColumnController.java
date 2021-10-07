@@ -31,6 +31,9 @@ public class newColumnController {
 	private TextField txtFieldColumnName;
 	
 	@FXML
+	private Label lbl_heading;
+	
+	@FXML
 	private TextArea txtAreaDescription;
 	
 	@FXML
@@ -60,6 +63,12 @@ public class newColumnController {
 	public void setProjectID(int projectID) {
 		this.projectID = projectID;
 	}
+	
+
+	public void setHeading(String projectName) {
+		lbl_heading.setText("Add column for project " + projectName);
+	}
+	
 	
 	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");

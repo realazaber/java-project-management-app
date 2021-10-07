@@ -248,6 +248,7 @@ public class dashboardController {
 						
 						//Apply parameters to the newcolumn scene.
 						newColumnController newColumnController = newColumnScene.getController();
+						newColumnController.setHeading(project.getProjectName());
 						newColumnController.setProjectID(project.getProjectID());
 						newColumnController.setUserID(userID);
 						//Load the new project window.
