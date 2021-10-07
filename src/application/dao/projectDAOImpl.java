@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import application.objects.Column;
 import application.objects.Project;
 import application.controllers.newProjectController;
 
@@ -117,6 +118,31 @@ public class projectDAOImpl implements projectDAO {
 			System.exit(0);
 		}
 		return false;
+	}
+	
+	public ArrayList<Column> loadColumns(int projectID) throws SQLException {
+		System.out.println("Loading columns for project " + projectID);
+		ArrayList<Column> columns = new ArrayList<Column>();
+		
+		Statement loadColumnsStatement = baseDao.connect().createStatement();
+		String query = "SELECT `column_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
+		ResultSet rs = loadColumnsStatement.executeQuery(query);
+		
+		while (rs.next()) {
+			Column tmpColumn = new Column();
+			tmpColumn.setColumn_name(rs.getString(1));
+			tmpColumn.setDue_date(rs.getDate(2));
+			tmpColumn.setDescription(rs.getString(3));
+			System.out.println("Column name: " + tmpColumn.getColumn_name());
+			System.out.println("Due date: " + tmpColumn.getDue_date());
+			System.out.println("Description: " + tmpColumn.getDescription());
+			columns.add(tmpColumn);
+			
+			System.out.println("=============================");
+
+		}
+		
+		return columns;
 	}
 	
 	public void saveColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) throws SQLException {
