@@ -86,6 +86,26 @@ public class projectDAOImpl implements projectDAO {
 	}
 	
 	public boolean addColumn(int projectID, String columnName, Date dueDate, String description) throws SQLException {
+
+		
+		try {
+			Connection connection = baseDao.connect();
+			Statement checkColumns = connection.createStatement();
+			ResultSet rs = checkColumns.executeQuery("SELECT * FROM `columns` WHERE `column_name` = '" + columnName + "'");
+			if (!rs.next()) {
+				String query = "INSERT INTO `columns` (`column_id`, `project_id`, `column_name`, `due_date`, `description`) VALUES (null, ?, ?, ?, ?)";
+				PreparedStatement statement = connection.prepareStatement(query);
+				statement.setInt(1, projectID);
+				statement.setString(2, columnName);
+				statement.setDate(3, dueDate);
+				statement.setString(4, description);
+				statement.execute();
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
 		return false;
 	}
 	

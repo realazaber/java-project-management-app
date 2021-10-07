@@ -93,12 +93,25 @@ public class newColumnController {
 	
 	//Add project to database
 	public void addColumn(ActionEvent event) throws SQLException {
-		Date tmpDate = new Date(datePicker.getValue().toEpochDay());
 		
-		if (txtFieldColumnName.getText() != "") {
-			if (model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText())) {
-				
+		
+		
+		
+		if (txtFieldColumnName.getText() != "" ) { //If user has entered the necessary details.
+			//Check if the column already exists.
+			Date tmpDate = new Date(datePicker.getValue().toEpochDay());
+			if (model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText()) == false) {
+				//If it does then notify the user.
+				lbl_notification.setText("Column already exists!");
 			}
+			else {
+				//If it doesn't then add the column
+				model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText());
+				lbl_notification.setText("Column " + txtFieldColumnName.getText() + " added!");
+			}
+		}
+		else {
+			lbl_notification.setText("Please fill in missing info.");
 		}
 		
 		
