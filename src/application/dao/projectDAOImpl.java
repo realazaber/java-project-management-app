@@ -125,7 +125,7 @@ public class projectDAOImpl implements projectDAO {
 		ArrayList<Column> columns = new ArrayList<Column>();
 		
 		Statement loadColumnsStatement = baseDao.connect().createStatement();
-		String query = "SELECT `column_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
+		String query = "SELECT `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
 		ResultSet rs = loadColumnsStatement.executeQuery(query);
 		
 		while (rs.next()) {

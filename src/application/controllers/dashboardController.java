@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import application.Model;
+import application.objects.Column;
 import application.objects.Project;
 import application.objects.User;
 import application.dao.projectDAO;
@@ -268,12 +269,19 @@ public class dashboardController {
 				
 			});
 			
+			HBox hbox = new HBox();
 			
+			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
+			ArrayList<Label> titles = new ArrayList<Label>();
 			
+			for (Column column : columns) {
+				titles.add(new Label(column.getColumn_name()));
+			}
 			
-			//Display delete button.
+			hbox.getChildren().addAll(titles);
+			hbox.setLayoutY(60);
 			
-			tabContent.getChildren().addAll(lbl_notification, addColumnButton, deleteButton);
+			tabContent.getChildren().addAll(lbl_notification, addColumnButton, deleteButton, hbox);
 			tab.setContent(tabContent);
 			tab_projects.getTabs().add(tab);
 			
