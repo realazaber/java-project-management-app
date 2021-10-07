@@ -237,10 +237,13 @@ public class dashboardController {
 					System.out.println("User ID: " + userId);
 					System.out.println("Project ID: " + project.getProjectID());
 					
-					//Prepare new project scene.
-					FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("newColumn.fxml"));
 					
 					try {
+						
+
+						//Prepare new project scene.
+						FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("NewColumn.fxml"));
+						
 						Parent root = newColumnScene.load();
 						
 						//Apply parameters to the newcolumn scene.

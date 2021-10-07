@@ -98,7 +98,7 @@ public class projectDAOImpl implements projectDAO {
 	}
 	
 	public boolean addTask(int taskID, String description, boolean completed) throws SQLException {
-		
+		return false;
 	}
 	
 	public void saveTaskChanges(int taskID, String description, boolean completed) throws SQLException {
