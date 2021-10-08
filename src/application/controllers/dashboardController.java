@@ -34,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -273,12 +274,20 @@ public class dashboardController {
 			
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
 			ArrayList<Label> titles = new ArrayList<Label>();
+			ArrayList<VBox> vboxs = new ArrayList<VBox>();
 			
 			for (Column column : columns) {
+				VBox vbox = new VBox();
+				Label columnTitle = new Label(column.getColumn_name());
+				Label date = new Label(column.getDue_date().toString());
+				Label description = new Label(column.getDescription());
+				vbox.getChildren().addAll(columnTitle, date, description);
+				vboxs.add(vbox);
+				
 				titles.add(new Label(column.getColumn_name()));
 			}
 			
-			hbox.getChildren().addAll(titles);
+			hbox.getChildren().addAll(vboxs);
 			hbox.setLayoutY(60);
 			
 			tabContent.getChildren().addAll(lbl_notification, addColumnButton, deleteButton, hbox);

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import application.objects.Column;
@@ -102,7 +103,7 @@ public class projectDAOImpl implements projectDAO {
 		try {
 			Connection connection = baseDao.connect();
 			Statement checkColumns = connection.createStatement();
-			ResultSet rs = checkColumns.executeQuery("SELECT * FROM `columns` WHERE `column_name` = '" + columnName + "'");
+			ResultSet rs = checkColumns.executeQuery("SELECT * FROM `columns` WHERE `column_name` = '" + columnName + "' && `project_id` = '" + projectID + "'");
 			if (!rs.next()) {
 				String query = "INSERT INTO `columns` (`column_id`, `project_id`, `column_name`, `due_date`, `description`) VALUES (null, ?, ?, ?, ?)";
 				PreparedStatement statement = connection.prepareStatement(query);
@@ -112,6 +113,7 @@ public class projectDAOImpl implements projectDAO {
 				statement.setString(4, description);
 				statement.execute();
 				return true;
+				
 			}
 		} catch (Exception e) {
 			System.out.println("Error connecting to database." + e);

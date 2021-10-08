@@ -2,6 +2,7 @@ package application.controllers;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import application.Model;
 import application.objects.User;
@@ -94,12 +95,11 @@ public class newColumnController {
 	//Add project to database
 	public void addColumn(ActionEvent event) throws SQLException {
 		
-		
-		
-		
 		if (txtFieldColumnName.getText() != "" ) { //If user has entered the necessary details.
 			//Check if the column already exists.
-			Date tmpDate = new Date(datePicker.getValue().toEpochDay());
+			LocalDate tmpLocalDate = datePicker.getValue();
+			Date tmpDate = Date.valueOf(tmpLocalDate);
+
 			if (model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText()) == false) {
 				//If it does then notify the user.
 				lbl_notification.setText("Column already exists!");
@@ -114,21 +114,6 @@ public class newColumnController {
 			lbl_notification.setText("Please fill in missing info.");
 		}
 		
-		
-//		if (textFieldProjectName.getText() != "") {
-//			if (model.getProjectDAO().addProject(userId, textFieldProjectName.getText()) == false) {
-//				lbl_notification.setText("Project already exists!");
-//				System.out.println(textFieldProjectName.getText() + " already exists");
-//			}
-//			else {
-//				lbl_notification.setText("Project successfully added!");
-//				System.out.println(textFieldProjectName.getText() + " added to database under user id: " + userId);
-//			}
-//		}
-//		else {
-//			System.out.println("Project name hasn't been added.");
-//			lbl_notification.setText("Please enter the project name");
-//		}
 		
 	}
 	
