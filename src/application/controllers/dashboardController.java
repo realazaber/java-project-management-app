@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -168,23 +169,23 @@ public class dashboardController {
 		for (Project project : userProjects) {
 				
 			//Create a tab for each project.
-			Tab tab = new Tab(project.getProjectName());
+			Tab tab_project = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
-			tab.setContent(scrollPane);
+			tab_project.setContent(scrollPane);
 			
-			Pane tabContent = new Pane();
+			Pane pane_tabContent = new Pane();
 			Label lbl_notification = new Label();
 			lbl_notification.setLayoutX(100);
 			lbl_notification.setLayoutY(100);
-			Button deleteButton = new Button("Delete Project");
-			deleteButton.setLayoutX(10);
-			deleteButton.setLayoutY(10);
-			Button addColumnButton = new Button("New Column");
-			addColumnButton.setLayoutX(130);
-			addColumnButton.setLayoutY(10);
+			Button btn_deleteProject = new Button("Delete Project");
+			btn_deleteProject.setLayoutX(10);
+			btn_deleteProject.setLayoutY(10);
+			Button btn_newColumn = new Button("New Column");
+			btn_newColumn.setLayoutX(130);
+			btn_newColumn.setLayoutY(10);
 			
 			//Add behaviour to delete button
-			deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+			btn_deleteProject.setOnAction(new EventHandler<ActionEvent>() {
 				
 				//Delete project.
 				@Override
@@ -230,7 +231,7 @@ public class dashboardController {
 				}
 			});
 			
-			addColumnButton.setOnAction(new EventHandler<ActionEvent>() {
+			btn_newColumn.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
 				public void handle(ActionEvent arg0) {
@@ -270,29 +271,36 @@ public class dashboardController {
 				
 			});
 			
-			HBox hbox = new HBox();
+			HBox hbox = new HBox(50);
 			
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
-			ArrayList<Label> titles = new ArrayList<Label>();
 			ArrayList<VBox> vboxs = new ArrayList<VBox>();
 			
 			for (Column column : columns) {
-				VBox vbox = new VBox();
-				Label columnTitle = new Label(column.getColumn_name());
-				Label date = new Label(column.getDue_date().toString());
-				Label description = new Label(column.getDescription());
-				vbox.getChildren().addAll(columnTitle, date, description);
+				VBox vbox = new VBox(10);
+				vbox.setAlignment(Pos.CENTER);
+				Label lbl_columnTitle = new Label("Name " + column.getColumn_name());
+				Label lbl_description = new Label("Description " + column.getDescription());
+				Label lbl_date = new Label("Due date " + column.getDue_date().toString());
+				
+				Button btn_deleteColumn = new Button("Delete column");
+				
+				
+				
+				Label lbl_tasksHeading = new Label("Tasks");
+				
+				
+				vbox.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_deleteColumn, lbl_tasksHeading);
 				vboxs.add(vbox);
 				
-				titles.add(new Label(column.getColumn_name()));
 			}
 			
 			hbox.getChildren().addAll(vboxs);
 			hbox.setLayoutY(60);
 			
-			tabContent.getChildren().addAll(lbl_notification, addColumnButton, deleteButton, hbox);
-			tab.setContent(tabContent);
-			tab_projects.getTabs().add(tab);
+			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_deleteProject, hbox);
+			tab_project.setContent(pane_tabContent);
+			tab_projects.getTabs().add(tab_project);
 			
 		}
 		
