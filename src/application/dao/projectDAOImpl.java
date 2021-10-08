@@ -25,7 +25,7 @@ public class projectDAOImpl implements projectDAO {
 		try {
 			Connection connection = baseDao.connect();
 			Statement checkProjects = connection.createStatement();
-			ResultSet rs = checkProjects.executeQuery("SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "'");
+			ResultSet rs = checkProjects.executeQuery("SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'");
 			if (!rs.next()) {
 				String query = "INSERT INTO `projects` (`project_id`, `user_id`, `project_name`) VALUES (null, ?, ?)";
 				PreparedStatement statement = connection.prepareStatement(query);

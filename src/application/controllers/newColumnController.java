@@ -95,7 +95,7 @@ public class newColumnController {
 	//Add project to database
 	public void addColumn(ActionEvent event) throws SQLException {
 		
-		if (txtFieldColumnName.getText() != "" ) { //If user has entered the necessary details.
+		if (txtFieldColumnName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) { //If user has entered the necessary details.
 			//Check if the column already exists.
 			LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
