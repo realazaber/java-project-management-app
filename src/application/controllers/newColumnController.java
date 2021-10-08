@@ -80,9 +80,9 @@ public class newColumnController {
 		dashboardController.setQuote();
 		dashboardController.setUserID(userID);
 		User user = model.getUserDAO().getUser(userID);
-		
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userID);
+		dashboardController.loadUser(user);
 		
 		
 		
