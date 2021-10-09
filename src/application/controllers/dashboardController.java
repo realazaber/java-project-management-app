@@ -156,6 +156,28 @@ public class dashboardController {
 			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), newProfileStream);
 		}
 		
+		//Prepare to load dashboard.
+		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+    	Parent root = dashboardScene.load();
+    	dashboardController dashboardController = dashboardScene.getController();
+    	     
+    			        
+    	User tmpUser = model.getUserDAO().getUser(currentUser.getUserID());
+    	
+    	//Apply parameters to dashboard controller so appropriate name and projects are shown.
+    	dashboardController.setUserID(tmpUser.getUserID());
+    	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
+    	dashboardController.setQuote();
+    	dashboardController.showProjects(currentUser.getUserID());
+    	dashboardController.loadUser(tmpUser);
+    	dashboardController.tabpane_mainTab.getSelectionModel().select(2);
+		
+    	//Load the dashboard.
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		
 		
 	}
 	

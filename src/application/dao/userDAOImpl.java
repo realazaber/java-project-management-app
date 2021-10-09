@@ -22,15 +22,16 @@ public class userDAOImpl implements userDAO {
 		User user = new User();
 		
 		Statement getUserStatement = baseDao.connect().createStatement();
-		String query = "SELECT `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'";
+		String query = "SELECT `id`, `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'";
 		ResultSet rs = getUserStatement.executeQuery(query);
 		
 		while (rs.next()) {
-			user.setFirstName(rs.getString(1));
-			user.setLastName(rs.getString(2));
-			user.setUsername(rs.getString(3));
-			user.setPassword(rs.getString(4));
-			user.setProfilePicture(rs.getBinaryStream(5));
+			user.setUserID(rs.getInt(1));
+			user.setFirstName(rs.getString(2));
+			user.setLastName(rs.getString(3));
+			user.setUsername(rs.getString(4));
+			user.setPassword(rs.getString(5));
+			user.setProfilePicture(rs.getBinaryStream(6));
 		}
 		
 		return user;
@@ -98,6 +99,7 @@ public class userDAOImpl implements userDAO {
 		ps_saveProfileChanges.setInt(4, user_id);
 		ps_saveProfileChanges.setString(5, password);
 		ps_saveProfileChanges.execute();
+		
 		
 	}
 
