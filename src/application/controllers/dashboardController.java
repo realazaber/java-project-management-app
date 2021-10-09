@@ -79,7 +79,9 @@ public class dashboardController {
     private ImageView profilePic;
     
     @FXML
-    private File newProfile = null;
+    private File newProfile;
+    
+    private InputStream newProfileStream;
 	
 	
 	int userId;
@@ -136,7 +138,9 @@ public class dashboardController {
 		txtFieldLName.setText(currentUser.getLastName());
 		txtFieldusername.setText(currentUser.getUsername());
 		txtFieldPassword.setText(currentUser.getPassword());
-		Image profile = new Image(currentUser.getProfilePicture());
+		newProfileStream = currentUser.getProfilePicture();
+	
+		Image profile = new Image(newProfileStream);
 		profilePic.setImage(profile);
 		
 		
