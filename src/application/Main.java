@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.sql.*;
 
 public class Main extends Application{
+	
+	private Model model = new Model();
+	
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		
@@ -29,7 +32,16 @@ public class Main extends Application{
 			System.out.println("GUI error.");
 			System.out.println("Error code: " + e);
 			System.exit(0);
-		}	
+		}
+		
+		try {
+			model.getBaseDao().connect();
+			System.out.println("Connected to database.");
+		} catch (Exception e) {
+			System.out.println("Database error.");
+			System.out.println("Error code: " + e);
+			System.exit(0);
+		}
 	}
 	
 	//Run the program
