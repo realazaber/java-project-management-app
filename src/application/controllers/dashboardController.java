@@ -216,6 +216,7 @@ public class dashboardController {
 			        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
 			        	dashboardController.setQuote();
 			        	dashboardController.showProjects(userID);
+			        	dashboardController.loadUser(tmpUser);
 			        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 						
 			        	//Load the dashboard.
@@ -318,9 +319,9 @@ public class dashboardController {
 				        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
 				        	dashboardController.setQuote();
 				        	dashboardController.showProjects(userID);
+				        	dashboardController.loadUser(tmpUser);
 				        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-				        	dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);				    
-				        	System.out.println("OIJWOEIJFEOIJEOWIFJOEF " + selectedProjectTab);
+				        	dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);				    				    
 							
 				        	//Load the dashboard.
 				        	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();

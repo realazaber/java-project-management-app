@@ -51,8 +51,10 @@ public class newProjectController {
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
 		dashboardController.setUserID(userId);
+		
 		User user = model.getUserDAO().getUser(userId);
 		
+		dashboardController.loadUser(user);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userId);
 		
