@@ -283,14 +283,64 @@ public class dashboardController {
 				Label lbl_description = new Label("Description " + column.getDescription());
 				Label lbl_date = new Label("Due date " + column.getDue_date().toString());
 				
+				Button btn_editColumn = new Button("Edit column");
 				Button btn_deleteColumn = new Button("Delete column");
 				
+				btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0)  {
+						System.out.println("Edit column " + column.getColumn_name());
+					}
+				});
 				
+				btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
+				
+					@Override
+					public void handle(ActionEvent arg0) {
+						System.out.println("Delete column " + column.getColumn_name());
+						try {
+							model.getProjectDAO().deleteColumn(column.getColumnID());
+							System.out.println("Column " + column.getColumnID() + " deleted.");
+							
+			        		//Prepare to load dashboard.
+			        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+				        	Parent root = dashboardScene.load();
+				        	dashboardController dashboardController = dashboardScene.getController();
+				        	
+				        	//Prepare user details.
+				        	dashboardController.setUserID(userID);			     
+				        				        
+				        	User tmpUser = model.getUserDAO().getUser(userID);
+				        	
+				        	//Apply parameters to dashboard controller so appropriate name and projects are shown.
+				        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
+				        	dashboardController.setQuote();
+				        	dashboardController.showProjects(userID);
+				        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+							
+				        	//Load the dashboard.
+				        	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+							Scene scene = new Scene(root);
+							stage.setScene(scene);
+							stage.show();
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							System.exit(0);
+						}
+					}
+				
+				});
+				
+				
+				HBox hbox_columnBtns = new HBox(5);
+				hbox_columnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
 				
 				Label lbl_tasksHeading = new Label("Tasks");
 				
 				
-				vbox.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_deleteColumn, lbl_tasksHeading);
+				vbox.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns, lbl_tasksHeading);
 				vboxs.add(vbox);
 				
 			}

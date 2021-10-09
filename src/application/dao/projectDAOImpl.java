@@ -127,14 +127,15 @@ public class projectDAOImpl implements projectDAO {
 		ArrayList<Column> columns = new ArrayList<Column>();
 		
 		Statement loadColumnsStatement = baseDao.connect().createStatement();
-		String query = "SELECT `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
+		String query = "SELECT `column_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
 		ResultSet rs = loadColumnsStatement.executeQuery(query);
 		
 		while (rs.next()) {
 			Column tmpColumn = new Column();
-			tmpColumn.setColumn_name(rs.getString(1));
-			tmpColumn.setDue_date(rs.getDate(2));
-			tmpColumn.setDescription(rs.getString(3));
+			tmpColumn.setColumnID(rs.getInt(1));
+			tmpColumn.setColumn_name(rs.getString(2));
+			tmpColumn.setDue_date(rs.getDate(3));
+			tmpColumn.setDescription(rs.getString(4));
 			System.out.println("Column name: " + tmpColumn.getColumn_name());
 			System.out.println("Due date: " + tmpColumn.getDue_date());
 			System.out.println("Description: " + tmpColumn.getDescription());
@@ -151,8 +152,27 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
-	public void deleteColumn(int taskID) throws SQLException {
-		
+	public void deleteColumn(int columnID) throws SQLException {
+		try {
+			//Connect to database
+			Connection connection = baseDao.connect();
+			
+			//Delete column
+			String queryDeleteColumn =  "DELETE FROM `columns` WHERE `column_id` = ?";
+			PreparedStatement statementDeleteColumn = connection.prepareStatement(queryDeleteColumn);
+			statementDeleteColumn.setInt(1, columnID);
+			statementDeleteColumn.execute();
+			//Delete tasks
+			String queryDeleteTasks = "DELETE FROM `tasks` WHERE `column_id` = ?";
+			PreparedStatement statementDeleteTasks = connection.prepareStatement(queryDeleteTasks);
+			statementDeleteTasks.setInt(1, columnID);
+			statementDeleteTasks.execute();
+			
+			
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
 	}
 	
 	public boolean addTask(int taskID, String description, boolean completed) throws SQLException {
