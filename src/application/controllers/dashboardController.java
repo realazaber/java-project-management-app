@@ -294,11 +294,13 @@ public class dashboardController {
 				});
 				
 				btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
-				
+					
 					@Override
 					public void handle(ActionEvent arg0) {
 						System.out.println("Delete column " + column.getColumn_name());
 						try {
+							
+							int selectedProjectTab = tab_projects.getSelectionModel().getSelectedIndex();
 							model.getProjectDAO().deleteColumn(column.getColumnID());
 							System.out.println("Column " + column.getColumnID() + " deleted.");
 							
@@ -317,6 +319,8 @@ public class dashboardController {
 				        	dashboardController.setQuote();
 				        	dashboardController.showProjects(userID);
 				        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+				        	dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);				    
+				        	System.out.println("OIJWOEIJFEOIJEOWIFJOEF " + selectedProjectTab);
 							
 				        	//Load the dashboard.
 				        	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();

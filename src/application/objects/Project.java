@@ -1,5 +1,7 @@
 package application.objects;
 
+import java.util.ArrayList;
+
 public class Project {
 	int projectID;
 	int userID;
@@ -32,6 +34,8 @@ public class Project {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
+	
+
 	
 	
 	
