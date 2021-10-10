@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import application.objects.Column;
 import application.objects.Project;
+import application.objects.Task;
 import application.controllers.newProjectController;
 
 public class projectDAOImpl implements projectDAO {
@@ -177,6 +178,29 @@ public class projectDAOImpl implements projectDAO {
 	
 	public boolean addTask(int taskID, String description, boolean completed) throws SQLException {
 		return false;
+	}
+	
+	public ArrayList<Task> loadTasks(int columnID) throws SQLException {
+		ArrayList<Task> tasks = new ArrayList<Task>();
+		
+		Statement loadTasksStatement = baseDao.connect().createStatement();
+		String query = "SELECT `task_id`, `column_id`, `description`, `completed` FROM `columns` WHERE `column_id` = '" + columnID + "'";
+		ResultSet rs = loadTasksStatement.executeQuery(query);
+		
+		while (rs.next()) {
+			Task tmpTask = new Task();
+			tmpTask.setTaskID(rs.getInt(1));
+			tmpTask.setColumnID(rs.getInt(2));
+			tmpTask.setDescription(rs.getString(3));
+			tmpTask.setCompleted(rs.getBoolean(4));
+			tasks.add(tmpTask);
+			
+			System.out.println("=============================");
+
+		}
+		
+		return tasks;
+		
 	}
 	
 	public void saveTaskChanges(int taskID, String description, boolean completed) throws SQLException {

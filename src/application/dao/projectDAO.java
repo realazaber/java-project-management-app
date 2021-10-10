@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import application.objects.Column;
 import application.objects.Project;
+import application.objects.Task;
 
 public interface projectDAO {
 	
@@ -22,7 +23,7 @@ public interface projectDAO {
 	public void deleteColumn(int columnID) throws SQLException;
 	
 	public boolean addTask(int taskID, String description, boolean completed) throws SQLException;
-	
+	public ArrayList<Task> loadTasks(int columnID) throws SQLException;
 	
 	public void saveTaskChanges(int taskID, String description, boolean completed) throws SQLException;
 	public void deleteTask(int taskItemID) throws SQLException;

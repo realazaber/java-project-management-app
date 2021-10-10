@@ -197,7 +197,6 @@ public class dashboardController {
 			//Create a tab for each project.
 			Tab tab_project = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
-			tab_project.setContent(scrollPane);
 			
 			Pane pane_tabContent = new Pane();
 			Label lbl_notification = new Label();
@@ -380,7 +379,8 @@ public class dashboardController {
 			hbox.setLayoutY(60);
 			
 			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_deleteProject, hbox);
-			tab_project.setContent(pane_tabContent);
+			scrollPane.setContent(pane_tabContent);
+			tab_project.setContent(scrollPane);
 			tab_projects.getTabs().add(tab_project);
 			
 		}
