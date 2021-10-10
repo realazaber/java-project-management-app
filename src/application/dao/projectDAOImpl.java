@@ -133,6 +133,7 @@ public class projectDAOImpl implements projectDAO {
 		
 		while (rs.next()) {
 			Column tmpColumn = new Column();
+			tmpColumn.setProjectID(projectID);
 			tmpColumn.setColumnID(rs.getInt(1));
 			tmpColumn.setColumn_name(rs.getString(2));
 			tmpColumn.setDue_date(rs.getDate(3));
@@ -149,8 +150,14 @@ public class projectDAOImpl implements projectDAO {
 		return columns;
 	}
 	
-	public void saveColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) throws SQLException {
-		
+	public void saveColumnChanges(int project_ID, int ColumnID, String columnName, Date dueDate, String description) throws SQLException {
+		PreparedStatement ps_saveColumnChanges = baseDao.connect().prepareStatement("UPDATE `columns` SET `column_name` = ?, `due_date` = ?, `description` = ? WHERE `column_id` = ? AND `project_id` = ?");
+		ps_saveColumnChanges.setString(1, columnName);
+		ps_saveColumnChanges.setDate(2, dueDate);
+		ps_saveColumnChanges.setString(3, description);
+		ps_saveColumnChanges.setInt(4, ColumnID);
+		ps_saveColumnChanges.setInt(5, project_ID);
+		ps_saveColumnChanges.execute();
 	}
 	
 	public void deleteColumn(int columnID) throws SQLException {

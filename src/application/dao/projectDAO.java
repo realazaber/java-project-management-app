@@ -19,7 +19,7 @@ public interface projectDAO {
 	public boolean addColumn(int projectID, String taskName, Date dueDate, String description) throws SQLException;
 	public ArrayList<Column> loadColumns(int projectID) throws SQLException;
 	
-	public void saveColumnChanges(int taskColumnID, String taskName, Date dueDate, String description) throws SQLException;
+	public void saveColumnChanges(int project_ID, int ColumnID, String columnName, Date dueDate, String description) throws SQLException;
 	public void deleteColumn(int columnID) throws SQLException;
 	
 	public boolean addTask(int taskID, String description, boolean completed) throws SQLException;
