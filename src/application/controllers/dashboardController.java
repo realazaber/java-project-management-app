@@ -316,6 +316,31 @@ public class dashboardController {
 					@Override
 					public void handle(ActionEvent arg0)  {
 						System.out.println("Edit column " + column.getColumn_name());
+						
+						//Prepare new project scene.
+						FXMLLoader editColumnScene = new FXMLLoader(getClass().getResource("EditColumn.fxml"));
+						
+						Parent root;
+						try {
+							root = editColumnScene.load();
+							//Apply parameters to the newcolumn scene.
+							editColumnController editColumnController = editColumnScene.getController();
+							editColumnController.loadColumn(column);
+							editColumnController.setUserID(userID);
+							
+							//Load the new project window.
+							stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+							Scene scene = new Scene(root);
+							stage.setScene(scene);
+							stage.show();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+
+						
+						
 					}
 				});
 				
