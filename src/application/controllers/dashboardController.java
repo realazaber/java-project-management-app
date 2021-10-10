@@ -380,6 +380,8 @@ public class dashboardController {
 			
 			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_deleteProject, hbox);
 			scrollPane.setContent(pane_tabContent);
+			
+			
 			tab_project.setContent(scrollPane);
 			tab_projects.getTabs().add(tab_project);
 			
