@@ -435,9 +435,6 @@ public class dashboardController {
 			tab_projects.getTabs().add(tab_project);
 			
 		}
-		
-		
-
 	}
 	
 	//Creates an inspirational quote.
@@ -503,9 +500,6 @@ public class dashboardController {
 		
 	}
 	
-	public void deleteProject(ActionEvent event, int projectID) {
-		
-	}
 	
 	public void logout(ActionEvent event) throws IOException {
 		//Print log of logging out.
@@ -522,21 +516,7 @@ public class dashboardController {
 		stage.show();
 	}
 	
-	
-	
-	public void addTaskColumn(ActionEvent event, int taskID, int projectID, String taskName, Date dueDate, String description) {
 		
-	}
-	
-	public void saveTaskColumnChanges(ActionEvent event,String taskName, Date dueDate, String description) {
-		
-	}
-	
-	public void deleteTaskColumn(ActionEvent event, int taskID) {
-		
-	}
-	
-	
 	
 	public void addTask(ActionEvent event, int taskID, String description, boolean completed) {
 		
