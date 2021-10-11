@@ -183,7 +183,7 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
-	public boolean addTask(int taskID, String description, boolean completed) throws SQLException {
+	public boolean addTask(int columnID, int taskID, String description, boolean completed) throws SQLException {
 		return false;
 	}
 	
@@ -191,15 +191,18 @@ public class projectDAOImpl implements projectDAO {
 		ArrayList<Task> tasks = new ArrayList<Task>();
 		
 		Statement loadTasksStatement = baseDao.connect().createStatement();
-		String query = "SELECT `task_id`, `column_id`, `description`, `completed` FROM `columns` WHERE `column_id` = '" + columnID + "'";
+		String query = "SELECT `task_id`, `column_id`, `task_name`, `description`, `due_date`, `completed` FROM `tasks` WHERE `column_id` = '" + columnID + "'";
 		ResultSet rs = loadTasksStatement.executeQuery(query);
 		
 		while (rs.next()) {
 			Task tmpTask = new Task();
 			tmpTask.setTaskID(rs.getInt(1));
 			tmpTask.setColumnID(rs.getInt(2));
-			tmpTask.setDescription(rs.getString(3));
-			tmpTask.setCompleted(rs.getBoolean(4));
+			tmpTask.setTaskName(rs.getString(3));
+			tmpTask.setDescription(rs.getString(4));
+			tmpTask.setDueDate(rs.getDate(5));
+			tmpTask.setCompleted(rs.getBoolean(6));
+			
 			tasks.add(tmpTask);
 			
 			System.out.println("=============================");

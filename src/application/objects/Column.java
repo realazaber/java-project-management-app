@@ -6,7 +6,7 @@ public class Column {
 	int columnID;
 	int projectID;
 	String column_name;
-	Date due_date;
+	Date dueDate;
 	String description;
 	
 	public Column() {
@@ -38,11 +38,11 @@ public class Column {
 	}
 
 	public Date getDue_date() {
-		return due_date;
+		return dueDate;
 	}
 
 	public void setDue_date(Date due_date) {
-		this.due_date = due_date;
+		this.dueDate = due_date;
 	}
 
 	public String getDescription() {

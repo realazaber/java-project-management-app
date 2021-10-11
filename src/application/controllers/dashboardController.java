@@ -8,11 +8,13 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import application.Model;
 import application.objects.Column;
 import application.objects.Project;
+import application.objects.Task;
 import application.objects.User;
 import application.dao.projectDAO;
 import application.dao.userDAO;
@@ -297,14 +299,14 @@ public class dashboardController {
 				
 			});
 			
-			HBox hbox = new HBox(50);
+			HBox hboxProjects = new HBox(50);
 			
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
-			ArrayList<VBox> vboxs = new ArrayList<VBox>();
+			ArrayList<VBox> vboxColumns = new ArrayList<VBox>();
 			
 			for (Column column : columns) {
-				VBox vbox = new VBox(10);
-				vbox.setAlignment(Pos.CENTER);
+				VBox vboxColumn = new VBox(10);
+				vboxColumn.setAlignment(Pos.CENTER);
 				Label lbl_columnTitle = new Label("Name " + column.getColumn_name());
 				Label lbl_description = new Label("Description " + column.getDescription());
 				Label lbl_date = new Label("Due date " + column.getDue_date().toString());
@@ -395,15 +397,38 @@ public class dashboardController {
 				Label lbl_tasksHeading = new Label("Tasks");
 				
 				
-				vbox.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns, lbl_tasksHeading);
-				vboxs.add(vbox);
+				ArrayList<Pane> taskPanes = new ArrayList<Pane>();
+				
+				VBox vboxTasks = new VBox(3);
+				ArrayList<Task> tasks = model.getProjectDAO().loadTasks(column.getColumnID());
+				for (Task task : tasks) {
+					VBox taskVbox = new VBox(3);
+					Pane taskPane = new Pane();
+					Label taskName = new Label(task.getTaskName());
+					Label taskDescription = new Label(task.getDescription());
+					Label taskDueDate = new Label(task.getDueDate().toString());
+					Label taskCompleted = new Label();
+					if (task.isCompleted()) {
+						taskCompleted.setText("Completed");
+					}
+					else {
+						taskCompleted.setText("Not finished yet");
+					}
+					taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted);
+					taskPanes.add(taskVbox);
+					vboxTasks.getChildren().addAll(taskPanes);
+					
+				}
+				
+				vboxColumn.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns, lbl_tasksHeading, vboxTasks);
+				vboxColumns.add(vboxColumn);
 				
 			}
 			
-			hbox.getChildren().addAll(vboxs);
-			hbox.setLayoutY(60);
+			hboxProjects.getChildren().addAll(vboxColumns);
+			hboxProjects.setLayoutY(60);
 			
-			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_deleteProject, hbox);
+			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_deleteProject, hboxProjects);
 			scrollPane.setContent(pane_tabContent);
 			
 			

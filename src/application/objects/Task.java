@@ -1,10 +1,15 @@
 package application.objects;
 
+import java.sql.Date;
+
 public class Task {
 	int taskID;
 	int columnID;
+	String name;
 	String description;
 	boolean completed;
+	
+	Date dueDate;
 	
 	public Task() {
 		
@@ -20,6 +25,14 @@ public class Task {
 
 	public int getColumnID() {
 		return columnID;
+	}
+	
+	public void setTaskName(String name) {
+		this.name = name;
+	}
+	
+	public String getTaskName() {
+		return name;
 	}
 
 	public void setColumnID(int columnID) {
@@ -40,6 +53,14 @@ public class Task {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+	
+	public Date getDueDate() {
+		return dueDate;
+	}
+	
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 	
 	
