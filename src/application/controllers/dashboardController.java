@@ -45,7 +45,7 @@ import javafx.stage.Stage;
 
 public class dashboardController {
 	
-	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad"};
+	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad", "You are epic cool"};
 	
 	private Stage stage;
 	
@@ -64,7 +64,6 @@ public class dashboardController {
 	@FXML
 	private Button btn_createProject;
 		
-	
     @FXML
     private TextField txtFieldFName;
     
@@ -85,7 +84,6 @@ public class dashboardController {
     
     private InputStream newProfileStream;
 	
-	
 	int userId;
 	String username;
 	String firstName;
@@ -93,8 +91,6 @@ public class dashboardController {
 	public User currentUser = new User();
 	
 	private Model model = new Model();
-	
-	
 	
     //Open file explorer and let user choose profile image.
     public void chooseProfile(ActionEvent event) throws Exception {  	
@@ -128,8 +124,6 @@ public class dashboardController {
 		}
 
     }
-	
-	
 	
 	//Load user details in profile tab.
 	public void loadUser(User currentUser) {
@@ -201,6 +195,7 @@ public class dashboardController {
 			ScrollPane scrollPane = new ScrollPane();
 			
 			Pane pane_tabContent = new Pane();
+			
 			Label lbl_notification = new Label();
 			lbl_notification.setLayoutX(100);
 			lbl_notification.setLayoutY(100);
@@ -304,15 +299,19 @@ public class dashboardController {
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
 			ArrayList<VBox> vboxColumns = new ArrayList<VBox>();
 			
+			
 			for (Column column : columns) {
 				VBox vboxColumn = new VBox(10);
-				vboxColumn.setAlignment(Pos.CENTER);
-				Label lbl_columnTitle = new Label("Name " + column.getColumn_name());
-				Label lbl_description = new Label("Description " + column.getDescription());
-				Label lbl_date = new Label("Due date " + column.getDue_date().toString());
+				vboxColumn.setMaxWidth(250);
+				Pane columnDetailsPane = new Pane();
+				Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
+				Label lbl_description = new Label("Description: \n" + column.getDescription());
+				lbl_description.setWrapText(true);
+				Label lbl_date = new Label("Due date: " + column.getDue_date().toString());
 				
 				Button btn_editColumn = new Button("Edit column");
 				Button btn_deleteColumn = new Button("Delete column");
+				columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
 				
 				btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
