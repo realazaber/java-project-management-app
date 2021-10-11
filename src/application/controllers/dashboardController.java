@@ -46,7 +46,7 @@ import javafx.stage.Stage;
 public class dashboardController {
 	
 	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad", "You are epic cool"};
-	
+
 	private Stage stage;
 	
 	@FXML
@@ -190,9 +190,14 @@ public class dashboardController {
 						
 		for (Project project : userProjects) {
 				
+
+			
+			
 			//Create a tab for each project.
 			Tab tab_project = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
+			
+
 			
 			Pane pane_tabContent = new Pane();
 			
@@ -433,6 +438,10 @@ public class dashboardController {
 			
 			tab_project.setContent(scrollPane);
 			tab_projects.getTabs().add(tab_project);
+			
+			if (project.isDefault()) {
+				tab_projects.getSelectionModel().select(tab_project);	
+			}
 			
 		}
 	}

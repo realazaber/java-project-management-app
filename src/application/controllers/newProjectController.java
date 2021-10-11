@@ -77,7 +77,7 @@ public class newProjectController {
 			
 			boolean isDefault = checkBox_default.isSelected();
 			
-			if (model.getProjectDAO().addProject(userId, textFieldProjectName.getText(), isDefault)) {
+			if (!model.getProjectDAO().addProject(userId, textFieldProjectName.getText(), isDefault)) {
 				lbl_notification.setText("Project already exists!");
 				System.out.println(textFieldProjectName.getText() + " already exists");
 			}
