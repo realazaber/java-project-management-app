@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -30,6 +31,9 @@ public class newProjectController {
 	
 	@FXML
 	private TextField textFieldProjectName;
+	
+	@FXML
+	private CheckBox checkBox_default;
 	
 	@FXML
 	private Label lbl_notification;
@@ -70,7 +74,10 @@ public class newProjectController {
 	public void addProject(ActionEvent event) throws SQLException {
 		
 		if (textFieldProjectName.getText() != "") {
-			if (model.getProjectDAO().addProject(userId, textFieldProjectName.getText()) == false) {
+			
+			boolean isDefault = checkBox_default.isSelected();
+			
+			if (model.getProjectDAO().addProject(userId, textFieldProjectName.getText(), isDefault)) {
 				lbl_notification.setText("Project already exists!");
 				System.out.println(textFieldProjectName.getText() + " already exists");
 			}

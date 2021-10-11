@@ -22,17 +22,27 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
-	public boolean addProject(int userID, String projectName) throws SQLException {
+	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException {
 		try {
 			Connection connection = baseDao.connect();
 			Statement checkProjects = connection.createStatement();
 			ResultSet rs = checkProjects.executeQuery("SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'");
 			if (!rs.next()) {
-				String query = "INSERT INTO `projects` (`project_id`, `user_id`, `project_name`) VALUES (null, ?, ?)";
-				PreparedStatement statement = connection.prepareStatement(query);
-				statement.setInt(1, userID);
-				statement.setString(2, projectName);
-				statement.execute();
+				
+				if (isDefault) {
+					//Change others to non default
+					PreparedStatement ps_checkForDefault = connection.prepareStatement("UPDATE `projects` SET `is_default` = 0 WHERE `user_id` = '" + userID + "'");
+					ps_checkForDefault.execute();
+				}
+				
+				
+				//Add project
+				String queryAddProject = "INSERT INTO `projects` (`project_id`, `user_id`, `project_name`, `is_default`) VALUES (null, ?, ?, ?)";
+				PreparedStatement ps_addProject = connection.prepareStatement(queryAddProject);
+				ps_addProject.setInt(1, userID);
+				ps_addProject.setString(2, projectName);
+				ps_addProject.setBoolean(3, isDefault);
+				ps_addProject.execute();
 				return true;
 			}
 			else {
@@ -50,7 +60,7 @@ public class projectDAOImpl implements projectDAO {
 		ArrayList<Project> projects = new ArrayList<Project>();
 		
 		Statement loadProjectStatement = baseDao.connect().createStatement();
-		String query = "SELECT `project_id`, `user_id`, `project_name` FROM `projects` WHERE `user_id` = '" + userID + "'";
+		String query = "SELECT `project_id`, `user_id`, `project_name`, `is_default` FROM `projects` WHERE `user_id` = '" + userID + "'";
 		ResultSet rs = loadProjectStatement.executeQuery(query);
 		
 		while (rs.next()) {
@@ -58,6 +68,7 @@ public class projectDAOImpl implements projectDAO {
 			tmpProject.setProjectID(rs.getInt(1));
 			tmpProject.setUserID(rs.getInt(2));
 			tmpProject.setProjectName(rs.getString(3));
+			tmpProject.setDefault(rs.getBoolean(4));
 			projects.add(tmpProject);
 			
 			System.out.println("=============================");

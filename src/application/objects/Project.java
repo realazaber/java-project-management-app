@@ -6,6 +6,7 @@ public class Project {
 	int projectID;
 	int userID;
 	String projectName;
+	boolean isDefault;
 	
 	public Project() {
 		
@@ -35,6 +36,13 @@ public class Project {
 		this.projectName = projectName;
 	}
 	
+	public boolean isDefault() {
+		return isDefault;
+	}
+	
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
+	}
 
 	
 	

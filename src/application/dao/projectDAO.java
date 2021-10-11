@@ -10,7 +10,7 @@ import application.objects.Task;
 
 public interface projectDAO {
 	
-	public boolean addProject(int userID, String projectName) throws SQLException;
+	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException;
 	public ArrayList<Project> loadProjects(int userID) throws SQLException;
 	
 	public void saveProjectChanges(String projectName) throws SQLException;
