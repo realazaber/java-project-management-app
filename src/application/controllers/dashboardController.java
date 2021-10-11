@@ -189,10 +189,7 @@ public class dashboardController {
 		ArrayList<Project> userProjects = model.getProjectDAO().loadProjects(userID);
 						
 		for (Project project : userProjects) {
-				
-
-			
-			
+							
 			//Create a tab for each project.
 			Tab tab_project = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
@@ -202,14 +199,24 @@ public class dashboardController {
 			Pane pane_tabContent = new Pane();
 			
 			Label lbl_notification = new Label();
-			lbl_notification.setLayoutX(100);
+			lbl_notification.setLayoutX(200);
 			lbl_notification.setLayoutY(100);
-			Button btn_deleteProject = new Button("Delete Project");
-			btn_deleteProject.setLayoutX(10);
-			btn_deleteProject.setLayoutY(10);
+
+			Button btn_editProject = new Button("Edit Project");
+			btn_editProject.setLayoutX(10);
+			btn_editProject.setLayoutY(10);
+			
+			
+			
 			Button btn_newColumn = new Button("New Column");
-			btn_newColumn.setLayoutX(130);
+			btn_newColumn.setLayoutX(110);
 			btn_newColumn.setLayoutY(10);
+
+
+			Button btn_deleteProject = new Button("Delete Project");
+			btn_deleteProject.setLayoutX(220);
+			btn_deleteProject.setLayoutY(10);
+			
 			
 			//Add behaviour to delete button
 			btn_deleteProject.setOnAction(new EventHandler<ActionEvent>() {
@@ -432,7 +439,7 @@ public class dashboardController {
 			hboxProjects.getChildren().addAll(vboxColumns);
 			hboxProjects.setLayoutY(60);
 			
-			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_deleteProject, hboxProjects);
+			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_editProject, btn_deleteProject, hboxProjects);
 			scrollPane.setContent(pane_tabContent);
 			
 			
