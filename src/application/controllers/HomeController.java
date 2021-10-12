@@ -106,6 +106,7 @@ public class HomeController {
 				
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		BufferedInputStream file_defaultImage = (BufferedInputStream) classLoader.getResourceAsStream("default_profile.png");
+		
 		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 			
 		BufferedInputStream input = null;
@@ -202,7 +203,7 @@ public class HomeController {
 		
 		if (currentUser != null) {	
 			
-        	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+        	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
         	Parent root = dashboardScene.load();      	
         	
         	

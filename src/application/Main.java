@@ -22,7 +22,9 @@ public class Main extends Application{
 		
 		//Load the GUI, if there is an error end the program.
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/application/controllers/Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/views/Home.fxml"));
+			
+			
 			Scene scene = new Scene(root,800,600);
 			primaryStage.setScene(scene);
 			primaryStage.show();

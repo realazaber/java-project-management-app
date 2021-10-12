@@ -157,7 +157,7 @@ public class dashboardController {
 		}
 		
 		//Prepare to load dashboard.
-		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
     	Parent root = dashboardScene.load();
     	dashboardController dashboardController = dashboardScene.getController();
     	     
@@ -237,7 +237,7 @@ public class dashboardController {
 		            //Refreshes the page on the same tab.
 		        	try {
 		        		//Prepare to load dashboard.
-		        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+		        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 			        	Parent root = dashboardScene.load();
 			        	dashboardController dashboardController = dashboardScene.getController();
 			        	
@@ -280,7 +280,7 @@ public class dashboardController {
 						
 
 						//Prepare new project scene.
-						FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("NewColumn.fxml"));
+						FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("/application/views/NewColumn.fxml"));
 						
 						Parent root = newColumnScene.load();
 						
@@ -331,7 +331,7 @@ public class dashboardController {
 						System.out.println("Edit column " + column.getColumn_name());
 						
 						//Prepare new project scene.
-						FXMLLoader editColumnScene = new FXMLLoader(getClass().getResource("EditColumn.fxml"));
+						FXMLLoader editColumnScene = new FXMLLoader(getClass().getResource("/application/views/EditColumn.fxml"));
 						
 						Parent root;
 						try {
@@ -369,7 +369,7 @@ public class dashboardController {
 							System.out.println("Column " + column.getColumnID() + " deleted.");
 							
 			        		//Prepare to load dashboard.
-			        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+			        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 				        	Parent root = dashboardScene.load();
 				        	dashboardController dashboardController = dashboardScene.getController();
 				        	
@@ -495,7 +495,7 @@ public class dashboardController {
 		System.out.println("User ID: " + userId);
 		
 		//Prepare new project scene.
-		FXMLLoader newProjectScene = new FXMLLoader(getClass().getResource("NewProject.fxml"));
+		FXMLLoader newProjectScene = new FXMLLoader(getClass().getResource("/application/views/NewProject.fxml"));
 		Parent root = newProjectScene.load();
 		
 		//Apply parameters to the newproject scene.
@@ -522,7 +522,7 @@ public class dashboardController {
 		System.out.println("logging out.");
 		
 		//Prepare home scene.
-		FXMLLoader homeScene = new FXMLLoader(getClass().getResource("Home.fxml"));
+		FXMLLoader homeScene = new FXMLLoader(getClass().getResource("/application/views/Home.fxml"));
 		Parent root = homeScene.load();
 		
 		//Load home scene.

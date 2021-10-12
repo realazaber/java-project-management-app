@@ -74,7 +74,7 @@ public class newColumnController {
 	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
-		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
