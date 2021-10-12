@@ -18,13 +18,14 @@ public class projectDAOImpl implements projectDAO {
 	
 	baseDao baseDao = new baseDao();
 	
+	Connection connection = baseDao.connect();
+	
 	public projectDAOImpl() {
 		
 	}
 	
 	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException {
 		try {
-			Connection connection = baseDao.connect();
 			Statement checkProjects = connection.createStatement();
 			ResultSet rs = checkProjects.executeQuery("SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'");
 			if (!rs.next()) {
@@ -59,7 +60,7 @@ public class projectDAOImpl implements projectDAO {
 		System.out.println("Loading projects for user: " + userID);
 		ArrayList<Project> projects = new ArrayList<Project>();
 		
-		Statement loadProjectStatement = baseDao.connect().createStatement();
+		Statement loadProjectStatement = connection.createStatement();
 		String query = "SELECT `project_id`, `user_id`, `project_name`, `is_default` FROM `projects` WHERE `user_id` = '" + userID + "'";
 		ResultSet rs = loadProjectStatement.executeQuery(query);
 		
@@ -82,14 +83,34 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
-	public void saveProjectChanges(String projectName) throws SQLException {
+	public void saveProjectChanges(int projectID, int userID, String projectName, boolean isDefault) throws SQLException {
 		
+		
+		
+		
+		Statement checkProjects = connection.createStatement();
+		
+		if (isDefault) {
+
+			ResultSet rs_checkProjects = checkProjects.executeQuery("SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "' && `is_default` = true");
+			if (!rs_checkProjects.next()) {
+				//Change others to non default
+				PreparedStatement ps_checkForDefault = connection.prepareStatement("UPDATE `projects` SET `is_default` = 0 WHERE `user_id` = '" + userID + "'");
+				ps_checkForDefault.execute();
+			}
+		}
+		
+		
+		
+		PreparedStatement ps_saveProjectChanges = connection.prepareStatement("UPDATE `projects` SET `project_name` = ?, `is_default` = ? WHERE `project_id` = ?");
+		ps_saveProjectChanges.setString(1, projectName);
+		ps_saveProjectChanges.setBoolean(2, isDefault);
+		ps_saveProjectChanges.setInt(3, projectID);
+		ps_saveProjectChanges.execute();
 	}
 	
 	public void deleteProject(int projectID) throws SQLException {
 		try {
-			//Connect to database
-			Connection connection = baseDao.connect();
 			
 			//Delete project
 			String queryDeleteProject =  "DELETE FROM `projects` WHERE `projects`.`project_id` = ?";
@@ -113,7 +134,6 @@ public class projectDAOImpl implements projectDAO {
 
 		
 		try {
-			Connection connection = baseDao.connect();
 			Statement checkColumns = connection.createStatement();
 			ResultSet rs = checkColumns.executeQuery("SELECT * FROM `columns` WHERE `column_name` = '" + columnName + "' && `project_id` = '" + projectID + "'");
 			if (!rs.next()) {
@@ -138,7 +158,7 @@ public class projectDAOImpl implements projectDAO {
 		System.out.println("Loading columns for project " + projectID);
 		ArrayList<Column> columns = new ArrayList<Column>();
 		
-		Statement loadColumnsStatement = baseDao.connect().createStatement();
+		Statement loadColumnsStatement = connection.createStatement();
 		String query = "SELECT `column_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
 		ResultSet rs = loadColumnsStatement.executeQuery(query);
 		
@@ -162,7 +182,7 @@ public class projectDAOImpl implements projectDAO {
 	}
 	
 	public void saveColumnChanges(int project_ID, int ColumnID, String columnName, Date dueDate, String description) throws SQLException {
-		PreparedStatement ps_saveColumnChanges = baseDao.connect().prepareStatement("UPDATE `columns` SET `column_name` = ?, `due_date` = ?, `description` = ? WHERE `column_id` = ? AND `project_id` = ?");
+		PreparedStatement ps_saveColumnChanges = connection.prepareStatement("UPDATE `columns` SET `column_name` = ?, `due_date` = ?, `description` = ? WHERE `column_id` = ? AND `project_id` = ?");
 		ps_saveColumnChanges.setString(1, columnName);
 		ps_saveColumnChanges.setDate(2, dueDate);
 		ps_saveColumnChanges.setString(3, description);
@@ -173,8 +193,6 @@ public class projectDAOImpl implements projectDAO {
 	
 	public void deleteColumn(int columnID) throws SQLException {
 		try {
-			//Connect to database
-			Connection connection = baseDao.connect();
 			
 			//Delete column
 			String queryDeleteColumn =  "DELETE FROM `columns` WHERE `column_id` = ?";
@@ -201,7 +219,7 @@ public class projectDAOImpl implements projectDAO {
 	public ArrayList<Task> loadTasks(int columnID) throws SQLException {
 		ArrayList<Task> tasks = new ArrayList<Task>();
 		
-		Statement loadTasksStatement = baseDao.connect().createStatement();
+		Statement loadTasksStatement = connection.createStatement();
 		String query = "SELECT `task_id`, `column_id`, `task_name`, `description`, `due_date`, `completed` FROM `tasks` WHERE `column_id` = '" + columnID + "'";
 		ResultSet rs = loadTasksStatement.executeQuery(query);
 		

@@ -217,6 +217,38 @@ public class dashboardController {
 			btn_deleteProject.setLayoutX(220);
 			btn_deleteProject.setLayoutY(10);
 			
+			btn_editProject.setOnAction(new EventHandler<ActionEvent>() {
+			
+				@Override
+				public void handle(ActionEvent arg0) {
+					System.out.println("Edit project " + project.getProjectName());
+					
+					//Prepare new project scene.
+					FXMLLoader editProjectScene = new FXMLLoader(getClass().getResource("/application/views/EditProject.fxml"));
+					
+					Parent root;
+					try {
+						root = editProjectScene.load();
+						//Apply parameters to the newcolumn scene.
+						
+						editProjectController editProjectController = editProjectScene.getController();
+						editProjectController.loadProject(project);
+						
+						//Load the new project window.
+						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						Scene scene = new Scene(root);
+						stage.setScene(scene);
+						stage.show();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+
+				}
+			
+			});
+			
 			
 			//Add behaviour to delete button
 			btn_deleteProject.setOnAction(new EventHandler<ActionEvent>() {

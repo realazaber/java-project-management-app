@@ -13,7 +13,7 @@ public interface projectDAO {
 	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException;
 	public ArrayList<Project> loadProjects(int userID) throws SQLException;
 	
-	public void saveProjectChanges(String projectName) throws SQLException;
+	public void saveProjectChanges(int projectID, int userID, String projectName, boolean isDefault) throws SQLException;
 	public void deleteProject(int projectID) throws SQLException;
 	
 	public boolean addColumn(int projectID, String taskName, Date dueDate, String description) throws SQLException;
