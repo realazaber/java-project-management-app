@@ -35,6 +35,11 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -198,6 +203,7 @@ public class dashboardController {
 			
 			Pane pane_tabContent = new Pane();
 			
+			
 			Label lbl_notification = new Label();
 			lbl_notification.setLayoutX(200);
 			lbl_notification.setLayoutY(100);
@@ -217,6 +223,8 @@ public class dashboardController {
 			btn_deleteProject.setLayoutX(220);
 			btn_deleteProject.setLayoutY(10);
 			
+			
+			//Add behaviour to edit project button (go to edit project page).
 			btn_editProject.setOnAction(new EventHandler<ActionEvent>() {
 			
 				@Override
@@ -249,8 +257,48 @@ public class dashboardController {
 			
 			});
 			
+			btn_newColumn.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent arg0) {
+					//Print log of opening add project window.
+					System.out.println("Opening add task window.");
+					System.out.println("User ID: " + userId);
+					System.out.println("Project ID: " + project.getProjectID());
+					
+					
+					try {
+						
+
+						//Prepare new project scene.
+						FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("/application/views/NewColumn.fxml"));
+						
+						Parent root = newColumnScene.load();
+						
+						//Apply parameters to the newcolumn scene.
+						newColumnController newColumnController = newColumnScene.getController();
+						newColumnController.setHeading(project.getProjectName());
+						newColumnController.setProjectID(project.getProjectID());
+						newColumnController.setUserID(userID);
+						//Load the new project window.
+						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						Scene scene = new Scene(root);
+						stage.setScene(scene);
+						stage.show();
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+
+
+				}
+				
+			});
 			
-			//Add behaviour to delete button
+			
+			//Add behaviour to delete project button. 
 			btn_deleteProject.setOnAction(new EventHandler<ActionEvent>() {
 				
 				//Delete project.
@@ -298,45 +346,7 @@ public class dashboardController {
 				}
 			});
 			
-			btn_newColumn.setOnAction(new EventHandler<ActionEvent>() {
-				
-				@Override
-				public void handle(ActionEvent arg0) {
-					//Print log of opening add project window.
-					System.out.println("Opening add task window.");
-					System.out.println("User ID: " + userId);
-					System.out.println("Project ID: " + project.getProjectID());
-					
-					
-					try {
-						
 
-						//Prepare new project scene.
-						FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("/application/views/NewColumn.fxml"));
-						
-						Parent root = newColumnScene.load();
-						
-						//Apply parameters to the newcolumn scene.
-						newColumnController newColumnController = newColumnScene.getController();
-						newColumnController.setHeading(project.getProjectName());
-						newColumnController.setProjectID(project.getProjectID());
-						newColumnController.setUserID(userID);
-						//Load the new project window.
-						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
-						Scene scene = new Scene(root);
-						stage.setScene(scene);
-						stage.show();
-						
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-
-
-				}
-				
-			});
 			
 			HBox hboxProjects = new HBox(50);
 			
@@ -348,6 +358,9 @@ public class dashboardController {
 				VBox vboxColumn = new VBox(10);
 				vboxColumn.setMaxWidth(250);
 				Pane columnDetailsPane = new Pane();
+
+				
+				
 				Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
 				Label lbl_description = new Label("Description: \n" + column.getDescription());
 				lbl_description.setWrapText(true);
@@ -356,6 +369,8 @@ public class dashboardController {
 				Button btn_editColumn = new Button("Edit column");
 				Button btn_deleteColumn = new Button("Delete column");
 				columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
+				
+				
 				
 				btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
