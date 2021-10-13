@@ -581,14 +581,7 @@ public class dashboardController {
 		stage.show();
 
 	}
-	
-
-	
-	public void saveProjectChanges(ActionEvent event, int projectID, String projectName) {
 		
-	}
-	
-	
 	public void logout(ActionEvent event) throws IOException {
 		//Print log of logging out.
 		System.out.println("logging out.");
@@ -604,11 +597,6 @@ public class dashboardController {
 		stage.show();
 	}
 	
-		
-	
-	public void addTask(ActionEvent event, int taskID, String description, boolean completed) {
-		
-	}
 	
 	public void saveTaskChanges(ActionEvent event, String description, boolean completed) {
 		
