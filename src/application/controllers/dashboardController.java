@@ -27,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -452,10 +453,17 @@ public class dashboardController {
 				HBox hbox_columnBtns = new HBox(5);
 				hbox_columnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
 				
+				
+				
+				
+				
+				
 				Label lbl_tasksHeading = new Label("Tasks");
+				lbl_tasksHeading.setContentDisplay(ContentDisplay.CENTER);
 				
 				
 				ArrayList<Pane> taskPanes = new ArrayList<Pane>();
+				
 				
 				VBox vboxTasks = new VBox(3);
 				ArrayList<Task> tasks = model.getProjectDAO().loadTasks(column.getColumnID());
@@ -472,21 +480,43 @@ public class dashboardController {
 					else {
 						taskCompleted.setText("Not finished yet");
 					}
-					taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted);
-					taskPanes.add(taskVbox);
+					
+					HBox hboxTaskButtons = new HBox(3);
+
+					Button taskEdit = new Button("Edit");
+					Button taskDelete = new Button("Delete");
+					hboxTaskButtons.getChildren().addAll(taskEdit, taskDelete);
+					
+					taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxTaskButtons);
+					
+					
+					taskPane.getChildren().addAll(taskVbox);
+					taskPane.setStyle("-fx-border-color: black;");
+					
+					taskPanes.add(taskPane);
 					vboxTasks.getChildren().addAll(taskPanes);
 					
 				}
 				
-				vboxColumn.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns, lbl_tasksHeading, vboxTasks);
-				vboxColumns.add(vboxColumn);
+				Pane pane_columnDetails = new Pane();
+				pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 10px;");
 				
+				VBox vbox_columnDetails = new VBox(3);
+				vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns);
+				pane_columnDetails.getChildren().addAll(vbox_columnDetails);
+				
+				Button btn_taskAdd = new Button("Create task");
+				
+				
+				vboxColumn.getChildren().addAll(pane_columnDetails, lbl_tasksHeading, btn_taskAdd, vboxTasks);
+				vboxColumns.add(vboxColumn);
 			}
 			
 			hboxProjects.getChildren().addAll(vboxColumns);
 			hboxProjects.setLayoutY(60);
 			
 			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_editProject, btn_deleteProject, hboxProjects);
+			
 			scrollPane.setContent(pane_tabContent);
 			
 			
