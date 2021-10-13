@@ -199,9 +199,7 @@ public class dashboardController {
 			//Create a tab for each project.
 			Tab tab_project = new Tab(project.getProjectName());
 			ScrollPane scrollPane = new ScrollPane();
-			
-
-			
+						
 			Pane pane_tabContent = new Pane();
 			
 			
