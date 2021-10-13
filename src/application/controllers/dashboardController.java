@@ -213,12 +213,9 @@ public class dashboardController {
 			btn_editProject.setLayoutX(10);
 			btn_editProject.setLayoutY(10);
 			
-			
-			
 			Button btn_newColumn = new Button("New Column");
 			btn_newColumn.setLayoutX(110);
 			btn_newColumn.setLayoutY(10);
-
 
 			Button btn_deleteProject = new Button("Delete Project");
 			btn_deleteProject.setLayoutX(220);
