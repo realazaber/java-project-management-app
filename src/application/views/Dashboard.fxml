@@ -52,13 +52,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="200.0" layoutX="536.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField fx:id="txtFieldFName" layoutX="25.0" layoutY="35.0" prefHeight="37.0" prefWidth="371.0" promptText="First name" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="35.0" />
-                        <TextField fx:id="txtFieldLName" layoutX="25.0" layoutY="88.0" prefHeight="33.0" prefWidth="325.0" promptText="Last name" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="85.0" />
-                        <TextField fx:id="txtFieldusername" layoutX="29.0" layoutY="169.0" prefHeight="38.0" prefWidth="371.0" promptText="Username" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="135.0" />
+                        <ImageView fx:id="imageView_Profile" fitHeight="150.0" fitWidth="200.0" layoutX="536.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextField fx:id="txtFieldFName" layoutX="25.0" layoutY="35.0" prefHeight="40.0" prefWidth="330.0" promptText="First name" />
+                        <TextField fx:id="txtFieldLName" layoutX="25.0" layoutY="88.0" prefHeight="40.0" prefWidth="330.0" promptText="Last name" />
                         <Button layoutX="556.0" layoutY="207.0" mnemonicParsing="false" onAction="#chooseProfile" text="Upload Profile Picture" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="200.0" />
                         <Button layoutX="346.0" layoutY="285.0" mnemonicParsing="false" onAction="#saveProfileChanges" text="Save changes" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="300.0" />
-                        <TextField fx:id="txtFieldPassword" layoutX="56.0" layoutY="181.0" prefHeight="29.0" prefWidth="325.0" promptText="Password" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="185.0" />
+                        <Label fx:id="label_userInfo" layoutX="26.0" layoutY="154.0" prefHeight="33.0" prefWidth="329.0" text="User info:" />
                      </children>
                   </AnchorPane>
                </content>

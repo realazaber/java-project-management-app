@@ -64,7 +64,8 @@ public class homeController {
     @FXML
     private Label loginStatus;
     
-    private static File tmpProfile = null;
+    @FXML
+    private File tmpProfile;
     
     private Model model = new Model();
     

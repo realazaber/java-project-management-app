@@ -1,6 +1,8 @@
 package application.controllers;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import application.Model;
 import application.controllers.add.newColumnController;
@@ -24,6 +28,7 @@ import application.objects.Task;
 import application.objects.User;
 import application.dao.projectDAO;
 import application.dao.userDAO;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -54,6 +59,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import java.awt.image.BufferedImage;
 
 public class dashboardController {
 	
@@ -89,7 +95,10 @@ public class dashboardController {
     private TextField txtFieldPassword;
     
     @FXML
-    private ImageView profilePic;
+    private Label label_userInfo;
+    
+    @FXML
+    private ImageView imageView_Profile;
     
     @FXML
     private File newProfile;
@@ -128,7 +137,7 @@ public class dashboardController {
     		Image selectedImage = new Image(fileInputStream);
     		System.out.println("Chosen image " + selectedImage);
     		
-    		profilePic.setImage(selectedImage);
+    		imageView_Profile.setImage(selectedImage);
     		System.out.println("Set " + newProfile + " as preview.");
 		} catch (Exception e) {
 			System.out.println("Error uploading custom profile: " + e);
@@ -144,12 +153,13 @@ public class dashboardController {
 		
 		txtFieldFName.setText(currentUser.getFirstName());
 		txtFieldLName.setText(currentUser.getLastName());
-		txtFieldusername.setText(currentUser.getUsername());
-		txtFieldPassword.setText(currentUser.getPassword());
+		
+		label_userInfo.setText("Username: " + currentUser.getUsername());
+		
 		newProfileStream = currentUser.getProfilePicture();
 	
 		Image profile = new Image(newProfileStream);
-		profilePic.setImage(profile);
+		imageView_Profile.setImage(profile);
 		
 		
 	}
@@ -160,12 +170,28 @@ public class dashboardController {
 		
 		if (newProfile == null) {
 			System.out.println("Saving changes with no new profile picture.");
-			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), currentUser.getProfilePicture());
+			
+			
+			
+			BufferedImage bImage = SwingFXUtils.fromFXImage(imageView_Profile.getImage(), null);
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			try {
+			    ImageIO.write(bImage, "png", outputStream);
+			    byte[] res  = outputStream.toByteArray();
+			    InputStream inputStream = new ByteArrayInputStream(res);
+			    model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), inputStream);
+			} catch (IOException e) {
+			    e.printStackTrace();
+			}
+			
+				
+				
+			
 		}
 		else {
 			System.out.println("Saving changes and uploading new profile picture.");
-			BufferedInputStream newProfileStream = new BufferedInputStream(new FileInputStream(newProfile));
-			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), txtFieldPassword.getText(), newProfileStream);
+			BufferedInputStream newProfileUpload = new BufferedInputStream(new FileInputStream(newProfile));
+			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), newProfileUpload);
 		}
 		
 		//Prepare to load dashboard.
