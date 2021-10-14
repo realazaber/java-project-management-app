@@ -429,9 +429,33 @@ public class dashboardController {
 					
 					HBox hboxTaskButtons = new HBox(3);
 
-					Button taskEdit = new Button("Edit");
-					Button taskDelete = new Button("Delete");
-					hboxTaskButtons.getChildren().addAll(taskEdit, taskDelete);
+					Button btn_taskEdit = new Button("Edit");
+					Button btn_taskDelete = new Button("Delete");
+					
+					
+					btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {
+						
+						@Override
+						public void handle(ActionEvent arg0) {
+							System.out.println("Delete task " + task.getTaskName());
+							try {
+								model.getProjectDAO().deleteTask(task.getTaskID());						
+								System.out.println("Task " + task.getTaskID() + " deleted.");
+								
+								refresh(arg0, userID);
+								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								System.exit(0);
+							}
+						}
+					
+					});
+					
+					
+					
+					hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
 					
 					taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxTaskButtons);
 					

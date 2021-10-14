@@ -264,7 +264,17 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
-	public void deleteTask(int taskItemID) throws SQLException {
-		
+	public void deleteTask(int taskID) throws SQLException {
+		try {
+			//Delete columns
+			String queryDeleteTasks = "DELETE FROM `tasks` WHERE `task_id` = ?";
+			PreparedStatement statementDeleteTasks = connection.prepareStatement(queryDeleteTasks);
+			statementDeleteTasks.setInt(1, taskID);
+			statementDeleteTasks.execute();
+			
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
 	}
 }
