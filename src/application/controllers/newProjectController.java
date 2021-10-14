@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -78,10 +79,12 @@ public class newProjectController {
 			boolean isDefault = checkBox_default.isSelected();
 			
 			if (!model.getProjectDAO().addProject(userId, textFieldProjectName.getText(), isDefault)) {
+				lbl_notification.setTextFill(Color.RED);
 				lbl_notification.setText("Project already exists!");
 				System.out.println(textFieldProjectName.getText() + " already exists");
 			}
 			else {
+				lbl_notification.setTextFill(Color.GREEN);
 				lbl_notification.setText("Project successfully added!");
 				System.out.println(textFieldProjectName.getText() + " added to database under user id: " + userId);
 			}

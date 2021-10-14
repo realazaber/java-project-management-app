@@ -70,27 +70,7 @@ public class newColumnController {
 		lbl_heading.setText("Add column for project " + projectName);
 	}
 	
-	
-	public void back(ActionEvent event) throws Exception {
-		System.out.println("Back to dashboard");
-		
-		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
-		Parent root = dashboardScene.load();
-		dashboardController dashboardController = dashboardScene.getController();
-		dashboardController.setQuote();
-		dashboardController.setUserID(userID);
-		User user = model.getUserDAO().getUser(userID);
-		dashboardController.setWelcomeMessage(user.getFirstName());
-		dashboardController.showProjects(userID);
-		dashboardController.loadUser(user);
-		
-		
-		
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
+
 	
 	//Add project to database
 	public void addColumn(ActionEvent event) throws SQLException {
@@ -115,6 +95,28 @@ public class newColumnController {
 		}
 		
 		
+	}
+	
+	
+	public void back(ActionEvent event) throws Exception {
+		System.out.println("Back to dashboard");
+		
+		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
+		Parent root = dashboardScene.load();
+		dashboardController dashboardController = dashboardScene.getController();
+		dashboardController.setQuote();
+		dashboardController.setUserID(userID);
+		User user = model.getUserDAO().getUser(userID);
+		dashboardController.setWelcomeMessage(user.getFirstName());
+		dashboardController.showProjects(userID);
+		dashboardController.loadUser(user);
+		
+		
+		
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 }

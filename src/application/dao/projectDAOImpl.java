@@ -131,7 +131,6 @@ public class projectDAOImpl implements projectDAO {
 	}
 	
 	public boolean addColumn(int projectID, String columnName, Date dueDate, String description) throws SQLException {
-
 		
 		try {
 			Statement checkColumns = connection.createStatement();
@@ -212,7 +211,26 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
-	public boolean addTask(int columnID, int taskID, String description, boolean completed) throws SQLException {
+	public boolean addTask(int columnID, String taskName, String description, Date dueDate, boolean completed) throws SQLException  {
+		try {
+			Statement checkTasks = connection.createStatement();
+			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `tasks` WHERE `task_name` = '" + taskName + "' && `column_id` = '" + columnID + "'");
+			if (!rs_checkTasks.next()) {
+				String query = "INSERT INTO `tasks` (`task_id`, `column_id`, `task_name`, `description`, `due_date`, `completed`) VALUES (null, ?, ?, ?, ?, ?)";
+				PreparedStatement statement = connection.prepareStatement(query);
+				statement.setInt(1, columnID);
+				statement.setString(2, taskName);
+				statement.setString(3, description);
+				statement.setDate(4, dueDate);
+				statement.setBoolean(5, completed);
+				statement.execute();
+				return true;
+				
+			}
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
 		return false;
 	}
 	

@@ -448,11 +448,6 @@ public class dashboardController {
 				HBox hbox_columnBtns = new HBox(5);
 				hbox_columnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
 				
-				
-				
-				
-				
-				
 				Label lbl_tasksHeading = new Label("Tasks");
 				lbl_tasksHeading.setContentDisplay(ContentDisplay.CENTER);
 				
@@ -465,9 +460,9 @@ public class dashboardController {
 				for (Task task : tasks) {
 					VBox taskVbox = new VBox(3);
 					Pane taskPane = new Pane();
-					Label taskName = new Label(task.getTaskName());
-					Label taskDescription = new Label(task.getDescription());
-					Label taskDueDate = new Label(task.getDueDate().toString());
+					Label taskName = new Label("Task name: " + task.getTaskName());
+					Label taskDescription = new Label("Task description: " + task.getDescription());
+					Label taskDueDate = new Label("Task due date: " + task.getDueDate().toString());
 					Label taskCompleted = new Label();
 					if (task.isCompleted()) {
 						taskCompleted.setText("Completed");
@@ -486,15 +481,16 @@ public class dashboardController {
 					
 					
 					taskPane.getChildren().addAll(taskVbox);
-					taskPane.setStyle("-fx-border-color: black;");
+					taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");
 					
 					taskPanes.add(taskPane);
-					vboxTasks.getChildren().addAll(taskPanes);
+					
 					
 				}
+				vboxTasks.getChildren().addAll(taskPanes);
 				
 				Pane pane_columnDetails = new Pane();
-				pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 10px;");
+				pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 3px; -fx-background-color: white;");
 				
 				VBox vbox_columnDetails = new VBox(3);
 				vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns);
@@ -503,7 +499,40 @@ public class dashboardController {
 				Button btn_taskAdd = new Button("Create task");
 				
 				
-				vboxColumn.getChildren().addAll(pane_columnDetails, lbl_tasksHeading, btn_taskAdd, vboxTasks);
+				btn_taskAdd.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent arg0) {
+						System.out.println("Add task");
+						
+						//Prepare new project scene.
+						FXMLLoader addTaskScene = new FXMLLoader(getClass().getResource("/application/views/NewTask.fxml"));
+						
+						Parent root;
+						try {
+							root = addTaskScene.load();
+							//Apply parameters to the newcolumn scene.
+							newTaskController newTaskController = addTaskScene.getController();
+							
+							newTaskController.loadAddTask(column.getColumnID(), userID);
+							
+							//Load the new project window.
+							stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+							Scene scene = new Scene(root);
+							stage.setScene(scene);
+							stage.show();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+				
+				HBox hbox_taskHeading = new HBox(3);
+				hbox_taskHeading.getChildren().addAll(lbl_tasksHeading, btn_taskAdd);
+				
+				
+				vboxColumn.getChildren().addAll(pane_columnDetails, hbox_taskHeading, vboxTasks);
 				vboxColumns.add(vboxColumn);
 			}
 			
@@ -595,15 +624,5 @@ public class dashboardController {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-	}
-	
-	
-	public void saveTaskChanges(ActionEvent event, String description, boolean completed) {
-		
-	}
-	
-	public void deleteTask(ActionEvent event, int taskItemID) {
-		
-	}
-	
+	}	
 }

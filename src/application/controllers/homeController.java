@@ -25,7 +25,7 @@ import application.Model;
 import application.objects.User;
 import application.dao.userDAO;
 
-public class HomeController {
+public class homeController {
 	
 	private Stage stage;
 	
