@@ -17,6 +17,7 @@ import application.controllers.add.newProjectController;
 import application.controllers.add.newTaskController;
 import application.controllers.edit.editColumnController;
 import application.controllers.edit.editProjectController;
+import application.controllers.edit.editTaskController;
 import application.objects.Column;
 import application.objects.Project;
 import application.objects.Task;
@@ -441,6 +442,24 @@ public class dashboardController {
 						
 						@Override
 						public void handle(ActionEvent arg0) {
+							//Prepare new project scene.
+							FXMLLoader editTaskScene = new FXMLLoader(getClass().getResource("/application/views/EditTask.fxml"));
+							
+							Parent root;
+							try {
+								root = editTaskScene.load();
+								//Apply parameters to the newcolumn scene.
+								editTaskController editTaskController = editTaskScene.getController();
+								editTaskController.loadEditTask(task, project);
+								//Load the new project window.
+								stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+								Scene scene = new Scene(root);
+								stage.setScene(scene);
+								stage.show();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							
 						}
 						

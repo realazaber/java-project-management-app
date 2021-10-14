@@ -217,7 +217,7 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
-	public boolean addTask(int columnID, String taskName, String description, Date dueDate, boolean completed) throws SQLException  {
+	public boolean addTask(int columnID, String taskName, String description, Date dueDate, boolean completed) throws SQLException {
 		try {
 			Statement checkTasks = connection.createStatement();
 			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `tasks` WHERE `task_name` = '" + taskName + "' && `column_id` = '" + columnID + "'");
@@ -264,8 +264,14 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
-	public void saveTaskChanges(int taskID, String description, boolean completed) throws SQLException {
-		
+	public void saveTaskChanges(int taskID, String taskName, String description, Date dueDate, boolean completed) throws SQLException {
+		PreparedStatement ps_saveTaskChanges = connection.prepareStatement("UPDATE `tasks` SET `task_name` = ?, `description` = ?, `due_date` = ?, `completed` = ? WHERE `task_id` = ?");
+		ps_saveTaskChanges.setString(1, taskName);
+		ps_saveTaskChanges.setString(2, description);
+		ps_saveTaskChanges.setDate(3, dueDate);
+		ps_saveTaskChanges.setBoolean(4, completed);
+		ps_saveTaskChanges.setInt(5, taskID);
+		ps_saveTaskChanges.execute();
 	}
 	
 	public void deleteTask(int taskID) throws SQLException {

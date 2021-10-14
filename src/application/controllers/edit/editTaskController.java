@@ -1,7 +1,9 @@
 package application.controllers.edit;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import application.Model;
 import application.controllers.dashboardController;
@@ -75,8 +77,13 @@ public class editTaskController {
 	}
 
     @FXML
-    void saveTaskChanges(ActionEvent event) {
-
+    void saveTaskChanges(ActionEvent event) throws SQLException {
+    	if (txtFieldTaskName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) {
+			LocalDate tmpLocalDate = datePicker.getValue();
+			Date tmpDate = Date.valueOf(tmpLocalDate);
+			
+			model.getProjectDAO().saveTaskChanges(task.getTaskID(), txtFieldTaskName.getText(), txtAreaDescription.getText(), tmpDate, checkBox_completed.isSelected());
+		}
     }
     
     @FXML

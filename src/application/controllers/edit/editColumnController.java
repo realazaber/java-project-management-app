@@ -68,8 +68,6 @@ public class editColumnController {
 			LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
 			model.getProjectDAO().saveColumnChanges(column.getProjectID(), column.getColumnID(), txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText());
-			System.out.println("EWFEWFWFW " + column.getProjectID());
-			System.out.println("WEFEWFEW " + column.getColumnID());
 		}
 		
 		
