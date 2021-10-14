@@ -10,7 +10,7 @@ public interface userDAO {
 	
 	public void saveProfileChanges(int user_id, String firstName, String lastName, String password, InputStream newProfile) throws SQLException;
 
-	boolean userExists(String firstName, String lastName) throws SQLException;
+	public boolean userExists(User user) throws SQLException;
 
 	void addUser(String firstName, String lastName, String username, String password, InputStream profileImage)
 			throws SQLException;

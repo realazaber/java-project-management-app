@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.sql.*;
 
 import application.Model;
+import application.controllers.add.newColumnController;
 import application.objects.User;
 import application.dao.userDAO;
 
@@ -135,7 +136,9 @@ public class homeController {
 				
 				//Check if user already exists.
 				
-				Boolean userExists = model.getUserDAO().userExists(textFieldFName.getText(), textFieldLName.getText());
+				User tmpUser = new User();
+				tmpUser.setUsername(textFieldUsername.getText());
+				Boolean userExists = model.getUserDAO().userExists(tmpUser);
 				
 				
 		        if (userExists) {

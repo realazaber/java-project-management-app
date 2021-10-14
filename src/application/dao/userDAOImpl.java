@@ -38,10 +38,10 @@ public class userDAOImpl implements userDAO {
 	}
 	
 	@Override
-	public boolean userExists(String firstName, String lastName) throws SQLException {
-		PreparedStatement ps_userExists = baseDao.connect().prepareStatement("SELECT * FROM `users` WHERE `first_name` = ? AND `last_name` = ?");
-		ps_userExists.setString(1, firstName);
-		ps_userExists.setString(2, lastName);
+	public boolean userExists(User user) throws SQLException {
+		
+		PreparedStatement ps_userExists = baseDao.connect().prepareStatement("SELECT * FROM `users` WHERE username = ?");
+		ps_userExists.setString(1, user.getUsername());
 		
 		ResultSet rs_userExists = ps_userExists.executeQuery();
 		if (rs_userExists.next()) {
