@@ -312,28 +312,7 @@ public class dashboardController {
 						        	
 		            //Refreshes the page on the same tab.
 		        	try {
-		        		//Prepare to load dashboard.
-		        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
-			        	Parent root = dashboardScene.load();
-			        	dashboardController dashboardController = dashboardScene.getController();
-			        	
-			        	//Prepare user details.
-			        	dashboardController.setUserID(userID);			     
-			        				        
-			        	User tmpUser = model.getUserDAO().getUser(userID);
-			        	
-			        	//Apply parameters to dashboard controller so appropriate name and projects are shown.
-			        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
-			        	dashboardController.setQuote();
-			        	dashboardController.showProjects(userID);
-			        	dashboardController.loadUser(tmpUser);
-			        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-						
-			        	//Load the dashboard.
-			        	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
-						Scene scene = new Scene(root);
-						stage.setScene(scene);
-						stage.show();
+		        		refresh(arg0, userID);
 						
 			        	
 					} catch (Exception e) {
@@ -406,34 +385,11 @@ public class dashboardController {
 					public void handle(ActionEvent arg0) {
 						System.out.println("Delete column " + column.getColumn_name());
 						try {
-							
-							int selectedProjectTab = tab_projects.getSelectionModel().getSelectedIndex();
+													
 							model.getProjectDAO().deleteColumn(column.getColumnID());
 							System.out.println("Column " + column.getColumnID() + " deleted.");
 							
-			        		//Prepare to load dashboard.
-			        		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
-				        	Parent root = dashboardScene.load();
-				        	dashboardController dashboardController = dashboardScene.getController();
-				        	
-				        	//Prepare user details.
-				        	dashboardController.setUserID(userID);			     
-				        				        
-				        	User tmpUser = model.getUserDAO().getUser(userID);
-				        	
-				        	//Apply parameters to dashboard controller so appropriate name and projects are shown.
-				        	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
-				        	dashboardController.setQuote();
-				        	dashboardController.showProjects(userID);
-				        	dashboardController.loadUser(tmpUser);
-				        	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-				        	dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);				    				    
-							
-				        	//Load the dashboard.
-				        	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
-							Scene scene = new Scene(root);
-							stage.setScene(scene);
-							stage.show();
+							refresh(arg0, userID);
 							
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -553,6 +509,37 @@ public class dashboardController {
 			
 		}
 	}
+	
+	
+	
+	public void refresh(ActionEvent arg0, int userID) throws Exception {
+		
+		int selectedProjectTab = tab_projects.getSelectionModel().getSelectedIndex();
+		//Prepare to load dashboard.
+		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
+    	Parent root = dashboardScene.load();
+    	dashboardController dashboardController = dashboardScene.getController();
+    	
+    	//Prepare user details.
+    	dashboardController.setUserID(userID);			     
+    				        
+    	User tmpUser = model.getUserDAO().getUser(userID);
+    	
+    	//Apply parameters to dashboard controller so appropriate name and projects are shown.
+    	dashboardController.setWelcomeMessage(tmpUser.getFirstName());
+    	dashboardController.setQuote();
+    	dashboardController.showProjects(userID);
+    	dashboardController.loadUser(tmpUser);
+    	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+    	dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);				    				    
+		
+    	//Load the dashboard.
+    	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 	
 	//Creates an inspirational quote.
 	public void setQuote() {
