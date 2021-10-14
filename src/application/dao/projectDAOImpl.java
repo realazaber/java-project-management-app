@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import application.objects.Column;
 import application.objects.Project;
@@ -118,11 +119,16 @@ public class projectDAOImpl implements projectDAO {
 			statementDeleteProject.setInt(1, projectID);
 			statementDeleteProject.execute();
 			
-			//Delete columns
-			String queryDeleteColumns = "DELETE FROM `columns` WHERE `project_id` = ?";
-			PreparedStatement statementDeleteColumns = connection.prepareStatement(queryDeleteColumns);
-			statementDeleteColumns.setInt(1, projectID);
-			statementDeleteColumns.execute();
+			//Delete columns and tasks that are connected to the project.
+			ArrayList<Column> columns = loadColumns(projectID);
+			
+			for (Column column : columns) {
+				deleteColumn(column.getColumnID());
+				ArrayList<Task> tasks = loadTasks(column.getColumnID());
+				for (Task task : tasks) {
+					deleteTask(task.getTaskID());
+				}
+			}
 			
 		} catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
@@ -251,8 +257,6 @@ public class projectDAOImpl implements projectDAO {
 			tmpTask.setCompleted(rs.getBoolean(6));
 			
 			tasks.add(tmpTask);
-			
-			System.out.println("=============================");
 
 		}
 		

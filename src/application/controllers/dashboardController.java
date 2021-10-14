@@ -432,6 +432,15 @@ public class dashboardController {
 					Button btn_taskEdit = new Button("Edit");
 					Button btn_taskDelete = new Button("Delete");
 					
+					btn_taskEdit.setOnAction(new EventHandler<ActionEvent>() {
+						
+						@Override
+						public void handle(ActionEvent arg0) {
+							
+						}
+						
+					});
+					
 					
 					btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {
 						
