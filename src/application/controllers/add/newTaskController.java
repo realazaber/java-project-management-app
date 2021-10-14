@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controllers.add;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import application.Model;
+import application.controllers.dashboardController;
 import application.objects.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

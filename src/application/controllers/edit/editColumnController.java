@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controllers.edit;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import application.Model;
+import application.controllers.dashboardController;
 import application.objects.Column;
 import application.objects.User;
 

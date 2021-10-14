@@ -1,9 +1,12 @@
-package application.controllers;
+package application.controllers.edit;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import application.Model;
+import application.controllers.dashboardController;
 import application.objects.Project;
+import application.objects.Task;
 import application.objects.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,52 +14,73 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class editProjectController {
-	public editProjectController() {
+public class editTaskController {
+	
+	public void editTaskController() {
 		
 	}
 	
 	private Stage stage;
 	
+	private Task task;
+	
 	private Project project;
 	
 	private Model model = new Model();
 	
-	@FXML
-	private TextField txtFieldProjectName;
-	
-	@FXML 
-	private CheckBox checkBox_default;
-	
-	@FXML
-	private Label lbl_notification;
-	
-	public void loadProject(Project project) {
+
+
+    @FXML
+    private Label lbl_heading;
+
+    @FXML
+    private TextField txtFieldTaskName;
+
+    @FXML
+    private Button btn_saveChanges;
+
+    @FXML
+    private Label lbl_notification;
+
+    @FXML
+    private TextArea txtAreaDescription;
+
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private CheckBox checkBox_completed;
+    
+	public void loadEditTask(Task task, Project project) {
 		this.project = project;
-		txtFieldProjectName.setText(project.getProjectName());
+		this.task = task;
 		
-		if (project.isDefault()) {
-			checkBox_default.setSelected(true);
+		txtFieldTaskName.setText(task.getTaskName());
+		txtAreaDescription.setText(task.getDescription());
+		datePicker.setValue(task.getDueDate().toLocalDate());
+		if (task.isCompleted()) {
+			checkBox_completed.setSelected(true);
 		}
 		else {
-			checkBox_default.setSelected(false);
-		}	
+			checkBox_completed.setSelected(false);
+		}
 	}
-	
-	public void saveProjectChanges(ActionEvent event) throws SQLException {
-		model.getProjectDAO().saveProjectChanges(project.getProjectID(), project.getUserID(), txtFieldProjectName.getText(), checkBox_default.isSelected());
-		System.out.println("Saved changes to project " + project.getProjectID());
-		lbl_notification.setTextFill(Color.GREEN);
-		lbl_notification.setText("Saved changes");
-	}
-	
-	public void back(ActionEvent event) throws Exception {
+
+    @FXML
+    void saveTaskChanges(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
@@ -79,5 +103,6 @@ public class editProjectController {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-	}
+    }
+
 }

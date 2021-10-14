@@ -12,6 +12,11 @@ import java.util.Iterator;
 import java.util.Random;
 
 import application.Model;
+import application.controllers.add.newColumnController;
+import application.controllers.add.newProjectController;
+import application.controllers.add.newTaskController;
+import application.controllers.edit.editColumnController;
+import application.controllers.edit.editProjectController;
 import application.objects.Column;
 import application.objects.Project;
 import application.objects.Task;

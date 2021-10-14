@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controllers.add;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import application.Model;
+import application.controllers.dashboardController;
 import application.objects.User;
 import application.dao.projectDAO;
 import application.dao.userDAO;
