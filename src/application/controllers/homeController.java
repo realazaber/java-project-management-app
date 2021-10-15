@@ -53,7 +53,7 @@ public class homeController {
     private Button btn_imageUpload;
     
     @FXML 
-    public static ImageView imageView = new ImageView();
+    public ImageView imageView = new ImageView();
 
     @FXML
     private TextField LoginUsername;
@@ -71,7 +71,10 @@ public class homeController {
     
 
     //Open file explorer and let user choose profile image.
-    public void chooseProfile(ActionEvent event) throws Exception {  	
+    @FXML
+    public void chooseProfile(ActionEvent event) throws Exception {  
+    	
+    	imageView.setImage(null);
     	
     	System.out.println("Uploading image.");
     	FileChooser fileChooser = new FileChooser();
@@ -95,6 +98,7 @@ public class homeController {
     		System.out.println("Chosen image " + selectedImage);
     		
     		imageView.setImage(selectedImage);
+    		
     		System.out.println("Set " + tmpProfile + " as preview.");
 		} catch (Exception e) {
 			System.out.println("Error uploading custom profile: " + e);
