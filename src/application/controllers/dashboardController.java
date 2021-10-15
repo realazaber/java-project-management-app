@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -47,6 +51,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -120,14 +125,11 @@ public class dashboardController {
     	FileChooser fileChooser = new FileChooser();
     	
     	//Add filters so only images can be added.
-        FileChooser.ExtensionFilter JPG_Filter = new FileChooser.ExtensionFilter("JPG images (*.JPG)", "*.JPG");
-        FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
-        FileChooser.ExtensionFilter jpeg_Filter = new FileChooser.ExtensionFilter("jpeg images (*.jpeg)", "*.jpeg");
         FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
         FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
         
     	
-    	fileChooser.getExtensionFilters().addAll(JPG_Filter, jpg_Filter, jpeg_Filter, PNG_Filter, png_Filter);
+    	fileChooser.getExtensionFilters().addAll(PNG_Filter, png_Filter);
     	fileChooser.setTitle("Select image");
     	newProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + newProfile);
@@ -373,11 +375,13 @@ public class dashboardController {
 				lbl_description.setWrapText(true);
 				Label lbl_date = new Label("Due date: " + column.getDue_date().toString());
 				
+				
+				lbl_date.setStyle("-fx-background-color: coral; -fx-padding: 5px;");
+				
+				
 				Button btn_editColumn = new Button("Edit column");
 				Button btn_deleteColumn = new Button("Delete column");
 				columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
-				
-				
 				
 				btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -657,6 +661,8 @@ public class dashboardController {
 	public void setWelcomeMessage(String firstName) {
 		lbl_fname.setText(firstName);
 	}
+	
+
 	
 	
 	//Open the window for adding the new project.

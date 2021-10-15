@@ -80,14 +80,11 @@ public class homeController {
     	FileChooser fileChooser = new FileChooser();
     	
     	//Add filters so only images can be added.
-        FileChooser.ExtensionFilter JPG_Filter = new FileChooser.ExtensionFilter("JPG images (*.JPG)", "*.JPG");
-        FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
-        FileChooser.ExtensionFilter jpeg_Filter = new FileChooser.ExtensionFilter("jpeg images (*.jpeg)", "*.jpeg");
         FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
         FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
         
     	
-    	fileChooser.getExtensionFilters().addAll(JPG_Filter, jpg_Filter, jpeg_Filter, PNG_Filter, png_Filter);
+    	fileChooser.getExtensionFilters().addAll( PNG_Filter, png_Filter);
     	fileChooser.setTitle("Select image");
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
