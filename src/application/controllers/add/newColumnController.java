@@ -110,6 +110,7 @@ public class newColumnController {
 		User user = model.getUserDAO().getUser(userID);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userID);
+		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 		dashboardController.loadUser(user);
 		
 		

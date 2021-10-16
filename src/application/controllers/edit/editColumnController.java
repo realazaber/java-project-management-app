@@ -88,6 +88,7 @@ public class editColumnController {
 		dashboardController.loadUser(user);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userId);
+		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 		
 		
 		

@@ -73,7 +73,7 @@ public class dashboardController {
 	private Stage stage;
 	
 	@FXML
-	private TabPane tabpane_mainTab;
+	public TabPane tabpane_mainTab;
 	
 	@FXML
 	private TabPane tab_projects;
@@ -374,7 +374,6 @@ public class dashboardController {
 				Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
 				Label lbl_description = new Label("Description: \n" + column.getDescription());
 				lbl_description.setWrapText(true);			
-				//Label lbl_date = new Label("Due date: " + column.getDue_date().toString());	
 				Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
 				
 				
@@ -628,13 +627,15 @@ public class dashboardController {
 		stage.show();
 	}
 	
+	//Check the difference in days between two dates and change
+	//the colour accordingly
 	public Label dateDifference(Date dueDate, boolean completed) {
 		
-		Date currentDate = Date.valueOf(LocalDate.now());
-		int daysBetween = (int) (dueDate.getTime() - currentDate.getTime()) / 1000 / 60 / 60 / 24;
-		System.out.println("OIJWROIJROIJROEIJRJORIGOIJEROIJG " + daysBetween);
-		Label output = new Label(dueDate.toString());
+		Date currentDate = Date.valueOf(LocalDate.now()); //Get current date
+		int daysBetween = (int) (dueDate.getTime() - currentDate.getTime()) / 1000 / 60 / 60 / 24; //Get due date
+		Label output = new Label(dueDate.toString()); //Prepare the output
 		
+	
 		if (daysBetween <= 7) {
 			if (daysBetween < 0) {
 				if (completed) {

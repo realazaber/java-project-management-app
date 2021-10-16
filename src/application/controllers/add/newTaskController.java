@@ -91,6 +91,7 @@ public class newTaskController {
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userID);
 		dashboardController.loadUser(user);
+		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 	
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);

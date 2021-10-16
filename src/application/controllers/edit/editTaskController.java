@@ -105,7 +105,7 @@ public class editTaskController {
 		dashboardController.loadUser(user);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(project.getUserID());
-		
+		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 		
 		
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
