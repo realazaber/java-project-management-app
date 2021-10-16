@@ -264,6 +264,20 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
+	public boolean tasksCompleted(int columnID) throws SQLException {
+		ArrayList<Task> tasks = loadTasks(columnID);
+		boolean allComplete = true;
+		for (Task task : tasks) {
+			if (task.isCompleted() == false) {
+				allComplete = false;
+			}
+		}
+		
+		
+		
+		return allComplete;
+	}
+	
 	public void saveTaskChanges(int taskID, String taskName, String description, Date dueDate, boolean completed) throws SQLException {
 		PreparedStatement ps_saveTaskChanges = connection.prepareStatement("UPDATE `tasks` SET `task_name` = ?, `description` = ?, `due_date` = ?, `completed` = ? WHERE `task_id` = ?");
 		ps_saveTaskChanges.setString(1, taskName);

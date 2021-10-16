@@ -125,11 +125,12 @@ public class dashboardController {
     	FileChooser fileChooser = new FileChooser();
     	
     	//Add filters so only images can be added.
-        FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
-        FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
+    	FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
+    	FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
+        
         
     	
-    	fileChooser.getExtensionFilters().addAll(PNG_Filter, png_Filter);
+    	fileChooser.getExtensionFilters().addAll(png_Filter, PNG_Filter);
     	fileChooser.setTitle("Select image");
     	newProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + newProfile);
@@ -372,11 +373,9 @@ public class dashboardController {
 				
 				Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
 				Label lbl_description = new Label("Description: \n" + column.getDescription());
-				lbl_description.setWrapText(true);
-				Label lbl_date = new Label("Due date: " + column.getDue_date().toString());
-				
-				
-				lbl_date.setStyle("-fx-background-color: coral; -fx-padding: 5px;");
+				lbl_description.setWrapText(true);			
+				//Label lbl_date = new Label("Due date: " + column.getDue_date().toString());	
+				Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
 				
 				
 				Button btn_editColumn = new Button("Edit column");
@@ -454,7 +453,9 @@ public class dashboardController {
 					Pane taskPane = new Pane();
 					Label taskName = new Label("Task name: " + task.getTaskName());
 					Label taskDescription = new Label("Task description: " + task.getDescription());
-					Label taskDueDate = new Label("Task due date: " + task.getDueDate().toString());
+					//Label taskDueDate = new Label("Task due date: " + task.getDueDate().toString());
+					Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
+					
 					Label taskCompleted = new Label();
 					if (task.isCompleted()) {
 						taskCompleted.setText("Completed");
@@ -627,6 +628,41 @@ public class dashboardController {
 		stage.show();
 	}
 	
+	public Label dateDifference(Date dueDate, boolean completed) {
+		
+		Date currentDate = Date.valueOf(LocalDate.now());
+		int daysBetween = (int) (dueDate.getTime() - currentDate.getTime()) / 1000 / 60 / 60 / 24;
+		System.out.println("OIJWROIJROIJROEIJRJORIGOIJEROIJG " + daysBetween);
+		Label output = new Label(dueDate.toString());
+		
+		if (daysBetween <= 7) {
+			if (daysBetween < 0) {
+				if (completed) {
+					//Completed before
+					output.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
+				}
+				else {
+					//Over due
+					output.setStyle("-fx-background-color: orange; -fx-padding: 5px;");
+				}
+				
+			}
+			else {
+				//Due date approaching
+				output.setStyle("-fx-background-color: yellow; -fx-padding: 5px;");
+			}
+
+		}
+		
+		
+		else if (completed && daysBetween >= 0) {
+			//Completed in time
+			output.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
+		}
+		
+		
+		return output;
+	}
 	
 	//Creates an inspirational quote.
 	public void setQuote() {
