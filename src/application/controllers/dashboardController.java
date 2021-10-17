@@ -15,6 +15,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -41,7 +42,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -49,6 +52,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -336,23 +340,30 @@ public class dashboardController {
 				@Override
 				public void handle(ActionEvent arg0) {
 					
-					//Deletes the project and notifies the user.
-					try {
-						model.getProjectDAO().deleteProject(project.getProjectID());
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}					
-					lbl_notification.setText(project.getProjectName() + " has been deleted!");
-						        	
-		            //Refreshes the page on the same tab.
-		        	try {
-		        		refresh(arg0, userID);
-						
-			        	
-					} catch (Exception e) {
-						System.out.println("Error: " + e);
+					Alert alertDeleteProject = new Alert(AlertType.CONFIRMATION);
+					Optional<ButtonType> choice = alertDeleteProject.showAndWait();
+					
+					if (choice.isPresent() && choice.get() == ButtonType.OK) {
+						//Deletes the project and notifies the user.
+						try {
+							model.getProjectDAO().deleteProject(project.getProjectID());
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}					
+						lbl_notification.setText(project.getProjectName() + " has been deleted!");
+							        	
+			            //Refreshes the page on the same tab.
+			        	try {
+			        		refresh(arg0, userID);
+							
+				        	
+						} catch (Exception e) {
+							System.out.println("Error: " + e);
+						}
 					}
+					
+
 				}
 			});
 			
