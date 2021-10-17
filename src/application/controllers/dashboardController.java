@@ -418,11 +418,7 @@ public class dashboardController {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
-						
-
-						
-						
+						}	
 					}
 				});
 				
@@ -520,20 +516,32 @@ public class dashboardController {
 					
 					btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {
 						
+
+						
 						@Override
 						public void handle(ActionEvent arg0) {
-							System.out.println("Delete task " + task.getTaskName());
-							try {
-								model.getProjectDAO().deleteTask(task.getTaskID());						
-								System.out.println("Task " + task.getTaskID() + " deleted.");
-								
-								refresh(arg0, userID);
-								
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								System.exit(0);
+							
+							Alert alertDeleteTask = new Alert(AlertType.CONFIRMATION);
+							alertDeleteTask.setTitle("Delete task " + task.getTaskName() + "?");
+							alertDeleteTask.setHeaderText("Are you sure you want to delete task " + task.getTaskName() + "?");
+							Optional<ButtonType> choice = alertDeleteTask.showAndWait();
+							
+							if (choice.isPresent() && choice.get() == ButtonType.OK) {
+								System.out.println("Delete task " + task.getTaskName());
+								try {
+									model.getProjectDAO().deleteTask(task.getTaskID());						
+									System.out.println("Task " + task.getTaskID() + " deleted.");
+									
+									refresh(arg0, userID);
+									
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+									System.exit(0);
+								}
 							}
+							
+
 						}
 					
 					});
