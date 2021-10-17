@@ -69,7 +69,6 @@ public class homeController {
     
     private Model model = new Model();
     
-
     //Open file explorer and let user choose profile image.
     
     public void chooseProfile(ActionEvent event) throws Exception {     	
@@ -110,8 +109,6 @@ public class homeController {
 				
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		BufferedInputStream file_defaultImage = (BufferedInputStream) classLoader.getResourceAsStream("default_profile.png");
-		
-		Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost/java-project-management-db", "root", "");
 			
 		BufferedInputStream input = null;
 		
@@ -131,6 +128,8 @@ public class homeController {
 		if (passField_Password.getText().equals(passField_ConfirmPassword.getText()) && !passField_Password.getText().equals("")) { //Passwords match.
 			
 			if(!textField_FName.getText().equals("") && !textField_LName.getText().equals("") && !textField_Username.getText().equals("")) {
+				
+				//Show the user details in console for debugging.
 				System.out.println("First name: " + textField_FName.getText());
 				System.out.println("Last name: " + textField_LName.getText());
 				System.out.println("Username: " + textField_Username.getText());
@@ -138,7 +137,6 @@ public class homeController {
 				System.out.println("Confirm password: " + passField_ConfirmPassword.getText());
 				
 				//Check if user already exists.
-				
 				User tmpUser = new User();
 				tmpUser.setUsername(textField_Username.getText());
 				Boolean userExists = model.getUserDAO().userExists(tmpUser);
@@ -211,9 +209,7 @@ public class homeController {
 			
         	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
         	Parent root = dashboardScene.load();      	
-        	
-        	
-        	
+        	        	
         	dashboardController dashboardController = dashboardScene.getController();
         	dashboardController.setUserID(currentUser.getUserID());
         	dashboardController.loadUser(currentUser);
@@ -234,16 +230,12 @@ public class homeController {
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
-			
-			
-			
-			
 		}
         else {
         	System.out.println("User does not exist.");
         	lbl_loginStatus.setText("Invalid username or password.");
         }
-        System.out.println("PASSWORD FIELD: " + passField_LoginPassword.getText());
+        System.out.println("Password field: " + passField_LoginPassword.getText());
 	}
 	
 	//Close application.

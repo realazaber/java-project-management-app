@@ -9,6 +9,7 @@ public class Model {
 	
 	
 	public Model() {
+		//Prepare the daos.
 		baseDao = new baseDao();
 		userDAO = new userDAOImpl();
 		projectDAO = new projectDAOImpl();
