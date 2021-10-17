@@ -86,9 +86,6 @@ public class projectDAOImpl implements projectDAO {
 	
 	public void saveProjectChanges(int projectID, int userID, String projectName, boolean isDefault) throws SQLException {
 		
-		
-		
-		
 		Statement checkProjects = connection.createStatement();
 		
 		if (isDefault) {

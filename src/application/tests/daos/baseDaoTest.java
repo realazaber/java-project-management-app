@@ -1,4 +1,4 @@
-package application.tests;
+package application.tests.daos;
 
 import static org.junit.Assert.*;
 

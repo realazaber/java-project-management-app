@@ -30,7 +30,6 @@ public class homeController {
 	
 	private Stage stage;
 	
-	
     @FXML
     private TextField textField_FName;
 

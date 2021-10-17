@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.dashboardController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0" />
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" />
       <TabPane fx:id="tabpane_mainTab" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <tabs>
           <Tab text="Dashboard">
@@ -19,11 +19,6 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="337.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label alignment="CENTER" layoutX="42.0" layoutY="45.0" prefHeight="25.0" prefWidth="482.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="118.0" AnchorPane.topAnchor="20.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
                         <Label fx:id="lbl_fname" alignment="CENTER" contentDisplay="CENTER" layoutX="409.0" layoutY="21.0" prefHeight="25.0" prefWidth="193.0" text="lbl_firstName" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <font>
                               <Font size="20.0" />
@@ -40,10 +35,10 @@
           </Tab>
           <Tab text="Projects">
             <content>
-              <AnchorPane>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button layoutX="611.0" layoutY="31.0" mnemonicParsing="false" onAction="#addProjectWindow" text="Create new project" AnchorPane.bottomAnchor="499.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="31.0" />
-                        <TabPane fx:id="tab_projects" layoutY="77.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <TabPane fx:id="tab_projects" layoutY="77.0" prefHeight="492.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>
