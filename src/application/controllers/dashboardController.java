@@ -98,12 +98,6 @@ public class dashboardController {
     private TextField txtFieldLName;
     
     @FXML
-    private TextField txtFieldusername;
-    
-    @FXML
-    private TextField txtFieldPassword;
-    
-    @FXML
     private Label label_userInfo;
     
     @FXML

@@ -40,11 +40,11 @@ public class homeController {
     @FXML
     private TextField textFieldUsername;
 
+    @FXML    
+    private PasswordField passFieldPassword;
+    
     @FXML
-    private TextField textFieldPassword;
-
-    @FXML
-    private TextField textFieldConfirmPassword;
+    private PasswordField passFieldConfirmPassword;
     
     @FXML
     private Label notification;
@@ -128,14 +128,14 @@ public class homeController {
 			input = new BufferedInputStream(new FileInputStream(tmpProfile));
 		}
 		
-		if (textFieldPassword.getText().equals(textFieldConfirmPassword.getText()) && !textFieldPassword.getText().equals("")) { //Passwords match.
+		if (passFieldPassword.getText().equals(passFieldConfirmPassword.getText()) && !passFieldPassword.getText().equals("")) { //Passwords match.
 			
 			if(!textFieldFName.getText().equals("") && !textFieldLName.getText().equals("") && !textFieldUsername.getText().equals("")) {
 				System.out.println("First name: " + textFieldFName.getText());
 				System.out.println("Last name: " + textFieldLName.getText());
 				System.out.println("Username: " + textFieldUsername.getText());
-				System.out.println("Password: " + textFieldPassword.getText());
-				System.out.println("Confirm password: " + textFieldConfirmPassword.getText());
+				System.out.println("Password: " + passFieldPassword.getText());
+				System.out.println("Confirm password: " + passFieldConfirmPassword.getText());
 				
 				//Check if user already exists.
 				
@@ -167,7 +167,7 @@ public class homeController {
 						
 
 						
-						model.getUserDAO().addUser(textFieldFName.getText(), textFieldLName.getText(), textFieldUsername.getText(), textFieldPassword.getText(), input);
+						model.getUserDAO().addUser(textFieldFName.getText(), textFieldLName.getText(), textFieldUsername.getText(), passFieldPassword.getText(), input);
 					}
 					catch (Exception e) {
 						System.out.println("Error: " + e);
@@ -177,8 +177,8 @@ public class homeController {
 						textFieldFName.setText("");
 						textFieldLName.setText("");
 						textFieldUsername.setText("");
-						textFieldPassword.setText("");
-						textFieldConfirmPassword.setText("");
+						passFieldPassword.setText("");
+						passFieldConfirmPassword.setText("");
 						notification.setText("Successfully registered!");
 						tmpProfile = null;
 					}
@@ -192,7 +192,7 @@ public class homeController {
 			
 		}
 		else {
-			System.out.println(textFieldPassword.getText() + " does not match " + textFieldConfirmPassword.getText());
+			System.out.println(passFieldPassword.getText() + " does not match " + passFieldConfirmPassword.getText());
 			notification.setText("Passwords do not match!");
 		}
 			
