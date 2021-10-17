@@ -27,9 +27,9 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btn_login" layoutX="421.0" layoutY="202.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="100.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="310.0" />
-                        <TextField fx:id="LoginUsername" layoutX="333.0" layoutY="90.0" prefHeight="30.0" prefWidth="489.0" promptText="Username" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
-                        <Label fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="222.0" prefHeight="16.0" prefWidth="388.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <PasswordField fx:id="passwordField" layoutX="315.0" layoutY="226.0" promptText="Password" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
+                        <TextField fx:id="textField_LoginUsername" layoutX="333.0" layoutY="90.0" prefHeight="30.0" prefWidth="489.0" promptText="Username" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="90.0" />
+                        <Label fx:id="lbl_loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="222.0" prefHeight="16.0" prefWidth="388.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <PasswordField fx:id="passField_LoginPassword" layoutX="315.0" layoutY="226.0" promptText="Password" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="140.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -38,10 +38,10 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btn_register" layoutX="350.0" layoutY="314.0" mnemonicParsing="false" onAction="#Register" prefHeight="30.0" prefWidth="100.0" text="Register" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="310.0" />
-                        <TextField fx:id="textFieldFName" layoutX="213.0" layoutY="84.0" prefHeight="24.0" prefWidth="200.0" promptText="FIrst name" />
-                        <TextField fx:id="textFieldLName" layoutX="213.0" layoutY="114.0" prefHeight="24.0" prefWidth="200.0" promptText="Last name" />
-                        <TextField fx:id="textFieldUsername" layoutX="213.0" layoutY="144.0" prefHeight="24.0" prefWidth="200.0" promptText="Username" />
-                        <Label fx:id="notification" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="270.0" prefHeight="16.0" prefWidth="526.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <TextField fx:id="textField_FName" layoutX="213.0" layoutY="84.0" prefHeight="24.0" prefWidth="200.0" promptText="FIrst name" />
+                        <TextField fx:id="textField_LName" layoutX="213.0" layoutY="114.0" prefHeight="24.0" prefWidth="200.0" promptText="Last name" />
+                        <TextField fx:id="textField_Username" layoutX="213.0" layoutY="144.0" prefHeight="24.0" prefWidth="200.0" promptText="Username" />
+                        <Label fx:id="lbl_notification" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="270.0" prefHeight="16.0" prefWidth="526.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                         <Button fx:id="btn_imageUpload" layoutX="209.0" layoutY="234.0" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="24.0" prefWidth="204.0" text="Upload image" />
                         <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="202.0" layoutX="428.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="428.0" AnchorPane.rightAnchor="195.0">
                            <viewport>
@@ -50,8 +50,8 @@
                            <image>
                               <Image url="@../../../resources/default_profile.png" />
                            </image></ImageView>
-                        <PasswordField fx:id="passFieldPassword" layoutX="213.0" layoutY="174.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="24.0" prefWidth="200.0" promptText="Password" />
-                        <PasswordField fx:id="passFieldConfirmPassword" layoutX="213.0" layoutY="204.0" prefHeight="24.0" prefWidth="200.0" promptText="Confirm password" />
+                        <PasswordField fx:id="passField_Password" layoutX="213.0" layoutY="174.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="24.0" prefWidth="200.0" promptText="Password" />
+                        <PasswordField fx:id="passField_ConfirmPassword" layoutX="213.0" layoutY="204.0" prefHeight="24.0" prefWidth="200.0" promptText="Confirm password" />
                      </children></AnchorPane>
             </content>
           </Tab>

@@ -32,22 +32,22 @@ public class homeController {
 	
 	
     @FXML
-    private TextField textFieldFName;
+    private TextField textField_FName;
 
     @FXML
-    private TextField textFieldLName;
+    private TextField textField_LName;
 
     @FXML
-    private TextField textFieldUsername;
+    private TextField textField_Username;
 
     @FXML    
-    private PasswordField passFieldPassword;
+    private PasswordField passField_Password;
     
     @FXML
-    private PasswordField passFieldConfirmPassword;
+    private PasswordField passField_ConfirmPassword;
     
     @FXML
-    private Label notification;
+    private Label lbl_notification;
     
     @FXML 
     private Button btn_imageUpload;
@@ -56,13 +56,13 @@ public class homeController {
     public ImageView imageView = new ImageView();
 
     @FXML
-    private TextField LoginUsername;
+    private TextField textField_LoginUsername;
     
     @FXML
-    private PasswordField passwordField;
+    private PasswordField passField_LoginPassword;
     
     @FXML
-    private Label loginStatus;
+    private Label lbl_loginStatus;
     
     @FXML
     private File tmpProfile;
@@ -71,26 +71,24 @@ public class homeController {
     
 
     //Open file explorer and let user choose profile image.
-    @FXML
-    public void chooseProfile(ActionEvent event) throws Exception {  
-    	
-    	imageView.setImage(null);
+    
+    public void chooseProfile(ActionEvent event) throws Exception {     	
     	
     	System.out.println("Uploading image.");
     	FileChooser fileChooser = new FileChooser();
     	
     	//Add filters so only images can be added.
     	FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
-    	FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
-        
-        
-    	
+    	FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");    	
     	fileChooser.getExtensionFilters().addAll(png_Filter, PNG_Filter);
     	fileChooser.setTitle("Select image");
+    	
+    	//Let user choose image and notify them when an image was selected.
     	tmpProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + tmpProfile);
 
     	try {
+    		//Save the image and display it on image view.
     		InputStream fileInputStream = new FileInputStream(tmpProfile);
     		Image selectedImage = new Image(fileInputStream);
     		System.out.println("Chosen image " + selectedImage);
@@ -99,8 +97,10 @@ public class homeController {
     		
     		System.out.println("Set " + tmpProfile + " as preview.");
 		} catch (Exception e) {
+			//If there is an error, notify the user.
 			System.out.println("Error uploading custom profile: " + e);
 			System.out.println("Image url: " + tmpProfile);
+			
 		}
 
     }
@@ -128,25 +128,25 @@ public class homeController {
 			input = new BufferedInputStream(new FileInputStream(tmpProfile));
 		}
 		
-		if (passFieldPassword.getText().equals(passFieldConfirmPassword.getText()) && !passFieldPassword.getText().equals("")) { //Passwords match.
+		if (passField_Password.getText().equals(passField_ConfirmPassword.getText()) && !passField_Password.getText().equals("")) { //Passwords match.
 			
-			if(!textFieldFName.getText().equals("") && !textFieldLName.getText().equals("") && !textFieldUsername.getText().equals("")) {
-				System.out.println("First name: " + textFieldFName.getText());
-				System.out.println("Last name: " + textFieldLName.getText());
-				System.out.println("Username: " + textFieldUsername.getText());
-				System.out.println("Password: " + passFieldPassword.getText());
-				System.out.println("Confirm password: " + passFieldConfirmPassword.getText());
+			if(!textField_FName.getText().equals("") && !textField_LName.getText().equals("") && !textField_Username.getText().equals("")) {
+				System.out.println("First name: " + textField_FName.getText());
+				System.out.println("Last name: " + textField_LName.getText());
+				System.out.println("Username: " + textField_Username.getText());
+				System.out.println("Password: " + passField_Password.getText());
+				System.out.println("Confirm password: " + passField_ConfirmPassword.getText());
 				
 				//Check if user already exists.
 				
 				User tmpUser = new User();
-				tmpUser.setUsername(textFieldUsername.getText());
+				tmpUser.setUsername(textField_Username.getText());
 				Boolean userExists = model.getUserDAO().userExists(tmpUser);
 				
 				
 		        if (userExists) {
 					System.out.println("User already exists.");
-					notification.setText("Account has already been created!");
+					lbl_notification.setText("Account has already been created!");
 				}
 
 		        else {
@@ -167,19 +167,19 @@ public class homeController {
 						
 
 						
-						model.getUserDAO().addUser(textFieldFName.getText(), textFieldLName.getText(), textFieldUsername.getText(), passFieldPassword.getText(), input);
+						model.getUserDAO().addUser(textField_FName.getText(), textField_LName.getText(), textField_Username.getText(), passField_Password.getText(), input);
 					}
 					catch (Exception e) {
 						System.out.println("Error: " + e);
 					}
 					
 					if(input != null) {
-						textFieldFName.setText("");
-						textFieldLName.setText("");
-						textFieldUsername.setText("");
-						passFieldPassword.setText("");
-						passFieldConfirmPassword.setText("");
-						notification.setText("Successfully registered!");
+						textField_FName.setText("");
+						textField_LName.setText("");
+						textField_Username.setText("");
+						passField_Password.setText("");
+						passField_ConfirmPassword.setText("");
+						lbl_notification.setText("Successfully registered!");
 						tmpProfile = null;
 					}
 		        }
@@ -187,13 +187,13 @@ public class homeController {
 			}
 			else {
 				System.out.println("Some data is not filled in.");
-				notification.setText("Please fill in all fields.");
+				lbl_notification.setText("Please fill in all fields.");
 			}
 			
 		}
 		else {
-			System.out.println(passFieldPassword.getText() + " does not match " + passFieldConfirmPassword.getText());
-			notification.setText("Passwords do not match!");
+			System.out.println(passField_Password.getText() + " does not match " + passField_ConfirmPassword.getText());
+			lbl_notification.setText("Passwords do not match!");
 		}
 			
 	}
@@ -204,7 +204,7 @@ public class homeController {
 		
 		System.out.println("Checking for user");
 		
-		User currentUser = model.getUserDAO().loginUser(LoginUsername.getText(), passwordField.getText());
+		User currentUser = model.getUserDAO().loginUser(textField_LoginUsername.getText(), passField_LoginPassword.getText());
 		
 		
 		if (currentUser != null) {	
@@ -227,7 +227,7 @@ public class homeController {
         	
 			
         	System.out.println("User exists.");
-			loginStatus.setText("Logging in!");
+			lbl_loginStatus.setText("Logging in!");
 			
 			
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -241,9 +241,9 @@ public class homeController {
 		}
         else {
         	System.out.println("User does not exist.");
-        	loginStatus.setText("Invalid username or password.");
+        	lbl_loginStatus.setText("Invalid username or password.");
         }
-        System.out.println("PASSWORD FIELD: " + passwordField.getText());
+        System.out.println("PASSWORD FIELD: " + passField_LoginPassword.getText());
 	}
 	
 	//Close application.
