@@ -431,18 +431,27 @@ public class dashboardController {
 					@Override
 					public void handle(ActionEvent arg0) {
 						System.out.println("Delete column " + column.getColumn_name());
-						try {
-													
-							model.getProjectDAO().deleteColumn(column.getColumnID());
-							System.out.println("Column " + column.getColumnID() + " deleted.");
-							
-							refresh(arg0, userID);
-							
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							System.exit(0);
+						Alert alertDeleteColumn = new Alert(AlertType.CONFIRMATION);
+						alertDeleteColumn.setTitle("Delete column " + column.getColumn_name() + "?");
+						alertDeleteColumn.setHeaderText("Are you sure you want to delete column " + column.getColumn_name() + "?");
+						Optional<ButtonType> choice = alertDeleteColumn.showAndWait();
+						
+						if (choice.isPresent() && choice.get() == ButtonType.OK) {
+							try {
+								
+								model.getProjectDAO().deleteColumn(column.getColumnID());
+								System.out.println("Column " + column.getColumnID() + " deleted.");
+								
+								refresh(arg0, userID);
+								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								System.exit(0);
+							}
 						}
+						
+
 					}
 				
 				});
