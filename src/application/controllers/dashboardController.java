@@ -341,6 +341,8 @@ public class dashboardController {
 				public void handle(ActionEvent arg0) {
 					
 					Alert alertDeleteProject = new Alert(AlertType.CONFIRMATION);
+					alertDeleteProject.setTitle("Delete project " + project.getProjectName() + "?");
+					alertDeleteProject.setHeaderText("Are you sure you want to delete project " + project.getProjectName() + "?");
 					Optional<ButtonType> choice = alertDeleteProject.showAndWait();
 					
 					if (choice.isPresent() && choice.get() == ButtonType.OK) {
