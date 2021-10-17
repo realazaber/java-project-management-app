@@ -720,7 +720,7 @@ public class dashboardController {
 	}
 		
 	public void setWelcomeMessage(String firstName) {
-		lbl_fname.setText(firstName);
+		lbl_fname.setText("Welcome " + firstName);
 	}
 	
 
