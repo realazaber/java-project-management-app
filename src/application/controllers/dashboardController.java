@@ -344,16 +344,19 @@ public class dashboardController {
 							model.getProjectDAO().deleteProject(project.getProjectID());
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							e1.printStackTrace();							
 						}					
 						lbl_notification.setText(project.getProjectName() + " has been deleted!");
 							        	
 			            //Refreshes the page on the same tab.
 			        	try {
-			        		refresh(arg0, userID);				        	
+			        		refresh(arg0, userID);	
+			        		System.out.println("Refreshed projects tab.");
 						} 
+			        	
 			        	catch (NullPointerException e) {
-							System.out.println("0 projects under user " + currentUser.getUsername());														
+							System.out.println("0 projects under user " + currentUser.getUsername());
+							System.out.println("Error: " + e);
 						}
 			        	catch (Exception e) {
 			        		System.out.println("Error: " + e);
@@ -633,7 +636,8 @@ public class dashboardController {
 	
 	public void refresh(ActionEvent arg0, int userID) throws Exception {
 		
-		int selectedProjectTab = tab_projects.getSelectionModel().getSelectedIndex();
+		
+		
 		//Prepare to load dashboard.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
     	Parent root = dashboardScene.load();
@@ -649,16 +653,25 @@ public class dashboardController {
     	dashboardController.setQuote();
     	dashboardController.showProjects(userID);
     	dashboardController.loadUser(tmpUser);
-    	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-    	
     	
     	
     	try {
+    		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+		} 
+    	
+    	catch (Exception e) {
+			System.out.println("Error: " + e);
+		}
+    	
+    	
+    	try {
+    		int selectedProjectTab = tab_projects.getSelectionModel().getSelectedIndex();
     		dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);	
 		} 
     	
     	catch (NullPointerException e) {
 			System.out.println("0 projects under user " + currentUser.getUsername());
+			
 		}
     	
     	catch (Exception e) {
