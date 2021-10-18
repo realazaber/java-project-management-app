@@ -77,8 +77,9 @@ public class homeController {
     	
     	//Add filters so only images can be added.
     	FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
-    	FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");    	
-    	fileChooser.getExtensionFilters().addAll(png_Filter, PNG_Filter);
+    	FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
+    	FileChooser.ExtensionFilter gif_Filter = new FileChooser.ExtensionFilter("gif images (*.gif)", "*.gif");
+    	fileChooser.getExtensionFilters().addAll(png_Filter, jpg_Filter, gif_Filter);
     	fileChooser.setTitle("Select image");
     	
     	//Let user choose image and notify them when an image was selected.
