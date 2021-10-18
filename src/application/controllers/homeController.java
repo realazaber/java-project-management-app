@@ -3,6 +3,7 @@ package application.controllers;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -136,22 +137,21 @@ public class homeController {
 				System.out.println("Password: " + passField_Password.getText());
 				System.out.println("Confirm password: " + passField_ConfirmPassword.getText());
 				
-				//Check if user already exists.
 				User tmpUser = new User();
 				tmpUser.setUsername(textField_Username.getText());
+				
+				//Check if user already exists.				
 				Boolean userExists = model.getUserDAO().userExists(tmpUser);
 				
 				
-		        if (userExists) {
+		        if (userExists) { //User account already exists.
 					System.out.println("User already exists.");
+					lbl_notification.setTextFill(Color.ORANGE);
 					lbl_notification.setText("Account has already been created!");
 				}
-
 		        else {
 					//
-					try {
-						
-						//
+					try {						
 						//If no image is uploaded use the default.
 						if (tmpProfile == null) {
 							System.out.println("No image has been added.");
@@ -160,11 +160,11 @@ public class homeController {
 							System.out.println("Default image " + file_defaultImage + " uploading.");						
 						}
 						else {
+							//If an image has been chosen let the user know it is being uploaded. 
 							System.out.println("Photo " + tmpProfile + " is being uploaded.");
 						}					
-						
-
-						
+											
+						//Add user to database.
 						model.getUserDAO().addUser(textField_FName.getText(), textField_LName.getText(), textField_Username.getText(), passField_Password.getText(), input);
 					}
 					catch (Exception e) {
@@ -172,11 +172,13 @@ public class homeController {
 					}
 					
 					if(input != null) {
+						//Let the user know that the account has been created.
 						textField_FName.setText("");
 						textField_LName.setText("");
 						textField_Username.setText("");
 						passField_Password.setText("");
 						passField_ConfirmPassword.setText("");
+						lbl_notification.setTextFill(Color.GREEN);
 						lbl_notification.setText("Successfully registered!");
 						tmpProfile = null;
 					}
@@ -184,13 +186,17 @@ public class homeController {
 								
 			}
 			else {
+				//Prompt the user to fill in all fields.
 				System.out.println("Some data is not filled in.");
+				lbl_notification.setTextFill(Color.RED);
 				lbl_notification.setText("Please fill in all fields.");
 			}
 			
 		}
 		else {
+			//Notify the user that password and confirm password does not match.
 			System.out.println(passField_Password.getText() + " does not match " + passField_ConfirmPassword.getText());
+			lbl_notification.setTextFill(Color.RED);
 			lbl_notification.setText("Passwords do not match!");
 		}
 			
@@ -198,13 +204,12 @@ public class homeController {
 	
 	//Check user details and login to dashboard.
 	public void Login(ActionEvent event) throws Exception {
-		
-		
 		System.out.println("Checking for user");
 		
+		//Check if a user with the same username and password exists.
 		User currentUser = model.getUserDAO().loginUser(textField_LoginUsername.getText(), passField_LoginPassword.getText());
 		
-		
+		//If the user exists then login.
 		if (currentUser != null) {	
 			
         	FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
@@ -232,10 +237,11 @@ public class homeController {
 			stage.show();
 		}
         else {
+        	//If the user has not been created or the login details are wrong let the user know.
         	System.out.println("User does not exist.");
-        	lbl_loginStatus.setText("Invalid username or password.");
-        }
-        System.out.println("Password field: " + passField_LoginPassword.getText());
+        	lbl_loginStatus.setTextFill(Color.RED);
+        	lbl_loginStatus.setText("Invalid login details or user does not exist.");
+        }      
 	}
 	
 	//Close application.

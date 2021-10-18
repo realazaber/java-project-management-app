@@ -124,11 +124,10 @@ public class dashboardController {
     	
     	//Add filters so only images can be added.
     	FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
-    	FileChooser.ExtensionFilter PNG_Filter = new FileChooser.ExtensionFilter("PNG images (*.PNG)", "*.PNG");
-        
-        
+    	FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
+    	FileChooser.ExtensionFilter gif_Filter = new FileChooser.ExtensionFilter("gif images (*.gif)", "*.gif");
+    	fileChooser.getExtensionFilters().addAll(png_Filter, jpg_Filter, gif_Filter);
     	
-    	fileChooser.getExtensionFilters().addAll(png_Filter, PNG_Filter);
     	fileChooser.setTitle("Select image");
     	newProfile = fileChooser.showOpenDialog(stage);
     	System.out.println("File chosen: " + newProfile);
