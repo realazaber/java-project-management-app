@@ -235,7 +235,6 @@ public class dashboardController {
 						
 			Pane pane_tabContent = new Pane();
 			
-			
 			Label lbl_notification = new Label();
 			lbl_notification.setLayoutX(200);
 			lbl_notification.setLayoutY(100);

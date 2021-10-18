@@ -33,7 +33,7 @@ public class Main extends Application{
 			System.out.println("Error code: " + e);
 			System.exit(0);
 		}
-		
+		//Load the database, if there is an error end the program.
 		try {
 			model.getBaseDao().connect();
 			System.out.println("Connected to database.");
