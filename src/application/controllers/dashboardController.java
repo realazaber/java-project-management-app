@@ -350,147 +350,60 @@ public class dashboardController {
 							        	
 			            //Refreshes the page on the same tab.
 			        	try {
-			        		refresh(arg0, userID);
-							
-				        	
-						} catch (Exception e) {
-							System.out.println("Error: " + e);
+			        		refresh(arg0, userID);				        	
+						} 
+			        	catch (NullPointerException e) {
+							System.out.println("0 projects under user " + currentUser.getUsername());														
 						}
-					}
-					
-
+			        	catch (Exception e) {
+			        		System.out.println("Error: " + e);
+						}			        	
+					}				
 				}
 			});
-			
-
 			
 			HBox hboxProjects = new HBox(50);
 			
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
 			ArrayList<VBox> vboxColumns = new ArrayList<VBox>();
 			
-			
-			for (Column column : columns) {
-				VBox vboxColumn = new VBox(10);
-				vboxColumn.setMaxWidth(250);
-				Pane columnDetailsPane = new Pane();
+			if (columns.isEmpty()) {
+				System.out.println("No columns under user " + currentUser.getUsername());
+			}
+			else {
+				for (Column column : columns) {
+					VBox vboxColumn = new VBox(10);
+					vboxColumn.setMaxWidth(250);
+					Pane columnDetailsPane = new Pane();
 
-				
-				
-				Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
-				Label lbl_description = new Label("Description: \n" + column.getDescription());
-				lbl_description.setWrapText(true);			
-				Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
-				
-				
-				Button btn_editColumn = new Button("Edit column");
-				Button btn_deleteColumn = new Button("Delete column");
-				columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
-				
-				btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent arg0)  {
-						System.out.println("Edit column " + column.getColumn_name());
-						
-						//Prepare new project scene.
-						FXMLLoader editColumnScene = new FXMLLoader(getClass().getResource("/application/views/EditColumn.fxml"));
-						
-						Parent root;
-						try {
-							root = editColumnScene.load();
-							//Apply parameters to the newcolumn scene.
-							editColumnController editColumnController = editColumnScene.getController();
-							editColumnController.loadColumn(column);
-							editColumnController.setUserID(userID);
-							
-							//Load the new project window.
-							stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
-							Scene scene = new Scene(root);
-							stage.setScene(scene);
-							stage.show();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}	
-					}
-				});
-				
-				btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
 					
-					@Override
-					public void handle(ActionEvent arg0) {
-						System.out.println("Delete column " + column.getColumn_name());
-						Alert alertDeleteColumn = new Alert(AlertType.CONFIRMATION);
-						alertDeleteColumn.setTitle("Delete column " + column.getColumn_name() + "?");
-						alertDeleteColumn.setHeaderText("Are you sure you want to delete column " + column.getColumn_name() + "?");
-						Optional<ButtonType> choice = alertDeleteColumn.showAndWait();
-						
-						if (choice.isPresent() && choice.get() == ButtonType.OK) {
-							try {
-								
-								model.getProjectDAO().deleteColumn(column.getColumnID());
-								System.out.println("Column " + column.getColumnID() + " deleted.");
-								
-								refresh(arg0, userID);
-								
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								System.exit(0);
-							}
-						}
-						
-					}
-				
-				});
-				
-				
-				HBox hbox_columnBtns = new HBox(5);
-				hbox_columnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
-				
-				Label lbl_tasksHeading = new Label("Tasks");
-				lbl_tasksHeading.setContentDisplay(ContentDisplay.CENTER);
-				
-				
-				ArrayList<Pane> taskPanes = new ArrayList<Pane>();
-				
-				
-				VBox vboxTasks = new VBox(3);
-				ArrayList<Task> tasks = model.getProjectDAO().loadTasks(column.getColumnID());
-				for (Task task : tasks) {
-					VBox taskVbox = new VBox(3);
-					Pane taskPane = new Pane();
-					Label taskName = new Label("Task name: " + task.getTaskName());
-					Label taskDescription = new Label("Task description: " + task.getDescription());
-					//Label taskDueDate = new Label("Task due date: " + task.getDueDate().toString());
-					Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
 					
-					Label taskCompleted = new Label();
-					if (task.isCompleted()) {
-						taskCompleted.setText("Completed");
-					}
-					else {
-						taskCompleted.setText("Not finished yet");
-					}
+					Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
+					Label lbl_description = new Label("Description: \n" + column.getDescription());
+					lbl_description.setWrapText(true);			
+					Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
 					
-					HBox hboxTaskButtons = new HBox(3);
-
-					Button btn_taskEdit = new Button("Edit");
-					Button btn_taskDelete = new Button("Delete");
 					
-					btn_taskEdit.setOnAction(new EventHandler<ActionEvent>() {
-						
+					Button btn_editColumn = new Button("Edit column");
+					Button btn_deleteColumn = new Button("Delete column");
+					columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
+					
+					btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
-						public void handle(ActionEvent arg0) {
+						public void handle(ActionEvent arg0)  {
+							System.out.println("Edit column " + column.getColumn_name());
+							
 							//Prepare new project scene.
-							FXMLLoader editTaskScene = new FXMLLoader(getClass().getResource("/application/views/EditTask.fxml"));
+							FXMLLoader editColumnScene = new FXMLLoader(getClass().getResource("/application/views/EditColumn.fxml"));
 							
 							Parent root;
 							try {
-								root = editTaskScene.load();
+								root = editColumnScene.load();
 								//Apply parameters to the newcolumn scene.
-								editTaskController editTaskController = editTaskScene.getController();
-								editTaskController.loadEditTask(task, project);
+								editColumnController editColumnController = editColumnScene.getController();
+								editColumnController.loadColumn(column);
+								editColumnController.setUserID(userID);
+								
 								//Load the new project window.
 								stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
 								Scene scene = new Scene(root);
@@ -499,30 +412,25 @@ public class dashboardController {
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-							}
-							
+							}	
 						}
-						
 					});
 					
-					
-					btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {
-						
-
+					btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
 						
 						@Override
 						public void handle(ActionEvent arg0) {
-							
-							Alert alertDeleteTask = new Alert(AlertType.CONFIRMATION);
-							alertDeleteTask.setTitle("Delete task " + task.getTaskName() + "?");
-							alertDeleteTask.setHeaderText("Are you sure you want to delete task " + task.getTaskName() + "?");
-							Optional<ButtonType> choice = alertDeleteTask.showAndWait();
+							System.out.println("Delete column " + column.getColumn_name());
+							Alert alertDeleteColumn = new Alert(AlertType.CONFIRMATION);
+							alertDeleteColumn.setTitle("Delete column " + column.getColumn_name() + "?");
+							alertDeleteColumn.setHeaderText("Are you sure you want to delete column " + column.getColumn_name() + "?");
+							Optional<ButtonType> choice = alertDeleteColumn.showAndWait();
 							
 							if (choice.isPresent() && choice.get() == ButtonType.OK) {
-								System.out.println("Delete task " + task.getTaskName());
 								try {
-									model.getProjectDAO().deleteTask(task.getTaskID());						
-									System.out.println("Task " + task.getTaskID() + " deleted.");
+									
+									model.getProjectDAO().deleteColumn(column.getColumnID());
+									System.out.println("Column " + column.getColumnID() + " deleted.");
 									
 									refresh(arg0, userID);
 									
@@ -533,73 +441,175 @@ public class dashboardController {
 								}
 							}
 							
-
 						}
 					
 					});
 					
 					
+					HBox hbox_columnBtns = new HBox(5);
+					hbox_columnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
 					
-					hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
-					
-					taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxTaskButtons);
-					
-					
-					taskPane.getChildren().addAll(taskVbox);
-					taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");
-					
-					taskPanes.add(taskPane);
+					Label lbl_tasksHeading = new Label("Tasks");
+					lbl_tasksHeading.setContentDisplay(ContentDisplay.CENTER);
 					
 					
-				}
-				vboxTasks.getChildren().addAll(taskPanes);
-				
-				Pane pane_columnDetails = new Pane();
-				pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 3px; -fx-background-color: white;");
-				
-				VBox vbox_columnDetails = new VBox(3);
-				vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns);
-				pane_columnDetails.getChildren().addAll(vbox_columnDetails);
-				
-				Button btn_taskAdd = new Button("Create task");
-				
-				
-				btn_taskAdd.setOnAction(new EventHandler<ActionEvent>() {
+					ArrayList<Pane> taskPanes = new ArrayList<Pane>();
 					
-					@Override
-					public void handle(ActionEvent arg0) {
-						System.out.println("Add task");
-						
-						//Prepare new project scene.
-						FXMLLoader addTaskScene = new FXMLLoader(getClass().getResource("/application/views/NewTask.fxml"));
-						
-						Parent root;
-						try {
-							root = addTaskScene.load();
-							//Apply parameters to the newcolumn scene.
-							newTaskController newTaskController = addTaskScene.getController();
+					
+					VBox vboxTasks = new VBox(3);
+					ArrayList<Task> tasks = model.getProjectDAO().loadTasks(column.getColumnID());
+
+					if (tasks.isEmpty()) {
+						System.out.println("No tasks under user " + currentUser.getUsername());
+					}
+					else {
+						for (Task task : tasks) {
+							VBox taskVbox = new VBox(3);
+							Pane taskPane = new Pane();
+							Label taskName = new Label("Task name: " + task.getTaskName());
+							Label taskDescription = new Label("Task description: " + task.getDescription());
+							//Label taskDueDate = new Label("Task due date: " + task.getDueDate().toString());
+							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
 							
-							newTaskController.loadAddTask(column.getColumnID(), userID);
+							Label taskCompleted = new Label();
+							if (task.isCompleted()) {
+								taskCompleted.setText("Completed");
+							}
+							else {
+								taskCompleted.setText("Not finished yet");
+							}
 							
-							//Load the new project window.
-							stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
-							Scene scene = new Scene(root);
-							stage.setScene(scene);
-							stage.show();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							HBox hboxTaskButtons = new HBox(3);
+
+							Button btn_taskEdit = new Button("Edit");
+							Button btn_taskDelete = new Button("Delete");
+							
+							btn_taskEdit.setOnAction(new EventHandler<ActionEvent>() {
+								
+								@Override
+								public void handle(ActionEvent arg0) {
+									//Prepare new project scene.
+									FXMLLoader editTaskScene = new FXMLLoader(getClass().getResource("/application/views/EditTask.fxml"));
+									
+									Parent root;
+									try {
+										root = editTaskScene.load();
+										//Apply parameters to the newcolumn scene.
+										editTaskController editTaskController = editTaskScene.getController();
+										editTaskController.loadEditTask(task, project);
+										//Load the new project window.
+										stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+										Scene scene = new Scene(root);
+										stage.setScene(scene);
+										stage.show();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+								}
+								
+							});
+							
+							
+							btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {
+								
+
+								
+								@Override
+								public void handle(ActionEvent arg0) {
+									
+									Alert alertDeleteTask = new Alert(AlertType.CONFIRMATION);
+									alertDeleteTask.setTitle("Delete task " + task.getTaskName() + "?");
+									alertDeleteTask.setHeaderText("Are you sure you want to delete task " + task.getTaskName() + "?");
+									Optional<ButtonType> choice = alertDeleteTask.showAndWait();
+									
+									if (choice.isPresent() && choice.get() == ButtonType.OK) {
+										System.out.println("Delete task " + task.getTaskName());
+										try {
+											model.getProjectDAO().deleteTask(task.getTaskID());						
+											System.out.println("Task " + task.getTaskID() + " deleted.");
+											
+											refresh(arg0, userID);
+											
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+											System.exit(0);
+										}
+									}
+									
+
+								}
+							
+							});
+							
+							
+							
+							hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
+							
+							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxTaskButtons);
+							
+							
+							taskPane.getChildren().addAll(taskVbox);
+							taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");
+							
+							taskPanes.add(taskPane);
+							
+							
 						}
 					}
-				});
-				
-				HBox hbox_taskHeading = new HBox(3);
-				hbox_taskHeading.getChildren().addAll(lbl_tasksHeading, btn_taskAdd);
-				
-				
-				vboxColumn.getChildren().addAll(pane_columnDetails, hbox_taskHeading, vboxTasks);
-				vboxColumns.add(vboxColumn);
+					
+					vboxTasks.getChildren().addAll(taskPanes);
+					
+					Pane pane_columnDetails = new Pane();
+					pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 3px; -fx-background-color: white;");
+					
+					VBox vbox_columnDetails = new VBox(3);
+					vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns);
+					pane_columnDetails.getChildren().addAll(vbox_columnDetails);
+					
+					Button btn_taskAdd = new Button("Create task");
+					
+					
+					btn_taskAdd.setOnAction(new EventHandler<ActionEvent>() {
+						
+						@Override
+						public void handle(ActionEvent arg0) {
+							System.out.println("Add task");
+							
+							//Prepare new project scene.
+							FXMLLoader addTaskScene = new FXMLLoader(getClass().getResource("/application/views/NewTask.fxml"));
+							
+							Parent root;
+							try {
+								root = addTaskScene.load();
+								//Apply parameters to the newcolumn scene.
+								newTaskController newTaskController = addTaskScene.getController();
+								
+								newTaskController.loadAddTask(column.getColumnID(), userID);
+								
+								//Load the new project window.
+								stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+								Scene scene = new Scene(root);
+								stage.setScene(scene);
+								stage.show();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					});
+					
+					HBox hbox_taskHeading = new HBox(3);
+					hbox_taskHeading.getChildren().addAll(lbl_tasksHeading, btn_taskAdd);
+					
+					
+					vboxColumn.getChildren().addAll(pane_columnDetails, hbox_taskHeading, vboxTasks);
+					vboxColumns.add(vboxColumn);
+				}
 			}
+
 			
 			hboxProjects.getChildren().addAll(vboxColumns);
 			hboxProjects.setLayoutY(60);
@@ -640,7 +650,23 @@ public class dashboardController {
     	dashboardController.showProjects(userID);
     	dashboardController.loadUser(tmpUser);
     	dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-    	dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);				    				    
+    	
+    	
+    	
+    	try {
+    		dashboardController.tab_projects.getSelectionModel().select(selectedProjectTab);	
+		} 
+    	
+    	catch (NullPointerException e) {
+			System.out.println("0 projects under user " + currentUser.getUsername());
+		}
+    	
+    	catch (Exception e) {
+			System.out.println("Error: " + e);
+		}
+
+    	
+    				    				    
 		
     	//Load the dashboard.
     	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
