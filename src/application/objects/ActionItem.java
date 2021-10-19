@@ -2,7 +2,7 @@ package application.objects;
 
 public class ActionItem {
 	int actionitemID;
-	int taskID;
+	int checkListID;
 	String name;
 	String descripion;
 	
@@ -18,12 +18,12 @@ public class ActionItem {
 		this.actionitemID = actionitemID;
 	}
 
-	public int getTaskID() {
-		return taskID;
+	public int getcheckListID() {
+		return checkListID;
 	}
 
-	public void setTaskID(int taskID) {
-		this.taskID = taskID;
+	public void setcheckListID(int checkListID) {
+		this.checkListID = checkListID;
 	}
 
 	public String getName() {

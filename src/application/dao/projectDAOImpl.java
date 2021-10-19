@@ -10,7 +10,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.junit.validator.PublicClassValidator;
+
 import application.controllers.add.newProjectController;
+import application.objects.ActionItem;
+import application.objects.Checklist;
 import application.objects.Column;
 import application.objects.Project;
 import application.objects.Task;
@@ -331,4 +335,126 @@ public class projectDAOImpl implements projectDAO {
 			System.exit(0);
 		}
 	}
+	
+	public boolean addCheckList(int taskID) {
+		
+		try {
+			Statement checkTasks = connection.createStatement();
+			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `checklists` WHERE `task_id` = '" + taskID + "'");
+			if (!rs_checkTasks.next()) {
+				String query = "INSERT INTO `checklists` (`checklist_id`, `task_id`) VALUES (null, ?)";
+				PreparedStatement statement = connection.prepareStatement(query);
+				statement.setInt(1, taskID);
+				statement.execute();
+				return true;
+				
+			}
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
+		
+		
+		
+		return false;
+	}
+	
+	public Checklist loadChecklist(int taskID) throws SQLException {
+		
+		Checklist checklist = new Checklist();
+		
+		Statement loadChecklistStatement = connection.createStatement();
+		String query = "SELECT `checklist_id`, `task_id`, FROM `checklists` WHERE `task_id` = '" + taskID + "'";
+		ResultSet rs_loadChecklist = loadChecklistStatement.executeQuery(query);
+		
+		while (rs_loadChecklist.next()) {
+			checklist.setCheckListID(rs_loadChecklist.getInt(1));
+			checklist.setTaskID(rs_loadChecklist.getInt(2));			
+		}
+		
+		
+		return checklist;
+	}
+	
+	public void deleteCheckList(int checkListID) {
+		try {
+			//Delete checklist
+			String queryDeleteChecklist = "DELETE FROM `checklists` WHERE `checklist_id` = ?";
+			PreparedStatement statementDeleteChecklist = connection.prepareStatement(queryDeleteChecklist);
+			statementDeleteChecklist.setInt(1, checkListID);
+			statementDeleteChecklist.execute();
+			
+			//Delete action items
+			ArrayList<ActionItem> actionItems = loadActionItems(checkListID);
+			for (ActionItem actionItem : actionItems) {
+				deleteActionItem(actionItem.getActionitemID());
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
+	}
+	
+	public boolean addActionItem(int checkListID, String name, String description) {
+		try {
+			Statement checkTasks = connection.createStatement();
+			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `actionItems` WHERE `checklist_id` = '" + checkListID + "' AND `name` = '" + name + "'");
+			if (!rs_checkTasks.next()) {
+				String query = "INSERT INTO `action_items` (`actionitem_id`, `checklist_id`, name, description) VALUES (null, ?, ?, ?)";
+				PreparedStatement statement = connection.prepareStatement(query);
+				statement.setInt(1, checkListID);
+				statement.setString(2, name);
+				statement.setString(3, description);
+				statement.execute();
+				return true;
+				
+			}
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
+				
+		return false;
+	}
+	
+	public ArrayList<ActionItem> loadActionItems(int checkListID) throws SQLException {
+		
+		ArrayList<ActionItem> actionItems = new ArrayList<ActionItem>();
+		
+		Statement loadActionItemsStatement = connection.createStatement();
+		String query = "SELECT `actionitem_id`, `checklist_id`, `name`, `description`, FROM `action_items` WHERE `checklist_id` = '" + checkListID + "'";
+		ResultSet rs_actionItems = loadActionItemsStatement.executeQuery(query);
+		
+		while (rs_actionItems.next()) {
+			
+			ActionItem tmpActionItem = new ActionItem();
+			tmpActionItem.setActionitemID(rs_actionItems.getInt(1));
+			tmpActionItem.setcheckListID(rs_actionItems.getInt(2));
+			tmpActionItem.setName(rs_actionItems.getString(3));
+			tmpActionItem.setDescripion(rs_actionItems.getString(4));
+			
+			actionItems.add(tmpActionItem);
+			
+		}			
+		
+		return actionItems;
+	}
+	
+	public void deleteActionItem(int actionItemID) {
+		try {
+			//Delete action item
+			String queryDeleteActionItem = "DELETE FROM `action_items` WHERE `actionitem_id` = ?";
+			PreparedStatement statementDeleteActionItem = connection.prepareStatement(queryDeleteActionItem);
+			statementDeleteActionItem.setInt(1, actionItemID);
+			statementDeleteActionItem.execute();
+			
+			
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
+	}
+	
+	
 }
