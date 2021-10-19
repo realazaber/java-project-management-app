@@ -102,6 +102,11 @@ public class editTaskController {
 		
 		ObservableList<String> columnNameOptions = FXCollections.observableArrayList(columnNames);
 		
+		
+		
+		Column defaultColumn = model.getProjectDAO().searchColumn(task.getColumnID());
+		
+		comboBoxChooseColumn.setPromptText(defaultColumn.getColumn_name());
 		comboBoxChooseColumn.setItems(columnNameOptions);
 		
 	}

@@ -55,6 +55,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -374,7 +375,18 @@ public class dashboardController {
 				System.out.println("No columns under user " + currentUser.getUsername());
 			}
 			else {
+				
+
+				
+				
 				for (Column column : columns) {
+					
+					
+					
+					
+					
+					
+					
 					VBox vboxColumn = new VBox(10);
 					vboxColumn.setMaxWidth(250);
 					Pane columnDetailsPane = new Pane();
@@ -632,7 +644,8 @@ public class dashboardController {
 		}
 	}
 	
-	
+
+
 	
 	public void refresh(ActionEvent arg0, int userID) throws Exception {
 		

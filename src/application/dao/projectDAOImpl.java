@@ -298,7 +298,7 @@ public class projectDAOImpl implements projectDAO {
 		Column column = new Column();
 		
 		Statement findColumnStatement = connection.createStatement();
-		String query = "SELECT `column_id`, `project_id`, `column_name`, `due_date`, `description` FROM `tasks` WHERE `column_id` = '" + columnID + "'";
+		String query = "SELECT `column_id`, `project_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `column_id` = '" + columnID + "'";
 		ResultSet rs = findColumnStatement.executeQuery(query);
 		
 		while (rs.next()) {
