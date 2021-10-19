@@ -384,10 +384,6 @@ public class dashboardController {
 				
 				for (Column column : columns) {
 					
-					
-					
-					
-					
 					VBox vboxColumn = new VBox(10);
 					vboxColumn.setMaxWidth(250);
 					Pane columnDetailsPane = new Pane();
