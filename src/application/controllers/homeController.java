@@ -16,11 +16,13 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.io.*;
 
 import application.Model;
 import application.controllers.add.newColumnController;
@@ -71,6 +73,7 @@ public class homeController {
     
     //Open file explorer and let user choose profile image.
     
+    @FXML
     public void chooseProfile(ActionEvent event) throws Exception {     	
     	
     	System.out.println("Uploading image.");
@@ -89,8 +92,10 @@ public class homeController {
 
     	try {
     		//Save the image and display it on image view.
-    		InputStream fileInputStream = new FileInputStream(tmpProfile);
-    		Image selectedImage = new Image(fileInputStream);
+    		FileInputStream fileInputStream = new FileInputStream(tmpProfile);
+    		
+    		byte[] newProfileBytes = fileInputStream.readAllBytes();    		
+    		Image selectedImage = new Image(new ByteArrayInputStream(newProfileBytes));
     		System.out.println("Chosen image " + selectedImage);
     		
     		imageView.setImage(selectedImage);
@@ -102,6 +107,7 @@ public class homeController {
 			System.out.println("Image url: " + tmpProfile);
 			
 		}
+    	
 
     }
 
