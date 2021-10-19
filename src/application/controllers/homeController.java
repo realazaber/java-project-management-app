@@ -83,7 +83,8 @@ public class homeController {
     	FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
     	FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
     	FileChooser.ExtensionFilter gif_Filter = new FileChooser.ExtensionFilter("gif images (*.gif)", "*.gif");
-    	fileChooser.getExtensionFilters().addAll(png_Filter, jpg_Filter, gif_Filter);
+    	//fileChooser.getExtensionFilters().addAll(png_Filter, jpg_Filter, gif_Filter);
+    	fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
     	fileChooser.setTitle("Select image");
     	
     	//Let user choose image and notify them when an image was selected.
@@ -227,6 +228,7 @@ public class homeController {
         	dashboardController.setWelcomeMessage(currentUser.getFirstName());
         	dashboardController.setQuote();
         	dashboardController.showProjects(currentUser.getUserID());
+        	
         	
         	
         	System.out.println("Logging in...");

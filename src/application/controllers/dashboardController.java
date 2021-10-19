@@ -148,6 +148,7 @@ public class dashboardController {
 	
 	//Load user details in profile tab.
 	public void loadUser(User currentUser) {
+		
 		this.currentUser = currentUser;
 		
 		
@@ -504,7 +505,7 @@ public class dashboardController {
 										Scene scene = new Scene(root);
 										stage.setScene(scene);
 										stage.show();
-									} catch (IOException e) {
+									} catch (Exception e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}

@@ -4,12 +4,18 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import application.Model;
 import application.controllers.dashboardController;
+import application.objects.Column;
 import application.objects.Project;
 import application.objects.Task;
 import application.objects.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.css.CssParser.ParseError.StringParsingError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -62,7 +69,16 @@ public class editTaskController {
     @FXML
     private CheckBox checkBox_completed;
     
-	public void loadEditTask(Task task, Project project) {
+    @FXML
+    private ComboBox<String> comboBoxChooseColumn;
+    
+    boolean changeColumn = false;
+    
+    ArrayList<Column> columns = new ArrayList<Column>();
+    
+    ArrayList<String> columnNames = new ArrayList<String>();
+    
+	public void loadEditTask(Task task, Project project) throws SQLException {
 		this.project = project;
 		this.task = task;
 		
@@ -75,6 +91,30 @@ public class editTaskController {
 		else {
 			checkBox_completed.setSelected(false);
 		}
+		
+		columns = model.getProjectDAO().loadColumns(project.getProjectID());
+		
+		
+		
+		for (Column column : columns) {			
+			columnNames.add(column.getColumn_name());
+		}
+		
+		ObservableList<String> columnNameOptions = FXCollections.observableArrayList(columnNames);
+		
+		comboBoxChooseColumn.setItems(columnNameOptions);
+		
+	}
+	
+	@FXML
+	void choseOption(ActionEvent event) {
+		
+		if (comboBoxChooseColumn.getSelectionModel().getSelectedItem() != null) {
+			System.out.println("Chaning column to " + comboBoxChooseColumn.getSelectionModel().getSelectedItem().toString());
+			changeColumn = true;
+		}
+		
+		
 	}
 
     @FXML
@@ -85,6 +125,20 @@ public class editTaskController {
 			model.getProjectDAO().saveTaskChanges(task.getTaskID(), txtFieldTaskName.getText(), txtAreaDescription.getText(), tmpDate, checkBox_completed.isSelected());
 			lbl_notification.setTextFill(Color.GREEN);
 			lbl_notification.setText(txtFieldTaskName.getText() + " edited successfully");
+			
+			if (changeColumn) {
+				
+				int columnID = 0;
+				
+				for (Column column : columns) {
+					if (column.getColumn_name() == comboBoxChooseColumn.getSelectionModel().getSelectedItem().toString()) {
+						columnID = column.getColumnID();
+					}
+				}
+				
+				
+				model.getProjectDAO().changeTaskColumn(task.getTaskID(), columnID);
+			}
 		}
     }
     

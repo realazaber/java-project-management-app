@@ -193,6 +193,7 @@ public class projectDAOImpl implements projectDAO {
 		ps_saveColumnChanges.execute();
 	}
 	
+	
 	public void deleteColumn(int columnID) throws SQLException {
 		try {
 			
@@ -283,6 +284,35 @@ public class projectDAOImpl implements projectDAO {
 		ps_saveTaskChanges.setBoolean(4, completed);
 		ps_saveTaskChanges.setInt(5, taskID);
 		ps_saveTaskChanges.execute();
+	}
+	
+
+	public void changeTaskColumn(int taskID, int columnID) throws SQLException {
+		PreparedStatement ps_changeTaskColumn = connection.prepareStatement("UPDATE `tasks` SET `column_id` = ? WHERE `task_id` = ?");
+		ps_changeTaskColumn.setInt(1, columnID);
+		ps_changeTaskColumn.setInt(2, taskID);
+		ps_changeTaskColumn.execute();
+	}
+	
+	public Column searchColumn(int columnID) throws SQLException {
+		Column column = new Column();
+		
+		Statement findColumnStatement = connection.createStatement();
+		String query = "SELECT `column_id`, `project_id`, `column_name`, `due_date`, `description` FROM `tasks` WHERE `column_id` = '" + columnID + "'";
+		ResultSet rs = findColumnStatement.executeQuery(query);
+		
+		while (rs.next()) {
+
+			column.setColumnID(rs.getInt(1));
+			column.setProjectID(rs.getInt(2));
+			column.setColumn_name(rs.getString(3));
+			column.setDue_date(rs.getDate(4));
+			column.setDescription(rs.getString(5));
+
+
+		}
+		
+		return column;
 	}
 	
 	public void deleteTask(int taskID) throws SQLException {
