@@ -70,6 +70,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.awt.image.BufferedImage;
@@ -491,6 +492,13 @@ public class dashboardController {
 								taskCompleted.setText("Not finished yet");
 							}
 							
+							HBox hboxChecklistItems = new HBox(50);
+							Button btn_viewChecklist = new Button("View Checklist");
+							Label lbl_checkListDetails = new Label("1/69");
+							lbl_checkListDetails.setTextAlignment(TextAlignment.RIGHT);
+							
+							hboxChecklistItems.getChildren().addAll(btn_viewChecklist, lbl_checkListDetails);
+							
 							HBox hboxTaskButtons = new HBox(3);
 
 							Button btn_taskEdit = new Button("Edit");
@@ -560,7 +568,7 @@ public class dashboardController {
 							
 							hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
 							
-							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxTaskButtons);
+							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxChecklistItems, hboxTaskButtons);
 							
 							
 							taskPane.getChildren().addAll(taskVbox);
