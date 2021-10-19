@@ -18,6 +18,9 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.Random;
 
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javax.imageio.ImageIO;
 
 import application.Model;
@@ -380,8 +383,6 @@ public class dashboardController {
 				
 				
 				for (Column column : columns) {
-					
-					
 					
 					
 					
