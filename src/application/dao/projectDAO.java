@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.objects.ActionItem;
+import application.objects.Checklist;
 import application.objects.Column;
 import application.objects.Project;
 import application.objects.Task;
@@ -30,4 +32,11 @@ public interface projectDAO {
 	public Column searchColumn(int columnID) throws SQLException;
 	public void saveTaskChanges(int taskID, String taskName, String description, Date dueDate, boolean completed) throws SQLException;
 	public void deleteTask(int taskItemID) throws SQLException;
+	
+	public boolean addCheckList(int taskID);
+	public Checklist loadChecklist(int taskID) throws SQLException;
+	public void deleteCheckList(int checkListID);
+	public boolean addActionItem(int checkListID, String name, String description);
+	public ArrayList<ActionItem> loadActionItems(int checkListID) throws SQLException;
+	public void deleteActionItem(int actionItemID);
 }

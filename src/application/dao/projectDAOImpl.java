@@ -443,7 +443,7 @@ public class projectDAOImpl implements projectDAO {
 	
 	public void deleteActionItem(int actionItemID) {
 		try {
-			//Delete action item
+			//Delete action item.
 			String queryDeleteActionItem = "DELETE FROM `action_items` WHERE `actionitem_id` = ?";
 			PreparedStatement statementDeleteActionItem = connection.prepareStatement(queryDeleteActionItem);
 			statementDeleteActionItem.setInt(1, actionItemID);
