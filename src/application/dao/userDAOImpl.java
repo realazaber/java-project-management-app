@@ -22,7 +22,7 @@ public class userDAOImpl implements userDAO {
 		User user = new User();
 		
 		Statement getUserStatement = baseDao.connect().createStatement();
-		String query = "SELECT `id`, `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'";
+		String query = "SELECT `user_id`, `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'";
 		ResultSet rs = getUserStatement.executeQuery(query);
 		
 		while (rs.next()) {
@@ -73,7 +73,7 @@ public class userDAOImpl implements userDAO {
 	
 	@Override
 	public void addUser(String firstName, String lastName, String username, String password, InputStream profileImage) throws SQLException {
-		PreparedStatement ps_addUser = baseDao.connect().prepareStatement("INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+		PreparedStatement ps_addUser = baseDao.connect().prepareStatement("INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
 	
 		if (profileImage == null) {
 			System.out.println("Using default image");
@@ -92,7 +92,7 @@ public class userDAOImpl implements userDAO {
 	
 	@Override
 	public void saveProfileChanges(int user_id, String firstName, String lastName, InputStream newProfile) throws SQLException {
-		PreparedStatement ps_saveProfileChanges = baseDao.connect().prepareStatement("UPDATE `users` SET `first_name` = ?, `last_name` = ?, `profile` = ? WHERE `id` = ?");
+		PreparedStatement ps_saveProfileChanges = baseDao.connect().prepareStatement("UPDATE `users` SET `first_name` = ?, `last_name` = ?, `profile` = ? WHERE `user_id` = ?");
 		ps_saveProfileChanges.setString(1, firstName);
 		ps_saveProfileChanges.setString(2, lastName);
 		ps_saveProfileChanges.setBinaryStream(3, newProfile);

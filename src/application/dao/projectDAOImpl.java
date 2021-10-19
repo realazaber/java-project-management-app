@@ -149,7 +149,8 @@ public class projectDAOImpl implements projectDAO {
 				return true;
 				
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
 		}
@@ -191,6 +192,27 @@ public class projectDAOImpl implements projectDAO {
 		ps_saveColumnChanges.setInt(4, ColumnID);
 		ps_saveColumnChanges.setInt(5, project_ID);
 		ps_saveColumnChanges.execute();
+	}
+	
+	public Column searchColumn(int columnID) throws SQLException {
+		Column column = new Column();
+		
+		Statement findColumnStatement = connection.createStatement();
+		String query = "SELECT `column_id`, `project_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `column_id` = '" + columnID + "'";
+		ResultSet rs = findColumnStatement.executeQuery(query);
+		
+		while (rs.next()) {
+
+			column.setColumnID(rs.getInt(1));
+			column.setProjectID(rs.getInt(2));
+			column.setColumn_name(rs.getString(3));
+			column.setDue_date(rs.getDate(4));
+			column.setDescription(rs.getString(5));
+
+
+		}
+		
+		return column;
 	}
 	
 	
@@ -294,26 +316,7 @@ public class projectDAOImpl implements projectDAO {
 		ps_changeTaskColumn.execute();
 	}
 	
-	public Column searchColumn(int columnID) throws SQLException {
-		Column column = new Column();
-		
-		Statement findColumnStatement = connection.createStatement();
-		String query = "SELECT `column_id`, `project_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `column_id` = '" + columnID + "'";
-		ResultSet rs = findColumnStatement.executeQuery(query);
-		
-		while (rs.next()) {
 
-			column.setColumnID(rs.getInt(1));
-			column.setProjectID(rs.getInt(2));
-			column.setColumn_name(rs.getString(3));
-			column.setDue_date(rs.getDate(4));
-			column.setDescription(rs.getString(5));
-
-
-		}
-		
-		return column;
-	}
 	
 	public void deleteTask(int taskID) throws SQLException {
 		try {
