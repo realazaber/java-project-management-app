@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -98,9 +100,20 @@ public class checklistController {
     
     @FXML
     void btn_createActionItem(ActionEvent event) {
-    	try {
-    		System.out.println("Adding action item " + textField_actItemName.getText());
-    		model.getProjectDAO().addActionItem(checkListID, textField_actItemName.getText(), textArea_actItemDescription.getText(), checkBoxCompleted.isSelected());
+    	try {    		
+    		
+    		if (!model.getProjectDAO().addActionItem(checkListID, textField_actItemName.getText(), textArea_actItemDescription.getText(), checkBoxCompleted.isSelected())) {
+				System.out.println(textField_actItemName.getText() + " already exists!");
+				Alert alertActionItemExists = new Alert(AlertType.ERROR);
+				alertActionItemExists.setTitle(textField_actItemName.getText() + " already exists!");
+				alertActionItemExists.setHeaderText(textField_actItemName.getText() + " already exists!");
+				alertActionItemExists.showAndWait();
+			}
+    		else {
+    			System.out.println(textField_actItemName.getText() + " added to checklist.");
+    		}
+    		
+    		
     		actionItems = model.getProjectDAO().loadActionItems(checkListID);
     		ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
     		table_actionItems.setItems(tableActionItems);
