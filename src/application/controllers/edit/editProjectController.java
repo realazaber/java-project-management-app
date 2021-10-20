@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import application.Model;
 import application.controllers.dashboardController;
-import application.objects.Project;
-import application.objects.User;
+import application.domains.Project;
+import application.domains.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

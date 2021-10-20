@@ -13,11 +13,7 @@ import java.util.Iterator;
 import org.junit.validator.PublicClassValidator;
 
 import application.controllers.add.newProjectController;
-import application.objects.ActionItem;
-import application.objects.Checklist;
-import application.objects.Column;
-import application.objects.Project;
-import application.objects.Task;
+import application.domains.*;
 
 public class projectDAOImpl implements projectDAO {
 	

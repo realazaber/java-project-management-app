@@ -9,10 +9,10 @@ import java.util.Iterator;
 
 import application.Model;
 import application.controllers.dashboardController;
-import application.objects.Column;
-import application.objects.Project;
-import application.objects.Task;
-import application.objects.User;
+import application.domains.Column;
+import application.domains.Project;
+import application.domains.Task;
+import application.domains.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.CssParser.ParseError.StringParsingError;

@@ -26,7 +26,7 @@ import java.io.*;
 
 import application.Model;
 import application.controllers.add.newColumnController;
-import application.objects.User;
+import application.domains.User;
 import application.dao.userDAO;
 
 public class homeController {

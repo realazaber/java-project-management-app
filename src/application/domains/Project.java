@@ -1,4 +1,4 @@
-package application.objects;
+package application.domains;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package application.objects;
+package application.domains;
 
 public class ActionItem {
 	int actionitemID;

@@ -18,8 +18,8 @@ import java.time.LocalDate;
 
 import application.Model;
 import application.controllers.dashboardController;
-import application.objects.Column;
-import application.objects.User;
+import application.domains.Column;
+import application.domains.User;
 
 public class editColumnController {
 

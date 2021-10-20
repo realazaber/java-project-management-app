@@ -4,11 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import application.objects.ActionItem;
-import application.objects.Checklist;
-import application.objects.Column;
-import application.objects.Project;
-import application.objects.Task;
+import application.domains.*;
 
 public interface projectDAO {
 	

@@ -1,4 +1,4 @@
-package application.objects;
+package application.domains;
 
 public class Checklist {
 	int checkListID;
