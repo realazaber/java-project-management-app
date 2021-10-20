@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,6 +58,15 @@ public class checklistController {
 
     @FXML
     private TextArea textArea_actItemDescription;
+    
+    @FXML
+    private CheckBox checkBoxCompleted;
+
+    @FXML
+    private Button btn_deleteActionItem;
+
+    @FXML
+    private Button btn_deleteChecklist;
 
     Model model = new Model();
     
@@ -80,6 +90,8 @@ public class checklistController {
     	col_actItemDescription.setCellValueFactory(new PropertyValueFactory<ActionItem, String>("description"));
     	col_actItemCompleted.setCellValueFactory(new PropertyValueFactory<ActionItem, Boolean>("completed"));
     	
+
+    	
     	table_actionItems.setItems(tableActionItems);
     
     }
@@ -88,11 +100,25 @@ public class checklistController {
     void btn_createActionItem(ActionEvent event) {
     	try {
     		System.out.println("Adding action item " + textField_actItemName.getText());
+    		model.getProjectDAO().addActionItem(checkListID, textField_actItemName.getText(), textArea_actItemDescription.getText(), checkBoxCompleted.isSelected());
+    		actionItems = model.getProjectDAO().loadActionItems(checkListID);
+    		ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
+    		table_actionItems.setItems(tableActionItems);
     		
 		} catch (Exception e) {
 			System.out.println("Error: " + e);
 		}
     	
+    }
+    
+    @FXML
+    void deleteActionItem(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteChecklist(ActionEvent event) {
+
     }
     
     @FXML

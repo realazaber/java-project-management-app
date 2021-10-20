@@ -35,11 +35,11 @@ public class ActionItem {
 		this.name = name;
 	}
 
-	public String getDescripion() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescripion(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	

@@ -555,7 +555,7 @@ public class dashboardController {
 							}
 							
 							if (completedActionItems == actionItems.size() && completedActionItems > 0) {
-								lbl_checkListDetails.setStyle("-fx-background-color: green;");
+								lbl_checkListDetails.setStyle("-fx-background-color: lightgreen;");
 							}
 							
 

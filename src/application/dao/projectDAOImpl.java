@@ -441,7 +441,7 @@ public class projectDAOImpl implements projectDAO {
 			tmpActionItem.setActionitemID(rs_actionItems.getInt(1));
 			tmpActionItem.setcheckListID(rs_actionItems.getInt(2));
 			tmpActionItem.setName(rs_actionItems.getString(3));
-			tmpActionItem.setDescripion(rs_actionItems.getString(4));
+			tmpActionItem.setDescription(rs_actionItems.getString(4));
 			tmpActionItem.setCompleted(rs_actionItems.getBoolean(5));
 			
 			actionItems.add(tmpActionItem);
