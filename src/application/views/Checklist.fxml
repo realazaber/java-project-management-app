@@ -20,9 +20,10 @@
       <Label fx:id="lbl_notification" alignment="CENTER" layoutY="380.0" prefHeight="43.0" prefWidth="600.0" textAlignment="CENTER" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="380.0" />
       <TableView fx:id="table_actionItems" layoutX="76.0" layoutY="56.0" prefHeight="200.0" prefWidth="467.0">
          <columns>
-            <TableColumn fx:id="col_actItemID" prefWidth="122.0" text="Action item ID" />
-            <TableColumn fx:id="col_actItemName" prefWidth="137.0" text="Action item Name" />
-            <TableColumn fx:id="col_actItemDescription" minWidth="0.0" prefWidth="207.0" text="Action item Description" />
+            <TableColumn fx:id="col_actItemID" prefWidth="60.0" text="Item ID" />
+            <TableColumn fx:id="col_actItemName" prefWidth="100.0" text="Item Name" />
+            <TableColumn fx:id="col_actItemDescription" minWidth="0.0" prefWidth="215.0" text="Item Description" />
+            <TableColumn fx:id="col_actItemCompleted" minWidth="0.0" prefWidth="90.0" text="Completed" />
          </columns></TableView>
       <Button fx:id="btn_addActionItem" layoutX="421.0" layoutY="275.0" mnemonicParsing="false" onAction="#btn_createActionItem" prefHeight="37.0" prefWidth="122.0" text="Add action item" />
       <TextField fx:id="textField_actItemName" layoutX="16.0" layoutY="274.0" prefHeight="25.0" prefWidth="162.0" promptText="Name" />

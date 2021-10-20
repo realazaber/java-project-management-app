@@ -32,7 +32,7 @@ public interface projectDAO {
 	public boolean addCheckList(int taskID);
 	public Checklist loadChecklist(int taskID) throws SQLException;
 	public void deleteCheckList(int checkListID);
-	public boolean addActionItem(int checkListID, String name, String description);
+	public boolean addActionItem(int checkListID, String name, String description, boolean completed);
 	public ArrayList<ActionItem> loadActionItems(int checkListID) throws SQLException;
 	public void deleteActionItem(int actionItemID);
 }

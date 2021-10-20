@@ -22,7 +22,7 @@ public class userDAOImpl implements userDAO {
 		User user = new User();
 		
 		Statement getUserStatement = baseDao.connect().createStatement();
-		String query = "SELECT `user_id`, `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `id` = '" + userID + "'";
+		String query = "SELECT `user_id`, `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `user_id` = '" + userID + "'";
 		ResultSet rs = getUserStatement.executeQuery(query);
 		
 		while (rs.next()) {

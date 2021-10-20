@@ -243,14 +243,24 @@ public class projectDAOImpl implements projectDAO {
 			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `tasks` WHERE `task_name` = '" + taskName + "' && `column_id` = '" + columnID + "'");
 			if (!rs_checkTasks.next()) {
 				String query = "INSERT INTO `tasks` (`task_id`, `column_id`, `task_name`, `description`, `due_date`, `completed`) VALUES (null, ?, ?, ?, ?, ?)";
-				PreparedStatement statement = connection.prepareStatement(query);
+				PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				statement.setInt(1, columnID);
 				statement.setString(2, taskName);
 				statement.setString(3, description);
 				statement.setDate(4, dueDate);
-				statement.setBoolean(5, completed);
+				statement.setBoolean(5, completed);				
 				statement.execute();
+				
+				ResultSet rs_newTaskID = statement.getGeneratedKeys();
+				int newTaskID = 0;
+				if (rs_newTaskID.next()) {
+					newTaskID = rs_newTaskID.getInt(1);
+				}
+				
+				addCheckList(newTaskID);
+				
 				return true;
+				
 				
 			}
 		} catch (Exception e) {
@@ -259,6 +269,8 @@ public class projectDAOImpl implements projectDAO {
 		}
 		return false;
 	}
+	
+	
 	
 	public ArrayList<Task> loadTasks(int columnID) throws SQLException {
 		ArrayList<Task> tasks = new ArrayList<Task>();
@@ -360,7 +372,7 @@ public class projectDAOImpl implements projectDAO {
 		Checklist checklist = new Checklist();
 		
 		Statement loadChecklistStatement = connection.createStatement();
-		String query = "SELECT `checklist_id`, `task_id`, FROM `checklists` WHERE `task_id` = '" + taskID + "'";
+		String query = "SELECT `checklist_id`, `task_id` FROM `checklists` WHERE `task_id` = '" + taskID + "'";
 		ResultSet rs_loadChecklist = loadChecklistStatement.executeQuery(query);
 		
 		while (rs_loadChecklist.next()) {
@@ -392,16 +404,17 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
-	public boolean addActionItem(int checkListID, String name, String description) {
+	public boolean addActionItem(int checkListID, String name, String description, boolean completed) {
 		try {
 			Statement checkTasks = connection.createStatement();
-			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `actionItems` WHERE `checklist_id` = '" + checkListID + "' AND `name` = '" + name + "'");
+			ResultSet rs_checkTasks = checkTasks.executeQuery("SELECT * FROM `action_items` WHERE `checklist_id` = '" + checkListID + "' AND `name` = '" + name + "'");
 			if (!rs_checkTasks.next()) {
-				String query = "INSERT INTO `action_items` (`actionitem_id`, `checklist_id`, name, description) VALUES (null, ?, ?, ?)";
+				String query = "INSERT INTO `action_items` (`actionitem_id`, `checklist_id`, `name`, `description`, `completed`) VALUES (null, ?, ?, ?, ?)";
 				PreparedStatement statement = connection.prepareStatement(query);
 				statement.setInt(1, checkListID);
 				statement.setString(2, name);
 				statement.setString(3, description);
+				statement.setBoolean(4, completed);
 				statement.execute();
 				return true;
 				
@@ -419,7 +432,7 @@ public class projectDAOImpl implements projectDAO {
 		ArrayList<ActionItem> actionItems = new ArrayList<ActionItem>();
 		
 		Statement loadActionItemsStatement = connection.createStatement();
-		String query = "SELECT `actionitem_id`, `checklist_id`, `name`, `description`, FROM `action_items` WHERE `checklist_id` = '" + checkListID + "'";
+		String query = "SELECT `actionitem_id`, `checklist_id`, `name`, `description` FROM `action_items` WHERE `checklist_id` = '" + checkListID + "'";
 		ResultSet rs_actionItems = loadActionItemsStatement.executeQuery(query);
 		
 		while (rs_actionItems.next()) {

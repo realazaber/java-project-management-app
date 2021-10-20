@@ -7,6 +7,8 @@ import application.Model;
 import application.controllers.dashboardController;
 import application.domains.ActionItem;
 import application.domains.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,16 +35,19 @@ public class checklistController {
     private Label lbl_notification;
 
     @FXML
-    private TableView<?> table_actionItems;
+    private TableView<ActionItem> table_actionItems;
     
     @FXML
-    private TableColumn<?, ?> col_actItemID;
+    private TableColumn<ActionItem, Integer> col_actItemID;
 
     @FXML
-    private TableColumn<?, ?> col_actItemName;
+    private TableColumn<ActionItem, String> col_actItemName;
 
     @FXML
-    private TableColumn<?, ?> col_actItemDescription;
+    private TableColumn<ActionItem, String> col_actItemDescription;
+    
+    @FXML
+    private TableColumn<ActionItem, Boolean> col_actItemCompleted;
 
     @FXML
     private Button btn_addActionItem;
@@ -67,16 +72,23 @@ public class checklistController {
     	this.checkListID = checkListID;
     	actionItems = model.getProjectDAO().loadActionItems(checkListID);
     	
+    	col_actItemID.setCellValueFactory(new PropertyValueFactory<ActionItem, Integer>("actionitemID"));
+    	col_actItemName.setCellValueFactory(new PropertyValueFactory<ActionItem, String>("name"));
+    	col_actItemDescription.setCellValueFactory(new PropertyValueFactory<ActionItem, String>("description"));
+    	col_actItemCompleted.setCellValueFactory(new PropertyValueFactory<ActionItem, Boolean>("completed"));
     	
-    	for (ActionItem actionItem : actionItems) {
-			table_actionItems.getColumns().addAll(actionItem.getActionitemID(), actionItem.getName(), actionItem.getDescripion());
-		}
+
+    	ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
+    	
+    	table_actionItems.setItems(tableActionItems);
+    
     }
     
     @FXML
     void btn_createActionItem(ActionEvent event) {
     	try {
-    		model.getProjectDAO().addActionItem(checkListID, textField_actItemName.getText(), textArea_actItemDescription.getText());
+    		System.out.println("Adding action item " + textField_actItemName.getText());
+    		
 		} catch (Exception e) {
 			System.out.println("Error: " + e);
 		}

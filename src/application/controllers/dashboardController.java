@@ -27,9 +27,12 @@ import application.Model;
 import application.controllers.add.newColumnController;
 import application.controllers.add.newProjectController;
 import application.controllers.add.newTaskController;
+import application.controllers.edit.checklistController;
 import application.controllers.edit.editColumnController;
 import application.controllers.edit.editProjectController;
 import application.controllers.edit.editTaskController;
+import application.domains.ActionItem;
+import application.domains.Checklist;
 import application.domains.Column;
 import application.domains.Project;
 import application.domains.Task;
@@ -494,8 +497,74 @@ public class dashboardController {
 							
 							HBox hboxChecklistItems = new HBox(50);
 							Button btn_viewChecklist = new Button("View Checklist");
-							Label lbl_checkListDetails = new Label("1/69");
-							lbl_checkListDetails.setTextAlignment(TextAlignment.RIGHT);
+							
+							
+							
+							
+							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
+							ArrayList<ActionItem> actionItems = model.getProjectDAO().loadActionItems(checklist.getCheckListID());
+							
+							
+								btn_viewChecklist.setOnAction(new EventHandler<ActionEvent>() {
+								
+								@Override
+								public void handle(ActionEvent arg0) {
+									//Prepare new project scene.
+									FXMLLoader checklistScene = new FXMLLoader(getClass().getResource("/application/views/Checklist.fxml"));
+									
+									Parent root;
+									try {
+										root = checklistScene.load();
+										//Apply parameters to the checklist scene.										
+										checklistController checklistController = checklistScene.getController();
+										checklistController.loadChecklist(checklist.getCheckListID());
+										
+										//Load the new project window.
+										stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+										Scene scene = new Scene(root);
+										stage.setScene(scene);
+										stage.show();
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+								}
+								
+							});
+							
+							
+							
+							
+							
+							int completedActionItems = 0;
+							
+							for (ActionItem actionItem : actionItems) {
+								if (actionItem.isCompleted()) {
+									completedActionItems++;
+								}
+							}
+							
+							Label lbl_checkListDetails = new Label("");
+							if (completedActionItems == 0) {
+								lbl_checkListDetails.setText("No action\nitems");
+								lbl_checkListDetails.setStyle("-fx-background-color: lightgrey;");
+							}
+							else {
+								lbl_checkListDetails.setText(completedActionItems + "/" + actionItems.size());
+							}
+							
+							if (completedActionItems == actionItems.size() && completedActionItems > 0) {
+								lbl_checkListDetails.setStyle("-fx-background-color: green;");
+							}
+							
+
+							
+							lbl_checkListDetails.setTextAlignment(TextAlignment.CENTER);
+							lbl_checkListDetails.setWrapText(true);
+							
+							
+							
 							
 							hboxChecklistItems.getChildren().addAll(btn_viewChecklist, lbl_checkListDetails);
 							

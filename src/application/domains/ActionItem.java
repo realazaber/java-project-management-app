@@ -5,6 +5,7 @@ public class ActionItem {
 	int checkListID;
 	String name;
 	String descripion;
+	boolean completed;
 	
 	public ActionItem() {
 		
@@ -40,6 +41,14 @@ public class ActionItem {
 
 	public void setDescripion(String descripion) {
 		this.descripion = descripion;
+	}
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+	
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 	
 }
