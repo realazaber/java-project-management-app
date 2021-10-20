@@ -517,7 +517,7 @@ public class dashboardController {
 										root = checklistScene.load();
 										//Apply parameters to the checklist scene.										
 										checklistController checklistController = checklistScene.getController();
-										checklistController.loadChecklist(checklist.getCheckListID());
+										checklistController.loadChecklist(checklist.getCheckListID(), project.getUserID());
 										
 										//Load the new project window.
 										stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();

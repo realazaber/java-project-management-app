@@ -66,19 +66,19 @@ public class checklistController {
     
     ArrayList<ActionItem> actionItems = new ArrayList<ActionItem>();
     
-    public void loadChecklist(int checkListID) throws SQLException {
+    public void loadChecklist(int checkListID, int userID) throws SQLException {
     	
+    	this.userID = userID;
     	
     	this.checkListID = checkListID;
+    	
     	actionItems = model.getProjectDAO().loadActionItems(checkListID);
+    	ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
     	
     	col_actItemID.setCellValueFactory(new PropertyValueFactory<ActionItem, Integer>("actionitemID"));
     	col_actItemName.setCellValueFactory(new PropertyValueFactory<ActionItem, String>("name"));
     	col_actItemDescription.setCellValueFactory(new PropertyValueFactory<ActionItem, String>("description"));
     	col_actItemCompleted.setCellValueFactory(new PropertyValueFactory<ActionItem, Boolean>("completed"));
-    	
-
-    	ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
     	
     	table_actionItems.setItems(tableActionItems);
     
@@ -96,7 +96,7 @@ public class checklistController {
     }
     
     @FXML
-    void back(ActionEvent event) throws Exception {
+	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
@@ -104,17 +104,21 @@ public class checklistController {
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
 		dashboardController.setUserID(userID);
+		
 		User user = model.getUserDAO().getUser(userID);
+		
+		dashboardController.loadUser(user);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userID);
-		dashboardController.loadUser(user);
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-	
+		
+		
+		
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-    }
+	}
 
 
 

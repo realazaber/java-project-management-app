@@ -432,7 +432,7 @@ public class projectDAOImpl implements projectDAO {
 		ArrayList<ActionItem> actionItems = new ArrayList<ActionItem>();
 		
 		Statement loadActionItemsStatement = connection.createStatement();
-		String query = "SELECT `actionitem_id`, `checklist_id`, `name`, `description` FROM `action_items` WHERE `checklist_id` = '" + checkListID + "'";
+		String query = "SELECT `actionitem_id`, `checklist_id`, `name`, `description`, `completed` FROM `action_items` WHERE `checklist_id` = '" + checkListID + "'";
 		ResultSet rs_actionItems = loadActionItemsStatement.executeQuery(query);
 		
 		while (rs_actionItems.next()) {
@@ -442,6 +442,7 @@ public class projectDAOImpl implements projectDAO {
 			tmpActionItem.setcheckListID(rs_actionItems.getInt(2));
 			tmpActionItem.setName(rs_actionItems.getString(3));
 			tmpActionItem.setDescripion(rs_actionItems.getString(4));
+			tmpActionItem.setCompleted(rs_actionItems.getBoolean(5));
 			
 			actionItems.add(tmpActionItem);
 			
