@@ -225,10 +225,14 @@ public class projectDAOImpl implements projectDAO {
 			statementDeleteColumn.setInt(1, columnID);
 			statementDeleteColumn.execute();
 			//Delete tasks
-			String queryDeleteTasks = "DELETE FROM `tasks` WHERE `column_id` = ?";
-			PreparedStatement statementDeleteTasks = connection.prepareStatement(queryDeleteTasks);
-			statementDeleteTasks.setInt(1, columnID);
-			statementDeleteTasks.execute();
+			
+			ArrayList<Task> tasks = loadTasks(columnID);
+			for (Task task : tasks) {
+				deleteTask(task.getTaskID());
+				Checklist tmpChecklist = loadChecklist(task.getTaskID());
+				deleteCheckList(tmpChecklist.getCheckListID());
+			}
+			
 			
 			
 		} catch (Exception e) {
@@ -259,9 +263,7 @@ public class projectDAOImpl implements projectDAO {
 				
 				addCheckList(newTaskID);
 				
-				return true;
-				
-				
+				return true;			
 			}
 		} catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
@@ -269,8 +271,6 @@ public class projectDAOImpl implements projectDAO {
 		}
 		return false;
 	}
-	
-	
 	
 	public ArrayList<Task> loadTasks(int columnID) throws SQLException {
 		ArrayList<Task> tasks = new ArrayList<Task>();

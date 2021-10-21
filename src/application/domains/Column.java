@@ -1,6 +1,7 @@
 package application.domains;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Column {
 	int columnID;
@@ -52,4 +53,7 @@ public class Column {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+
+
 }

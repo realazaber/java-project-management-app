@@ -487,10 +487,6 @@ public class dashboardController {
 							HBox hboxChecklistItems = new HBox(50);
 							Button btn_viewChecklist = new Button("View Checklist");
 							
-							
-							
-							
-							
 							ArrayList<ActionItem> actionItems = model.getProjectDAO().loadActionItems(checklist.getCheckListID());
 							
 							
