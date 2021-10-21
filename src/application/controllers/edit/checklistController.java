@@ -196,6 +196,9 @@ public class checklistController {
     @FXML
     void deleteActionItem(ActionEvent event) throws SQLException {
     	model.getProjectDAO().deleteActionItem(selectedActionItem.getActionitemID());
+		textField_actItemName.clear();
+		textArea_actItemDescription.clear();
+		checkBoxCompleted.setSelected(false);
     	refreshTable();
     	
     }
