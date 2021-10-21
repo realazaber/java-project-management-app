@@ -349,51 +349,64 @@ public class dashboardController {
 				System.out.println("No columns under user " + currentUser.getUsername());
 			}
 			else {		
-				
+				//Load details for each column.
 				for (Column column : columns) {
 					
+					/*
+					 * Make a new area for the 
+					 * column contents to be 
+					 * displayed.
+					 */
 					VBox vboxColumn = new VBox(10);
 					vboxColumn.setMaxWidth(250);
 					Pane columnDetailsPane = new Pane();
 
+					//Show main details about the column.					
 					Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
 					Label lbl_description = new Label("Description: \n" + column.getDescription());
 					lbl_description.setWrapText(true);			
+					
+					//Calculate how much time there is until all tasks are due.
 					Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
 					
-					
+					//Create buttons for managing the column.
 					Button btn_editColumn = new Button("Edit column");
 					Button btn_deleteColumn = new Button("Delete column");
-					columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
 					
+					//Add labels and buttons about column to the column pane.
+					columnDetailsPane.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, btn_editColumn, btn_deleteColumn);
+										
+					//Add behaviour to edit column button (go to edit column page).
 					btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent event)  {
 							System.out.println("Edit column " + column.getColumn_name());
 							
-							//Prepare new project scene.
+							//Prepare edit column scene.
 							FXMLLoader editColumnScene = new FXMLLoader(getClass().getResource("/application/views/EditColumn.fxml"));
 							
 							Parent root;
 							try {
 								root = editColumnScene.load();
-								//Apply parameters to the newcolumn scene.
+								//Apply parameters to the edit column scene.
 								editColumnController editColumnController = editColumnScene.getController();
 								editColumnController.loadColumn(column);
 								editColumnController.setUserID(userID);
 								
-								//Load the new project window.
+								//Load the edit column window.
 								stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 								Scene scene = new Scene(root);
 								stage.setScene(scene);
 								stage.show();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							} 
+							catch (IOException e) {																				
+								System.out.println("Error loading edit column page");
+								System.out.println("Error code: " + e);								
 							}	
 						}
 					});
 					
+					//Add behaviour to delete column button.
 					btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
 						
 						@Override
@@ -417,10 +430,8 @@ public class dashboardController {
 									e.printStackTrace();
 									System.exit(0);
 								}
-							}
-							
-						}
-					
+							}							
+						}					
 					});
 					
 					
@@ -670,9 +681,7 @@ public class dashboardController {
 	
 	
 	public void refresh(ActionEvent event, int userID) throws Exception {
-		
-		
-		
+						
 		//Prepare to load dashboard.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
     	Parent root = dashboardScene.load();
