@@ -341,6 +341,8 @@ public class dashboardController {
 			//Load columns for this project.
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
 			
+			boolean bumhole = false;
+			
 			//Create a vertical column to put column details and taks in.
 			ArrayList<VBox> vboxColumnDetails = new ArrayList<VBox>();
 			
