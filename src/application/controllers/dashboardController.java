@@ -266,7 +266,7 @@ public class dashboardController {
 			btn_newColumn.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
-				public void handle(ActionEvent arg0) {
+				public void handle(ActionEvent event) {
 					//Print log of opening add project window.
 					System.out.println("Opening add task window.");
 					System.out.println("User ID: " + userId);
@@ -287,7 +287,7 @@ public class dashboardController {
 						newColumnController.setProjectID(project.getProjectID());
 						newColumnController.setUserID(userID);
 						//Load the new project window.
-						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 						Scene scene = new Scene(root);
 						stage.setScene(scene);
 						stage.show();

@@ -17,6 +17,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class newColumnController {
@@ -83,11 +84,13 @@ public class newColumnController {
 
 			if (model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText()) == false) {
 				//If it does then notify the user.
+				lbl_notification.setTextFill(Color.RED);
 				lbl_notification.setText("Column already exists!");
 			}
 			else {
 				//If it doesn't then add the column
 				model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText());
+				lbl_notification.setTextFill(Color.GREEN);
 				lbl_notification.setText("Column " + txtFieldColumnName.getText() + " added!");
 			}
 		}
