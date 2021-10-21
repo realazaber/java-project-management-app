@@ -95,6 +95,10 @@ public class newColumnController {
 			lbl_notification.setText("Please fill in missing info.");
 		}
 		
+		txtFieldColumnName.clear();
+		txtAreaDescription.clear();
+		
+		
 		
 	}
 	

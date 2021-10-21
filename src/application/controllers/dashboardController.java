@@ -480,6 +480,7 @@ public class dashboardController {
 					}
 					else {
 						for (Task task : tasks) {
+							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
 							VBox taskVbox = new VBox(3);
 							Pane taskPane = new Pane();
 							Label taskName = new Label("Task name: " + task.getTaskName());
@@ -501,7 +502,7 @@ public class dashboardController {
 							
 							
 							
-							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
+							
 							ArrayList<ActionItem> actionItems = model.getProjectDAO().loadActionItems(checklist.getCheckListID());
 							
 							
@@ -546,16 +547,20 @@ public class dashboardController {
 							}
 							
 							Label lbl_checkListDetails = new Label("");
-							if (completedActionItems == 0) {
+
+
+							
+							if (completedActionItems == actionItems.size() && completedActionItems > 0) {
+								//All action items are complete.
+								lbl_checkListDetails.setText(completedActionItems + "/" + actionItems.size());
+								lbl_checkListDetails.setStyle("-fx-background-color: lightgreen;");
+							}
+							else if (actionItems.size() == 0) {
 								lbl_checkListDetails.setText("No action\nitems");
-								lbl_checkListDetails.setStyle("-fx-background-color: lightgrey;");
 							}
 							else {
 								lbl_checkListDetails.setText(completedActionItems + "/" + actionItems.size());
-							}
-							
-							if (completedActionItems == actionItems.size() && completedActionItems > 0) {
-								lbl_checkListDetails.setStyle("-fx-background-color: lightgreen;");
+								lbl_checkListDetails.setStyle("-fx-background-color: lightyellow;");
 							}
 							
 
@@ -619,6 +624,7 @@ public class dashboardController {
 											model.getProjectDAO().deleteTask(task.getTaskID());						
 											System.out.println("Task " + task.getTaskID() + " deleted.");
 											
+											model.getProjectDAO().deleteCheckList(checklist.getCheckListID());
 											refresh(arg0, userID);
 											
 										} catch (Exception e) {

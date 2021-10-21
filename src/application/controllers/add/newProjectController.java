@@ -96,6 +96,8 @@ public class newProjectController {
 			lbl_notification.setText("Please enter the project name");
 		}
 		
+		textFieldProjectName.clear();
+		checkBox_default.setSelected(false);
 	}
 	
 }

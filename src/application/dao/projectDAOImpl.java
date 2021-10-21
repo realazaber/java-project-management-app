@@ -122,7 +122,7 @@ public class projectDAOImpl implements projectDAO {
 			for (Column column : columns) {
 				deleteColumn(column.getColumnID());
 				ArrayList<Task> tasks = loadTasks(column.getColumnID());
-				for (Task task : tasks) {
+				for (Task task : tasks) {				
 					deleteTask(task.getTaskID());
 				}
 			}
@@ -338,6 +338,8 @@ public class projectDAOImpl implements projectDAO {
 			statementDeleteTasks.setInt(1, taskID);
 			statementDeleteTasks.execute();
 			
+			deleteCheckList(taskID);
+			
 		} catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
@@ -449,6 +451,16 @@ public class projectDAOImpl implements projectDAO {
 		}			
 		
 		return actionItems;
+	}
+	
+	public void changeActionItem(int actionItemID, String name, String description, boolean completed) throws SQLException {
+		PreparedStatement ps_saveActionItemChanges = connection.prepareStatement("UPDATE `action_items` SET `name` = ?, `description` = ?, `completed` = ? WHERE `actionitem_id` = ?");
+		ps_saveActionItemChanges.setString(1, name);
+		ps_saveActionItemChanges.setString(2, description);
+		ps_saveActionItemChanges.setBoolean(3, completed);
+		ps_saveActionItemChanges.setInt(4, actionItemID);
+
+		ps_saveActionItemChanges.execute();
 	}
 	
 	public void deleteActionItem(int actionItemID) {

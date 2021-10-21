@@ -34,5 +34,6 @@ public interface projectDAO {
 	public void deleteCheckList(int checkListID);
 	public boolean addActionItem(int checkListID, String name, String description, boolean completed);
 	public ArrayList<ActionItem> loadActionItems(int checkListID) throws SQLException;
+	public void changeActionItem(int actionItemID, String name, String description, boolean completed) throws SQLException;
 	public void deleteActionItem(int actionItemID);
 }

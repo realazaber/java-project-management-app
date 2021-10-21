@@ -26,7 +26,7 @@
             <TableColumn fx:id="col_actItemDescription" minWidth="0.0" prefWidth="215.0" text="Item Description" />
             <TableColumn fx:id="col_actItemCompleted" minWidth="0.0" prefWidth="90.0" text="Completed" />
          </columns></TableView>
-      <Button fx:id="btn_addActionItem" layoutX="421.0" layoutY="275.0" mnemonicParsing="false" onAction="#btn_createActionItem" prefHeight="37.0" prefWidth="122.0" text="Add action item" />
+      <Button fx:id="btn_addActionItem" layoutX="421.0" layoutY="275.0" mnemonicParsing="false" onAction="#createActionItem" prefHeight="37.0" prefWidth="122.0" text="Add action item" />
       <TextField fx:id="textField_actItemName" layoutX="16.0" layoutY="274.0" prefHeight="25.0" prefWidth="162.0" promptText="Name" />
       <TextArea fx:id="textArea_actItemDescription" layoutX="188.0" layoutY="271.0" prefHeight="102.0" prefWidth="220.0" promptText="Description" />
       <CheckBox fx:id="checkBoxCompleted" layoutX="32.0" layoutY="333.0" mnemonicParsing="false" text="Completed" />
@@ -35,5 +35,6 @@
             <Font size="11.0" />
          </font></Button>
       <Button fx:id="btn_deleteChecklist" layoutX="15.0" layoutY="427.0" mnemonicParsing="false" onAction="#deleteChecklist" prefHeight="52.0" prefWidth="162.0" style="-fx-background-color: coral;" text="Delete checklist" />
+      <Button fx:id="btn_saveActionItem" layoutX="422.0" layoutY="275.0" mnemonicParsing="false" onAction="#saveActionItem" prefHeight="37.0" prefWidth="122.0" text="Save changes" />
    </children>
 </AnchorPane>
