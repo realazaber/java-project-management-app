@@ -72,7 +72,6 @@ public class homeController {
     private Model model = new Model();
     
     //Open file explorer and let user choose profile image.
-    
     @FXML
     public void chooseProfile(ActionEvent event) throws Exception {     	
     	
@@ -80,10 +79,6 @@ public class homeController {
     	FileChooser fileChooser = new FileChooser();
     	
     	//Add filters so only images can be added.
-    	FileChooser.ExtensionFilter png_Filter = new FileChooser.ExtensionFilter("png images (*.png)", "*.png");
-    	FileChooser.ExtensionFilter jpg_Filter = new FileChooser.ExtensionFilter("jpg images (*.jpg)", "*.jpg");
-    	FileChooser.ExtensionFilter gif_Filter = new FileChooser.ExtensionFilter("gif images (*.gif)", "*.gif");
-    	//fileChooser.getExtensionFilters().addAll(png_Filter, jpg_Filter, gif_Filter);
     	fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
     	fileChooser.setTitle("Select image");
     	
@@ -113,6 +108,7 @@ public class homeController {
     }
 
     //If user is not in database yet then upload new user.
+    @FXML
 	public void Register(ActionEvent event) throws Exception {
 				
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -129,12 +125,14 @@ public class homeController {
 				System.out.println("Default image not found: " + e);
 			}
 		}
-		else {//Set the selected image as profile.
+		else {//If user has chosen an image, set it as profile.
 			input = new BufferedInputStream(new FileInputStream(tmpProfile));
 		}
 		
-		if (passField_Password.getText().equals(passField_ConfirmPassword.getText()) && !passField_Password.getText().equals("")) { //Passwords match.
+		//Passwords match.
+		if (passField_Password.getText().equals(passField_ConfirmPassword.getText()) && !passField_Password.getText().equals("")) { 
 			
+			//All fields are filled in.
 			if(!textField_FName.getText().equals("") && !textField_LName.getText().equals("") && !textField_Username.getText().equals("")) {
 				
 				//Show the user details in console for debugging.
@@ -144,6 +142,7 @@ public class homeController {
 				System.out.println("Password: " + passField_Password.getText());
 				System.out.println("Confirm password: " + passField_ConfirmPassword.getText());
 				
+				//Create user.
 				User tmpUser = new User();
 				tmpUser.setUsername(textField_Username.getText());
 				
@@ -156,38 +155,29 @@ public class homeController {
 					lbl_notification.setTextFill(Color.ORANGE);
 					lbl_notification.setText("Account has already been created!");
 				}
-		        else {
-					//
-					try {						
-						//If no image is uploaded use the default.
-						if (tmpProfile == null) {
-							System.out.println("No image has been added.");
-							//Upload default
-							input = file_defaultImage;
-							System.out.println("Default image " + file_defaultImage + " uploading.");						
-						}
-						else {
-							//If an image has been chosen let the user know it is being uploaded. 
-							System.out.println("Photo " + tmpProfile + " is being uploaded.");
-						}					
+		        else { //If user account doesn't exist then add user to database.
+					
+					try {									
 											
 						//Add user to database.
 						model.getUserDAO().addUser(textField_FName.getText(), textField_LName.getText(), textField_Username.getText(), passField_Password.getText(), input);
+						//Let the user know that the account has been created.
+
 					}
 					catch (Exception e) {
 						System.out.println("Error: " + e);
 					}
 					
 					if(input != null) {
-						//Let the user know that the account has been created.
-						textField_FName.setText("");
-						textField_LName.setText("");
-						textField_Username.setText("");
-						passField_Password.setText("");
-						passField_ConfirmPassword.setText("");
+						//Let the user know that the account has been created.						
+						textField_FName.clear();
+						textField_LName.clear();
+						textField_Username.clear();
+						passField_Password.clear();
+						passField_ConfirmPassword.clear();
 						lbl_notification.setTextFill(Color.GREEN);
 						lbl_notification.setText("Successfully registered!");
-						tmpProfile = null;
+						
 					}
 		        }
 								
