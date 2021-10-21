@@ -316,7 +316,7 @@ public class dashboardController {
 						catch (SQLException e1) {
 							System.out.println("Database error!");
 							System.out.println("Error: " + e1);
-						}					
+						}				
 						
 							        	
 			            //Refreshes the page on the same tab.
@@ -399,51 +399,55 @@ public class dashboardController {
 								stage.setScene(scene);
 								stage.show();
 							} 
-							catch (IOException e) {																				
-								System.out.println("Error loading edit column page");
-								System.out.println("Error code: " + e);								
+							catch (IOException e) {	
+								//Error loading edit column window.
+								System.out.println("Database error!");
+								System.out.println("Error: " + e);							
 							}	
 						}
 					});
 					
 					//Add behaviour to delete column button.
-					btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
-						
+					btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {						
 						@Override
-						public void handle(ActionEvent event) {
+						public void handle(ActionEvent event) {							
 							System.out.println("Delete column " + column.getColumn_name());
+							
+							/*Confirmation box appears to help prevent the user from
+							* accidentally deleting columns by misclicks. 
+							*/
 							Alert alertDeleteColumn = new Alert(AlertType.CONFIRMATION);
 							alertDeleteColumn.setTitle("Delete column " + column.getColumn_name() + "?");
 							alertDeleteColumn.setHeaderText("Are you sure you want to delete column " + column.getColumn_name() + "?");
 							Optional<ButtonType> choice = alertDeleteColumn.showAndWait();
 							
+							//If the user clicks ok then delete the column.
 							if (choice.isPresent() && choice.get() == ButtonType.OK) {
 								try {
-									
+									//Delete the column and let the user know it.
 									model.getProjectDAO().deleteColumn(column.getColumnID());
 									System.out.println("Column " + column.getColumnID() + " deleted.");
 									
+									//Refresh the page.
 									refresh(event, userID);
 									
 								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									System.exit(0);
+									//Error delete column.									
+									System.out.println("Database error!");
+									System.out.println("Error: " + e);
 								}
 							}							
 						}					
-					});
+					});					
 					
 					
-					HBox hbox_columnBtns = new HBox(5);
-					hbox_columnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
+					HBox hboxColumnBtns = new HBox(5);
+					hboxColumnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
 					
-					Label lbl_tasksHeading = new Label("Tasks");
-					lbl_tasksHeading.setContentDisplay(ContentDisplay.CENTER);
+					Label lbl_TasksHeading = new Label("Tasks");
+					lbl_TasksHeading.setContentDisplay(ContentDisplay.CENTER);					
 					
-					
-					ArrayList<Pane> taskPanes = new ArrayList<Pane>();
-					
+					ArrayList<Pane> taskPanes = new ArrayList<Pane>();					
 					
 					VBox vboxTasks = new VBox(3);
 					ArrayList<Task> tasks = model.getProjectDAO().loadTasks(column.getColumnID());
@@ -524,15 +528,10 @@ public class dashboardController {
 								lbl_checkListDetails.setText(completedActionItems + "/" + actionItems.size());
 								lbl_checkListDetails.setStyle("-fx-background-color: lightyellow;");
 							}
-							
-
-							
+														
 							lbl_checkListDetails.setTextAlignment(TextAlignment.CENTER);
 							lbl_checkListDetails.setWrapText(true);
-							
-							
-							
-							
+																											
 							hboxChecklistItems.getChildren().addAll(btn_viewChecklist, lbl_checkListDetails);
 							
 							HBox hboxTaskButtons = new HBox(3);
@@ -617,12 +616,11 @@ public class dashboardController {
 					pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 3px; -fx-background-color: white;");
 					
 					VBox vbox_columnDetails = new VBox(3);
-					vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hbox_columnBtns);
+					vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hboxColumnBtns);
 					pane_columnDetails.getChildren().addAll(vbox_columnDetails);
 					
 					Button btn_taskAdd = new Button("Create task");
-					
-					
+										
 					btn_taskAdd.setOnAction(new EventHandler<ActionEvent>() {
 						
 						@Override
@@ -653,7 +651,7 @@ public class dashboardController {
 					});
 					
 					HBox hbox_taskHeading = new HBox(3);
-					hbox_taskHeading.getChildren().addAll(lbl_tasksHeading, btn_taskAdd);
+					hbox_taskHeading.getChildren().addAll(lbl_TasksHeading, btn_taskAdd);
 					
 					
 					vboxColumn.getChildren().addAll(pane_columnDetails, hbox_taskHeading, vboxTasks);
