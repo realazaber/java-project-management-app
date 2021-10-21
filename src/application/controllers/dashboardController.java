@@ -80,7 +80,7 @@ import java.awt.image.BufferedImage;
 
 public class dashboardController {
 	
-	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad", "You are epic cool"};
+	String[] quotes = {"You are epic smart", "I owe you kfc", "You are a chad", "You are epic cool", "You smell nice today"};
 
 	private Stage stage;
 	
@@ -158,15 +158,13 @@ public class dashboardController {
 	public void loadUser(User currentUser) {
 		
 		this.currentUser = currentUser;
-		
-		
+				
 		txtFieldFName.setText(currentUser.getFirstName());
 		txtFieldLName.setText(currentUser.getLastName());
 		
 		label_userInfo.setText("Username: " + currentUser.getUsername());
 		
 		newProfileStream = currentUser.getProfilePicture();
-	
 		Image profile = new Image(newProfileStream);
 		imageView_Profile.setImage(profile);
 		
@@ -177,10 +175,9 @@ public class dashboardController {
 	public void saveProfileChanges(ActionEvent event) throws Exception {  	
 		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());
 		
+		//Save changes but no new profile picture.
 		if (newProfile == null) {
 			System.out.println("Saving changes with no new profile picture.");
-			
-			
 			
 			BufferedImage bImage = SwingFXUtils.fromFXImage(imageView_Profile.getImage(), null);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -193,21 +190,18 @@ public class dashboardController {
 			    e.printStackTrace();
 			}
 			
-				
-				
-			
+		//Save changes with new profile picture.
 		}
 		else {
 			System.out.println("Saving changes and uploading new profile picture.");
 			BufferedInputStream newProfileUpload = new BufferedInputStream(new FileInputStream(newProfile));
 			model.getUserDAO().saveProfileChanges(currentUser.getUserID(), txtFieldFName.getText(), txtFieldLName.getText(), newProfileUpload);
 		}
-		
-		//Prepare to load dashboard.
+				
+		//Refresh dashboard on this tab.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
     	Parent root = dashboardScene.load();
-    	dashboardController dashboardController = dashboardScene.getController();
-    	     
+    	dashboardController dashboardController = dashboardScene.getController();    	     
     			        
     	User tmpUser = model.getUserDAO().getUser(currentUser.getUserID());
     	
@@ -223,9 +217,7 @@ public class dashboardController {
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		stage.show();
-		
-		
+		stage.show();		
 	}
 	
 	
@@ -242,10 +234,6 @@ public class dashboardController {
 			ScrollPane scrollPane = new ScrollPane();
 						
 			Pane pane_tabContent = new Pane();
-			
-			Label lbl_notification = new Label();
-			lbl_notification.setLayoutX(200);
-			lbl_notification.setLayoutY(100);
 
 			Button btn_editProject = new Button("Edit Project");
 			btn_editProject.setLayoutX(10);
@@ -354,7 +342,7 @@ public class dashboardController {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();							
 						}					
-						lbl_notification.setText(project.getProjectName() + " has been deleted!");
+						
 							        	
 			            //Refreshes the page on the same tab.
 			        	try {
@@ -547,8 +535,6 @@ public class dashboardController {
 							}
 							
 							Label lbl_checkListDetails = new Label("");
-
-
 							
 							if (completedActionItems == actionItems.size() && completedActionItems > 0) {
 								//All action items are complete.
@@ -709,7 +695,7 @@ public class dashboardController {
 			hboxProjects.getChildren().addAll(vboxColumns);
 			hboxProjects.setLayoutY(60);
 			
-			pane_tabContent.getChildren().addAll(lbl_notification, btn_newColumn, btn_editProject, btn_deleteProject, hboxProjects);
+			pane_tabContent.getChildren().addAll(btn_newColumn, btn_editProject, btn_deleteProject, hboxProjects);
 			
 			scrollPane.setContent(pane_tabContent);
 			
@@ -724,8 +710,6 @@ public class dashboardController {
 		}
 	}
 	
-
-
 	
 	public void refresh(ActionEvent arg0, int userID) throws Exception {
 		
@@ -808,8 +792,6 @@ public class dashboardController {
 			}
 
 		}
-		
-		
 		else if (completed && daysBetween >= 0) {
 			//Completed in time
 			output.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
@@ -852,9 +834,6 @@ public class dashboardController {
 	public void setWelcomeMessage(String firstName) {
 		lbl_fname.setText("Welcome " + firstName);
 	}
-	
-
-	
 	
 	//Open the window for adding the new project.
 	public void addProjectWindow(ActionEvent event) throws IOException {
