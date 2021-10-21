@@ -460,28 +460,43 @@ public class dashboardController {
 						System.out.println("No tasks under user " + currentUser.getUsername());
 					}
 					
+					//If there are tasks display them in the column.
 					else {
 						for (Task task : tasks) {
-							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
-							VBox taskVbox = new VBox(3);
+							
+							//Create task box.
 							Pane taskPane = new Pane();
+							VBox taskVbox = new VBox(3);
+							
+							//Main task details.
 							Label taskName = new Label("Task name: " + task.getTaskName());
 							Label taskDescription = new Label("Task description: " + task.getDescription());							
-							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
 							
+							
+							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
+							ArrayList<ActionItem> actionItems = model.getProjectDAO().loadActionItems(checklist.getCheckListID());
+							
+							//Check whether the task is completed and set the label accordingly
 							Label taskCompleted = new Label();
-							if (task.isCompleted()) {
+							boolean actionItemsCompleted = true;
+							for (ActionItem actionItem : actionItems) {
+								if (!actionItem.isCompleted()) {
+									actionItemsCompleted = false;
+									task.setCompleted(false);
+								}
+							}
+							if (task.isCompleted() && actionItemsCompleted) {		
 								taskCompleted.setText("Completed");
 							}
 							else {
 								taskCompleted.setText("Not finished yet");
 							}
 							
+							
+							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
+							
 							HBox hboxChecklistItems = new HBox(50);
-							Button btn_viewChecklist = new Button("View Checklist");
-							
-							ArrayList<ActionItem> actionItems = model.getProjectDAO().loadActionItems(checklist.getCheckListID());
-							
+							Button btn_viewChecklist = new Button("View Checklist");										
 							
 								btn_viewChecklist.setOnAction(new EventHandler<ActionEvent>() {
 								

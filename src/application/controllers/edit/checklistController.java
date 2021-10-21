@@ -113,19 +113,23 @@ public class checklistController {
     	table_actionItems.setOnMouseClicked((MouseEvent event) -> {
     		if (event.getClickCount() > 0) {
     			
-    	    	btn_addActionItem.setVisible(false);
-    	    	btn_saveActionItem.setVisible(true);
-    			
-				selectedActionItem = table_actionItems.getSelectionModel().getSelectedItems().get(0);
-				
-				textField_actItemName.setText(selectedActionItem.getName());
-				textArea_actItemDescription.setText(selectedActionItem.getDescription());
-				
-				if (selectedActionItem.isCompleted()) {
-					checkBoxCompleted.setSelected(true);
-				}
-				else {
-					checkBoxCompleted.setSelected(false);
+    			try {
+        	    	btn_addActionItem.setVisible(false);
+        	    	btn_saveActionItem.setVisible(true);
+        			
+    				selectedActionItem = table_actionItems.getSelectionModel().getSelectedItems().get(0);
+    				
+    				textField_actItemName.setText(selectedActionItem.getName());
+    				textArea_actItemDescription.setText(selectedActionItem.getDescription());
+    				
+    				if (selectedActionItem.isCompleted()) {
+    					checkBoxCompleted.setSelected(true);
+    				}
+    				else {
+    					checkBoxCompleted.setSelected(false);
+    				}
+				} catch (Exception e) {
+					System.out.println("Empty row.");
 				}
 				
 			}
