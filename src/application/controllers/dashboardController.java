@@ -439,22 +439,27 @@ public class dashboardController {
 							}							
 						}					
 					});					
-					
-					
+																					
+					//Put the column buttons in a row.
 					HBox hboxColumnBtns = new HBox(5);
 					hboxColumnBtns.getChildren().addAll(btn_editColumn, btn_deleteColumn);
 					
+					//Title for the tasks.
 					Label lbl_TasksHeading = new Label("Tasks");
 					lbl_TasksHeading.setContentDisplay(ContentDisplay.CENTER);					
 					
+					//Create list of task boxes.
 					ArrayList<Pane> taskPanes = new ArrayList<Pane>();					
-					
 					VBox vboxTasks = new VBox(3);
+					
+					//Load the tasks for the column.
 					ArrayList<Task> tasks = model.getProjectDAO().loadTasks(column.getColumnID());
 
+					//If there are no tasks in this column notify the user in console.
 					if (tasks.isEmpty()) {
 						System.out.println("No tasks under user " + currentUser.getUsername());
 					}
+					
 					else {
 						for (Task task : tasks) {
 							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
@@ -676,6 +681,19 @@ public class dashboardController {
 			
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public void refresh(ActionEvent event, int userID) throws Exception {
