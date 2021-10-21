@@ -10,17 +10,10 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.Random;
 
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javax.imageio.ImageIO;
 
 import application.Model;
@@ -37,14 +30,11 @@ import application.domains.Column;
 import application.domains.Project;
 import application.domains.Task;
 import application.domains.User;
-import application.dao.projectDAO;
-import application.dao.userDAO;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,7 +43,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -61,18 +50,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Dragboard;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -114,6 +94,8 @@ public class dashboardController {
     @FXML
     private File newProfile;
     
+    
+    
     private InputStream newProfileStream;
 	
 	int userId;
@@ -123,6 +105,21 @@ public class dashboardController {
 	public User currentUser = new User();
 	
 	private Model model = new Model();
+	
+	//Load user details in profile tab.
+	public void loadUser(User currentUser) {
+		
+		this.currentUser = currentUser;
+				
+		txtFieldFName.setText(currentUser.getFirstName());
+		txtFieldLName.setText(currentUser.getLastName());
+		
+		label_userInfo.setText("Username: " + currentUser.getUsername());
+		
+		newProfileStream = currentUser.getProfilePicture();
+		Image profile = new Image(newProfileStream);
+		imageView_Profile.setImage(profile);	
+	}
 	
     //Open file explorer and let user choose profile image.
     public void chooseProfile(ActionEvent event) throws Exception {  	
@@ -141,6 +138,7 @@ public class dashboardController {
     	System.out.println("File chosen: " + newProfile);
 
     	try {
+    		//Load the image and display it in image view.
     		InputStream fileInputStream = new FileInputStream(newProfile);
     		Image selectedImage = new Image(fileInputStream);
     		System.out.println("Chosen image " + selectedImage);
@@ -154,23 +152,7 @@ public class dashboardController {
 
     }
 	
-	//Load user details in profile tab.
-	public void loadUser(User currentUser) {
-		
-		this.currentUser = currentUser;
-				
-		txtFieldFName.setText(currentUser.getFirstName());
-		txtFieldLName.setText(currentUser.getLastName());
-		
-		label_userInfo.setText("Username: " + currentUser.getUsername());
-		
-		newProfileStream = currentUser.getProfilePicture();
-		Image profile = new Image(newProfileStream);
-		imageView_Profile.setImage(profile);
-		
-		
-	}
-	
+
     //Get the input fields and update the user details with them.
 	public void saveProfileChanges(ActionEvent event) throws Exception {  	
 		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());

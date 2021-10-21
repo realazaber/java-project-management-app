@@ -233,8 +233,6 @@ public class projectDAOImpl implements projectDAO {
 				deleteCheckList(tmpChecklist.getCheckListID());
 			}
 			
-			
-			
 		} catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
