@@ -367,6 +367,11 @@ public class dashboardController {
 					lbl_description.setWrapText(true);			
 					
 					//Calculate how much time there is until all tasks are due.
+					
+					
+					
+					
+					
 					Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
 					
 					//Create buttons for managing the column.
@@ -492,126 +497,142 @@ public class dashboardController {
 								taskCompleted.setText("Not finished yet");
 							}
 							
-							
+							/*
+							 * Show the due date and set the color
+							 * depending on how far the due date is 
+							 */
 							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
 							
-							HBox hboxChecklistItems = new HBox(50);
-							Button btn_viewChecklist = new Button("View Checklist");										
 							
+							//Contains buttons and labels relating to checklist.
+							HBox hboxChecklistItems = new HBox(50);
+						
+							//Button for opening the checklist.
+							Button btn_viewChecklist = new Button("View Checklist");										
+								
+							//Add behaviour to view checklist button (go to view checklist page).
 								btn_viewChecklist.setOnAction(new EventHandler<ActionEvent>() {
 								
 								@Override
 								public void handle(ActionEvent event) {
-									//Prepare new project scene.
+									//Prepare view checklist scene.
 									FXMLLoader checklistScene = new FXMLLoader(getClass().getResource("/application/views/Checklist.fxml"));
 									
 									Parent root;
 									try {
 										root = checklistScene.load();
-										//Apply parameters to the checklist scene.										
+										//Apply parameters to the view checklist scene.										
 										checklistController checklistController = checklistScene.getController();
 										checklistController.loadChecklist(checklist.getCheckListID(), project.getUserID());
 										
-										//Load the new project window.
+										//Load the view checklist window.
 										stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 										Scene scene = new Scene(root);
 										stage.setScene(scene);
 										stage.show();
 									} catch (Exception e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										System.out.println("Error opening view checklist window.");
 									}
 									
 								}
 								
 							});
-																												
-							int completedActionItems = 0;
-							
+														
+							//Get the number of completed action items.
+							int completedActionItems = 0;							
 							for (ActionItem actionItem : actionItems) {
 								if (actionItem.isCompleted()) {
 									completedActionItems++;
 								}
 							}
 							
+							//Prepare label that shows details about the checklist.
 							Label lbl_checkListDetails = new Label("");
 							
+							//All action items are complete.
 							if (completedActionItems == actionItems.size() && completedActionItems > 0) {
-								//All action items are complete.
+								
 								lbl_checkListDetails.setText(completedActionItems + "/" + actionItems.size());
 								lbl_checkListDetails.setStyle("-fx-background-color: lightgreen;");
 							}
+							//There are no action items.
 							else if (actionItems.size() == 0) {
 								lbl_checkListDetails.setText("No action\nitems");
 							}
+							//There are some action items left.
 							else {
 								lbl_checkListDetails.setText(completedActionItems + "/" + actionItems.size());
 								lbl_checkListDetails.setStyle("-fx-background-color: lightyellow;");
 							}
-														
+
+							//Make the text display properly.
 							lbl_checkListDetails.setTextAlignment(TextAlignment.CENTER);
 							lbl_checkListDetails.setWrapText(true);
-																											
+																		
+							//Add view checklist button and checklist details.
 							hboxChecklistItems.getChildren().addAll(btn_viewChecklist, lbl_checkListDetails);
-							
+														
+							//Prepare buttons for managing tasks.
 							HBox hboxTaskButtons = new HBox(3);
-
 							Button btn_taskEdit = new Button("Edit");
 							Button btn_taskDelete = new Button("Delete");
 							
-							btn_taskEdit.setOnAction(new EventHandler<ActionEvent>() {
-								
+							//Add behaviour to edit task button (go to edit task page).
+							btn_taskEdit.setOnAction(new EventHandler<ActionEvent>() {								
 								@Override
 								public void handle(ActionEvent event) {
-									//Prepare new project scene.
+									//Prepare task edit scene.
 									FXMLLoader editTaskScene = new FXMLLoader(getClass().getResource("/application/views/EditTask.fxml"));
 									
 									Parent root;
 									try {
 										root = editTaskScene.load();
-										//Apply parameters to the newcolumn scene.
+										//Apply parameters to the task edit scene.
 										editTaskController editTaskController = editTaskScene.getController();
 										editTaskController.loadEditTask(task, project);
-										//Load the new project window.
+										//Load the task edit window.
 										stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 										Scene scene = new Scene(root);
 										stage.setScene(scene);
 										stage.show();
-									} catch (Exception e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									
+									} 
+									catch (Exception e) {
+										//Can not load edit task window.
+										System.out.println("Error loading edit task window");
+									}									
 								}
 								
 							});
 							
-							
-							btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {
-								
-
-								
+							//Add behaviour to delete task button.
+							btn_taskDelete.setOnAction(new EventHandler<ActionEvent>() {															
 								@Override
 								public void handle(ActionEvent event) {
 									
+									/*Confirmation box appears to help prevent the user from
+									* accidentally deleting tasks by misclicks. 
+									*/
 									Alert alertDeleteTask = new Alert(AlertType.CONFIRMATION);
 									alertDeleteTask.setTitle("Delete task " + task.getTaskName() + "?");
 									alertDeleteTask.setHeaderText("Are you sure you want to delete task " + task.getTaskName() + "?");
 									Optional<ButtonType> choice = alertDeleteTask.showAndWait();
 									
+									//If user selects ok then delete task.
 									if (choice.isPresent() && choice.get() == ButtonType.OK) {
 										System.out.println("Delete task " + task.getTaskName());
 										try {
+											//Delete task.
 											model.getProjectDAO().deleteTask(task.getTaskID());						
 											System.out.println("Task " + task.getTaskID() + " deleted.");
 											
+											//Delete checklist connect to this task.
 											model.getProjectDAO().deleteCheckList(checklist.getCheckListID());
 											refresh(event, userID);
 											
 										} catch (Exception e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-											System.exit(0);
+											//Error delete task.									
+											System.out.println("Database error!");
+											System.out.println("Error: " + e);
 										}
 									}
 									
@@ -619,67 +640,71 @@ public class dashboardController {
 								}
 							
 							});
-																					
+								
+							//Add all nodes to the screen.
 							hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
 							
 							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxChecklistItems, hboxTaskButtons);														
 							taskPane.getChildren().addAll(taskVbox);
-							taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");
-							
+							taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");							
 							taskPanes.add(taskPane);														
 						}
 					}
-					
+																				
+					//Add tasks to vertical column.
 					vboxTasks.getChildren().addAll(taskPanes);
 					
+					//Set style for the column details box.
 					Pane pane_columnDetails = new Pane();
 					pane_columnDetails.setStyle("-fx-border-color: grey; -fx-padding: 3px; -fx-background-color: white;");
 					
+					//Add nodes to page.
 					VBox vbox_columnDetails = new VBox(3);
 					vbox_columnDetails.getChildren().addAll(lbl_columnTitle, lbl_description, lbl_date, hboxColumnBtns);
-					pane_columnDetails.getChildren().addAll(vbox_columnDetails);
+					pane_columnDetails.getChildren().addAll(vbox_columnDetails);									
 					
+					//Create button for add task.
 					Button btn_taskAdd = new Button("Create task");
-										
+									
+					//Add behaviour to add task button (go to add task page).
 					btn_taskAdd.setOnAction(new EventHandler<ActionEvent>() {
 						
 						@Override
 						public void handle(ActionEvent event) {
 							System.out.println("Add task");
 							
-							//Prepare new project scene.
+							//Prepare new task scene.
 							FXMLLoader addTaskScene = new FXMLLoader(getClass().getResource("/application/views/NewTask.fxml"));
 							
 							Parent root;
 							try {
 								root = addTaskScene.load();
-								//Apply parameters to the newcolumn scene.
+								//Apply parameters to the new task scene.
 								newTaskController newTaskController = addTaskScene.getController();
 								
 								newTaskController.loadAddTask(column.getColumnID(), userID);
 								
-								//Load the new project window.
+								//Load the new task window.
 								stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 								Scene scene = new Scene(root);
 								stage.setScene(scene);
 								stage.show();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								System.out.println("Error loading new task page");
+								System.out.println("Error code: " + e);
 							}
 						}
 					});
 					
 					HBox hbox_taskHeading = new HBox(3);
-					hbox_taskHeading.getChildren().addAll(lbl_TasksHeading, btn_taskAdd);
-					
-					
+					//Add task nodes to page.
+					hbox_taskHeading.getChildren().addAll(lbl_TasksHeading, btn_taskAdd);										
 					vboxColumn.getChildren().addAll(pane_columnDetails, hbox_taskHeading, vboxTasks);
 					vboxColumnDetails.add(vboxColumn);
 				}
 			}
 
-			
+			//Add task nodes to page and position them.
 			hboxColumns.getChildren().addAll(vboxColumnDetails);
 			hboxColumns.setLayoutY(60);
 			
@@ -690,6 +715,10 @@ public class dashboardController {
 			tab_project.setContent(scrollPane);
 			tab_projects.getTabs().add(tab_project);
 			
+			/*
+			 * If there is a project selected as default 
+			 * have it preselected.
+			 */
 			if (project.isDefault()) {
 				tab_projects.getSelectionModel().select(tab_project);	
 			}
@@ -710,7 +739,7 @@ public class dashboardController {
 	
 	
 	
-	
+	//Refresh the page.
 	public void refresh(ActionEvent event, int userID) throws Exception {
 						
 		//Prepare to load dashboard.

@@ -77,7 +77,8 @@ public class newColumnController {
 	//Add project to database
 	public void addColumn(ActionEvent event) throws SQLException {
 		
-		if (txtFieldColumnName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) { //If user has entered the necessary details.
+		//If user has entered the necessary details.
+		if (txtFieldColumnName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) { 
 			//Check if the column already exists.
 			LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
@@ -94,13 +95,16 @@ public class newColumnController {
 				lbl_notification.setText("Column " + txtFieldColumnName.getText() + " added!");
 			}
 		}
+		//If user has not filled in all necesssary fields prompt them to try again.
 		else {
+			lbl_notification.setTextFill(Color.ORANGE);
 			lbl_notification.setText("Please fill in missing info.");
 		}
 		
+		//Clear all fields
 		txtFieldColumnName.clear();
 		txtAreaDescription.clear();
-		
+		datePicker.setValue(null);
 		
 		
 	}

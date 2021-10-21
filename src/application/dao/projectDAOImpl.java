@@ -299,13 +299,19 @@ public class projectDAOImpl implements projectDAO {
 		boolean allComplete = true;
 		for (Task task : tasks) {
 			if (task.isCompleted() == false) {
-				allComplete = false;
+				return false;
+			}
+			allComplete = false;
+			Checklist tmpChecklist = loadChecklist(task.getTaskID());
+			ArrayList<ActionItem> tmpActionItems = loadActionItems(tmpChecklist.getCheckListID());
+			for (ActionItem actionItem : tmpActionItems) {
+				if (actionItem.isCompleted() == false) {
+					return false;
+				}
 			}
 		}
-		
-		
-		
-		return allComplete;
+				
+		return true;
 	}
 	
 	public void saveTaskChanges(int taskID, String taskName, String description, Date dueDate, boolean completed) throws SQLException {
