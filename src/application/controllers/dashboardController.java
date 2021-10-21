@@ -17,19 +17,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import application.Model;
-import application.controllers.add.newColumnController;
-import application.controllers.add.newProjectController;
-import application.controllers.add.newTaskController;
-import application.controllers.edit.checklistController;
-import application.controllers.edit.editColumnController;
-import application.controllers.edit.editProjectController;
-import application.controllers.edit.editTaskController;
-import application.domains.ActionItem;
-import application.domains.Checklist;
-import application.domains.Column;
-import application.domains.Project;
-import application.domains.Task;
-import application.domains.User;
+import application.controllers.add.*;
+import application.controllers.edit.*;
+import application.domains.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -93,9 +83,7 @@ public class dashboardController {
     
     @FXML
     private File newProfile;
-    
-    
-    
+       
     private InputStream newProfileStream;
 	
 	int userId;
@@ -152,7 +140,6 @@ public class dashboardController {
 
     }
 	
-
     //Get the input fields and update the user details with them.
 	public void saveProfileChanges(ActionEvent event) throws Exception {  	
 		System.out.println("Saving changes to " + currentUser.getUserID() + " " + currentUser.getFirstName());
@@ -208,15 +195,16 @@ public class dashboardController {
 	public void showProjects(int userID) throws Exception {
 		//Load all projects into userProjects ArrayList.
 		ArrayList<Project> userProjects = model.getProjectDAO().loadProjects(userID);
-						
+		
 		for (Project project : userProjects) {
 							
 			//Create a tab for each project.
 			Tab tab_project = new Tab(project.getProjectName());
-			ScrollPane scrollPane = new ScrollPane();
-						
-			Pane pane_tabContent = new Pane();
+			ScrollPane scrollPane = new ScrollPane();						
+			Pane paneTabContent = new Pane();
+			HBox hboxColumns = new HBox(50);
 
+			//Create project buttons.
 			Button btn_editProject = new Button("Edit Project");
 			btn_editProject.setLayoutX(10);
 			btn_editProject.setLayoutY(10);
@@ -234,7 +222,7 @@ public class dashboardController {
 			btn_editProject.setOnAction(new EventHandler<ActionEvent>() {
 			
 				@Override
-				public void handle(ActionEvent arg0) {
+				public void handle(ActionEvent event) {
 					System.out.println("Edit project " + project.getProjectName());
 					
 					//Prepare new project scene.
@@ -249,13 +237,14 @@ public class dashboardController {
 						editProjectController.loadProject(project);
 						
 						//Load the new project window.
-						stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+						stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 						Scene scene = new Scene(root);
 						stage.setScene(scene);
 						stage.show();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} 
+					catch (IOException e) {						
+						System.out.println("Error loading edit project page");
+						System.out.println("Error code: " + e);
 					}
 					
 
@@ -263,20 +252,17 @@ public class dashboardController {
 			
 			});
 			
+			//Add behaviour to new column button (go to add column page).
 			btn_newColumn.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					//Print log of opening add project window.
-					System.out.println("Opening add task window.");
+					//Print log of opening add column window.
+					System.out.println("Opening add column window.");
 					System.out.println("User ID: " + userId);
-					System.out.println("Project ID: " + project.getProjectID());
-					
-					
-					try {
-						
-
-						//Prepare new project scene.
+					System.out.println("Project ID: " + project.getProjectID());										
+					try {						
+						//Prepare new column scene.
 						FXMLLoader newColumnScene = new FXMLLoader(getClass().getResource("/application/views/NewColumn.fxml"));
 						
 						Parent root = newColumnScene.load();
@@ -292,13 +278,12 @@ public class dashboardController {
 						stage.setScene(scene);
 						stage.show();
 						
-					} catch (IOException e) {
+					} 
+					catch (IOException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-
-
+						System.out.println("Error loading new column page");
+						System.out.println("Error code: " + e);
+					}				
 				}
 				
 			});
@@ -309,33 +294,42 @@ public class dashboardController {
 				
 				//Delete project.
 				@Override
-				public void handle(ActionEvent arg0) {
+				public void handle(ActionEvent event) {
 					
+					/*Confirmation box appears to help prevent the user from
+					* accidentally deleting projects by misclicks. 
+					*/
 					Alert alertDeleteProject = new Alert(AlertType.CONFIRMATION);
 					alertDeleteProject.setTitle("Delete project " + project.getProjectName() + "?");
 					alertDeleteProject.setHeaderText("Are you sure you want to delete project " + project.getProjectName() + "?");
 					Optional<ButtonType> choice = alertDeleteProject.showAndWait();
 					
+					//If user selects ok then delete project.
 					if (choice.isPresent() && choice.get() == ButtonType.OK) {
 						//Deletes the project and notifies the user.
 						try {
+							//Delete project.
 							model.getProjectDAO().deleteProject(project.getProjectID());
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();							
+							System.out.println(project.getProjectName() + " has been deleted");
+						} 
+						//Database error
+						catch (SQLException e1) {
+							System.out.println("Database error!");
+							System.out.println("Error: " + e1);
 						}					
 						
 							        	
 			            //Refreshes the page on the same tab.
 			        	try {
-			        		refresh(arg0, userID);	
+			        		refresh(event, userID);	
 			        		System.out.println("Refreshed projects tab.");
 						} 
-			        	
+			        	//No projects left.
 			        	catch (NullPointerException e) {
 							System.out.println("0 projects under user " + currentUser.getUsername());
 							System.out.println("Error: " + e);
 						}
+			        	//Unknown error.
 			        	catch (Exception e) {
 			        		System.out.println("Error: " + e);
 						}			        	
@@ -343,18 +337,18 @@ public class dashboardController {
 				}
 			});
 			
-			HBox hboxProjects = new HBox(50);
 			
+			//Load columns for this project.
 			ArrayList<Column> columns = model.getProjectDAO().loadColumns(project.getProjectID());
-			ArrayList<VBox> vboxColumns = new ArrayList<VBox>();
 			
+			//Create a vertical column to put column details and taks in.
+			ArrayList<VBox> vboxColumnDetails = new ArrayList<VBox>();
+			
+			//If there are no columns for this project print message to console.
 			if (columns.isEmpty()) {
 				System.out.println("No columns under user " + currentUser.getUsername());
 			}
-			else {
-				
-
-				
+			else {		
 				
 				for (Column column : columns) {
 					
@@ -362,8 +356,6 @@ public class dashboardController {
 					vboxColumn.setMaxWidth(250);
 					Pane columnDetailsPane = new Pane();
 
-					
-					
 					Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
 					Label lbl_description = new Label("Description: \n" + column.getDescription());
 					lbl_description.setWrapText(true);			
@@ -376,7 +368,7 @@ public class dashboardController {
 					
 					btn_editColumn.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
-						public void handle(ActionEvent arg0)  {
+						public void handle(ActionEvent event)  {
 							System.out.println("Edit column " + column.getColumn_name());
 							
 							//Prepare new project scene.
@@ -391,7 +383,7 @@ public class dashboardController {
 								editColumnController.setUserID(userID);
 								
 								//Load the new project window.
-								stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+								stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 								Scene scene = new Scene(root);
 								stage.setScene(scene);
 								stage.show();
@@ -405,7 +397,7 @@ public class dashboardController {
 					btn_deleteColumn.setOnAction(new EventHandler<ActionEvent>() {
 						
 						@Override
-						public void handle(ActionEvent arg0) {
+						public void handle(ActionEvent event) {
 							System.out.println("Delete column " + column.getColumn_name());
 							Alert alertDeleteColumn = new Alert(AlertType.CONFIRMATION);
 							alertDeleteColumn.setTitle("Delete column " + column.getColumn_name() + "?");
@@ -418,7 +410,7 @@ public class dashboardController {
 									model.getProjectDAO().deleteColumn(column.getColumnID());
 									System.out.println("Column " + column.getColumnID() + " deleted.");
 									
-									refresh(arg0, userID);
+									refresh(event, userID);
 									
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
@@ -454,8 +446,7 @@ public class dashboardController {
 							VBox taskVbox = new VBox(3);
 							Pane taskPane = new Pane();
 							Label taskName = new Label("Task name: " + task.getTaskName());
-							Label taskDescription = new Label("Task description: " + task.getDescription());
-							//Label taskDueDate = new Label("Task due date: " + task.getDueDate().toString());
+							Label taskDescription = new Label("Task description: " + task.getDescription());							
 							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
 							
 							Label taskCompleted = new Label();
@@ -475,7 +466,7 @@ public class dashboardController {
 								btn_viewChecklist.setOnAction(new EventHandler<ActionEvent>() {
 								
 								@Override
-								public void handle(ActionEvent arg0) {
+								public void handle(ActionEvent event) {
 									//Prepare new project scene.
 									FXMLLoader checklistScene = new FXMLLoader(getClass().getResource("/application/views/Checklist.fxml"));
 									
@@ -487,7 +478,7 @@ public class dashboardController {
 										checklistController.loadChecklist(checklist.getCheckListID(), project.getUserID());
 										
 										//Load the new project window.
-										stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+										stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 										Scene scene = new Scene(root);
 										stage.setScene(scene);
 										stage.show();
@@ -499,11 +490,7 @@ public class dashboardController {
 								}
 								
 							});
-							
-							
-							
-							
-							
+																												
 							int completedActionItems = 0;
 							
 							for (ActionItem actionItem : actionItems) {
@@ -545,7 +532,7 @@ public class dashboardController {
 							btn_taskEdit.setOnAction(new EventHandler<ActionEvent>() {
 								
 								@Override
-								public void handle(ActionEvent arg0) {
+								public void handle(ActionEvent event) {
 									//Prepare new project scene.
 									FXMLLoader editTaskScene = new FXMLLoader(getClass().getResource("/application/views/EditTask.fxml"));
 									
@@ -556,7 +543,7 @@ public class dashboardController {
 										editTaskController editTaskController = editTaskScene.getController();
 										editTaskController.loadEditTask(task, project);
 										//Load the new project window.
-										stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+										stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 										Scene scene = new Scene(root);
 										stage.setScene(scene);
 										stage.show();
@@ -575,7 +562,7 @@ public class dashboardController {
 
 								
 								@Override
-								public void handle(ActionEvent arg0) {
+								public void handle(ActionEvent event) {
 									
 									Alert alertDeleteTask = new Alert(AlertType.CONFIRMATION);
 									alertDeleteTask.setTitle("Delete task " + task.getTaskName() + "?");
@@ -589,7 +576,7 @@ public class dashboardController {
 											System.out.println("Task " + task.getTaskID() + " deleted.");
 											
 											model.getProjectDAO().deleteCheckList(checklist.getCheckListID());
-											refresh(arg0, userID);
+											refresh(event, userID);
 											
 										} catch (Exception e) {
 											// TODO Auto-generated catch block
@@ -602,20 +589,14 @@ public class dashboardController {
 								}
 							
 							});
-							
-							
-							
+																					
 							hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
 							
-							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxChecklistItems, hboxTaskButtons);
-							
-							
+							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxChecklistItems, hboxTaskButtons);														
 							taskPane.getChildren().addAll(taskVbox);
 							taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");
 							
-							taskPanes.add(taskPane);
-							
-							
+							taskPanes.add(taskPane);														
 						}
 					}
 					
@@ -634,7 +615,7 @@ public class dashboardController {
 					btn_taskAdd.setOnAction(new EventHandler<ActionEvent>() {
 						
 						@Override
-						public void handle(ActionEvent arg0) {
+						public void handle(ActionEvent event) {
 							System.out.println("Add task");
 							
 							//Prepare new project scene.
@@ -649,7 +630,7 @@ public class dashboardController {
 								newTaskController.loadAddTask(column.getColumnID(), userID);
 								
 								//Load the new project window.
-								stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+								stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 								Scene scene = new Scene(root);
 								stage.setScene(scene);
 								stage.show();
@@ -665,18 +646,17 @@ public class dashboardController {
 					
 					
 					vboxColumn.getChildren().addAll(pane_columnDetails, hbox_taskHeading, vboxTasks);
-					vboxColumns.add(vboxColumn);
+					vboxColumnDetails.add(vboxColumn);
 				}
 			}
 
 			
-			hboxProjects.getChildren().addAll(vboxColumns);
-			hboxProjects.setLayoutY(60);
+			hboxColumns.getChildren().addAll(vboxColumnDetails);
+			hboxColumns.setLayoutY(60);
 			
-			pane_tabContent.getChildren().addAll(btn_newColumn, btn_editProject, btn_deleteProject, hboxProjects);
+			paneTabContent.getChildren().addAll(btn_newColumn, btn_editProject, btn_deleteProject, hboxColumns);
 			
-			scrollPane.setContent(pane_tabContent);
-			
+			scrollPane.setContent(paneTabContent);
 			
 			tab_project.setContent(scrollPane);
 			tab_projects.getTabs().add(tab_project);
@@ -689,7 +669,7 @@ public class dashboardController {
 	}
 	
 	
-	public void refresh(ActionEvent arg0, int userID) throws Exception {
+	public void refresh(ActionEvent event, int userID) throws Exception {
 		
 		
 		
@@ -732,12 +712,9 @@ public class dashboardController {
     	catch (Exception e) {
 			System.out.println("Error: " + e);
 		}
-
-    	
-    				    				    
-		
+    	    				    				    		
     	//Load the dashboard.
-    	stage = (Stage)((Node)arg0.getSource()).getScene().getWindow();
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
@@ -750,8 +727,7 @@ public class dashboardController {
 		Date currentDate = Date.valueOf(LocalDate.now()); //Get current date
 		int daysBetween = (int) (dueDate.getTime() - currentDate.getTime()) / 1000 / 60 / 60 / 24; //Get due date
 		Label output = new Label(dueDate.toString()); //Prepare the output
-		
-	
+			
 		if (daysBetween <= 7) {
 			if (daysBetween < 0) {
 				if (completed) {
@@ -761,21 +737,17 @@ public class dashboardController {
 				else {
 					//Over due
 					output.setStyle("-fx-background-color: orange; -fx-padding: 5px;");
-				}
-				
+				}				
 			}
 			else {
 				//Due date approaching
 				output.setStyle("-fx-background-color: yellow; -fx-padding: 5px;");
 			}
-
 		}
 		else if (completed && daysBetween >= 0) {
 			//Completed in time
 			output.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
-		}
-		
-		
+		}		
 		return output;
 	}
 	

@@ -199,6 +199,9 @@ public class checklistController {
 		textField_actItemName.clear();
 		textArea_actItemDescription.clear();
 		checkBoxCompleted.setSelected(false);
+		//Reset the buttons.
+    	btn_addActionItem.setVisible(true);
+    	btn_saveActionItem.setVisible(false);
     	refreshTable();
     	
     }
