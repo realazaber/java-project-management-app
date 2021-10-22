@@ -21,8 +21,8 @@ public class userDAOImpl implements userDAO {
 	public User getUser(int userID) throws SQLException {
 		User user = new User();
 		
-		Statement getUserStatement = baseDao.connect().createStatement();
 		String query = "SELECT `user_id`, `first_name`, `last_name`, `username`, `password`, `profile` FROM `users` WHERE `user_id` = '" + userID + "'";
+		PreparedStatement getUserStatement = baseDao.connect().prepareStatement(query);		
 		ResultSet rs = getUserStatement.executeQuery(query);
 		
 		while (rs.next()) {
@@ -40,7 +40,8 @@ public class userDAOImpl implements userDAO {
 	@Override
 	public boolean userExists(User user) throws SQLException {
 		
-		PreparedStatement ps_userExists = baseDao.connect().prepareStatement("SELECT * FROM `users` WHERE username = ?");
+		String query = "SELECT * FROM `users` WHERE username = ?";
+		PreparedStatement ps_userExists = baseDao.connect().prepareStatement(query);
 		ps_userExists.setString(1, user.getUsername());
 		
 		ResultSet rs_userExists = ps_userExists.executeQuery();

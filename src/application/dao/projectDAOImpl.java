@@ -1,5 +1,6 @@
 package application.dao;
 
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,8 +10,10 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.sql.*;
 
 import org.junit.validator.PublicClassValidator;
+
 
 import application.controllers.add.newProjectController;
 import application.domains.*;
@@ -27,8 +30,10 @@ public class projectDAOImpl implements projectDAO {
 	
 	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException {
 		try {
-			Statement checkProjects = connection.createStatement();
-			ResultSet rs = checkProjects.executeQuery("SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'");
+			String query = "SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'";	
+			query = query.replace("'", "''");
+			PreparedStatement checkProjects = connection.prepareStatement(query);
+			ResultSet rs = checkProjects.executeQuery(query);
 			if (!rs.next()) {
 				
 				if (isDefault) {
@@ -36,15 +41,14 @@ public class projectDAOImpl implements projectDAO {
 					PreparedStatement ps_checkForDefault = connection.prepareStatement("UPDATE `projects` SET `is_default` = 0 WHERE `user_id` = '" + userID + "'");
 					ps_checkForDefault.execute();
 				}
-				
-				
+								
 				//Add project
-				String queryAddProject = "INSERT INTO `projects` (`project_id`, `user_id`, `project_name`, `is_default`) VALUES (null, ?, ?, ?)";
+				String queryAddProject = "INSERT INTO `projects` (`project_id`, `user_id`, `project_name`, `is_default`) VALUES (null, ?, ?, ?)";						
 				PreparedStatement ps_addProject = connection.prepareStatement(queryAddProject);
 				ps_addProject.setInt(1, userID);
 				ps_addProject.setString(2, projectName);
 				ps_addProject.setBoolean(3, isDefault);
-				ps_addProject.execute();
+				ps_addProject.executeUpdate();
 				return true;
 			}
 			else {
@@ -61,8 +65,9 @@ public class projectDAOImpl implements projectDAO {
 		System.out.println("Loading projects for user: " + userID);
 		ArrayList<Project> projects = new ArrayList<Project>();
 		
-		Statement loadProjectStatement = connection.createStatement();
 		String query = "SELECT `project_id`, `user_id`, `project_name`, `is_default` FROM `projects` WHERE `user_id` = '" + userID + "'";
+		PreparedStatement loadProjectStatement = connection.prepareStatement(query);
+		
 		ResultSet rs = loadProjectStatement.executeQuery(query);
 		
 		while (rs.next()) {
