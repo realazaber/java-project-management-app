@@ -89,7 +89,7 @@ public class newColumnController {
 				lbl_notification.setText("Column already exists!");
 			}
 			else {
-				//If it doesn't then add the column
+				//If it doesn't then add the column.
 				model.getProjectDAO().addColumn(projectID, txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText());
 				lbl_notification.setTextFill(Color.GREEN);
 				lbl_notification.setText("Column " + txtFieldColumnName.getText() + " added!");
@@ -101,7 +101,7 @@ public class newColumnController {
 			lbl_notification.setText("Please fill in missing info.");
 		}
 		
-		//Clear all fields
+		//Clear all fields.
 		txtFieldColumnName.clear();
 		txtAreaDescription.clear();
 		datePicker.setValue(null);
@@ -109,10 +109,11 @@ public class newColumnController {
 		
 	}
 	
-	
+	//Go back to dashboard.
 	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
+		//Load the dashboard and set the neccessary parameters.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
@@ -124,8 +125,7 @@ public class newColumnController {
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 		dashboardController.loadUser(user);
 		
-		
-		
+		//Go to dashboard.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);

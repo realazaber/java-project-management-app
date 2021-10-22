@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import application.domains.*;
 
+//Interface for projectDAOImpl
 public interface projectDAO {
 	
 	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException;

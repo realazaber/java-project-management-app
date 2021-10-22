@@ -27,7 +27,7 @@ public class editColumnController {
 		
 	}
 	
-	int userId;
+	int userID;
 	
 	private Stage stage;
 
@@ -45,53 +45,48 @@ public class editColumnController {
 	private DatePicker datePicker;
 	
 	public void setUserID(int userID) {
-		this.userId = userID;
+		this.userID = userID;
 	}
 	
 	public int getUserId() {
-		return userId;
+		return userID;
 	}
 	
-	public void loadColumn(Column column) {
-		
-		this.column = column;
-		
+	//Load column details and display them in input fields.
+	public void loadColumn(Column column) {		
+		this.column = column;		
 		txtFieldColumnName.setText(column.getColumn_name());
 		txtAreaDescription.setText(column.getDescription());
 		LocalDate tmpLocalDate = column.getDue_date().toLocalDate(); 
 		datePicker.setValue(tmpLocalDate);
 	}
 	
-	public void saveColumnChanges(ActionEvent event) throws SQLException {
-		
+	//Save changes to column.
+	public void saveColumnChanges(ActionEvent event) throws SQLException {		
 		if (txtFieldColumnName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) {
 			LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
 			model.getProjectDAO().saveColumnChanges(column.getProjectID(), column.getColumnID(), txtFieldColumnName.getText(), tmpDate, txtAreaDescription.getText());
 		}
-		
-		
-		
 	}
 	
+	//Go back to dashboard.
 	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
+		//Load the dashboard and set the neccessary parameters.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
-		dashboardController.setUserID(userId);
-		
-		User user = model.getUserDAO().getUser(userId);
-		
-		dashboardController.loadUser(user);
+		dashboardController.setUserID(userID);
+		User user = model.getUserDAO().getUser(userID);
 		dashboardController.setWelcomeMessage(user.getFirstName());
-		dashboardController.showProjects(userId);
+		dashboardController.showProjects(userID);
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+		dashboardController.loadUser(user);
 		
-		
-		
+		//Go to dashboard.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);

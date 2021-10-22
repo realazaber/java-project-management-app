@@ -473,14 +473,11 @@ public class projectDAOImpl implements projectDAO {
 			String queryDeleteActionItem = "DELETE FROM `action_items` WHERE `actionitem_id` = ?";
 			PreparedStatement statementDeleteActionItem = connection.prepareStatement(queryDeleteActionItem);
 			statementDeleteActionItem.setInt(1, actionItemID);
-			statementDeleteActionItem.execute();
-			
-			
-		} catch (Exception e) {
+			statementDeleteActionItem.execute();			
+		} 
+		catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
 		}
 	}
-	
-	
 }

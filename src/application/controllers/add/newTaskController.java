@@ -59,29 +59,46 @@ public class newTaskController {
     	this.userID = userID;
     }
 
+    //Add task to database.
     @FXML
     void addTask(ActionEvent event) throws SQLException {
+    	//If user has entered the necessary details.
     	if (txtFieldTaskName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) {
 			LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
 			
+			//Check if the task already exists.
 			if (model.getProjectDAO().addTask(columnID, txtFieldTaskName.getText(), txtAreaDescription.getText(), tmpDate, checkBoxCompleted.isSelected()) ) {
+				//If it does then notify the user.
 				System.out.println(txtFieldTaskName.getText() + " added to column " + columnID);
 				lbl_notification.setTextFill(Color.GREEN);
 				lbl_notification.setText(txtFieldTaskName.getText() + " added.");
 			}
+			//If it doesn't then add the task.
 			else {
 				System.out.println(txtFieldTaskName.getText() + " already exists.");
 				lbl_notification.setTextFill(Color.RED);
 				lbl_notification.setText(txtFieldTaskName.getText() + " already exists.");
 			}
 		}
+    	else {
+    		//If user has not filled in all necesssary fields prompt them to try again.
+			lbl_notification.setTextFill(Color.ORANGE);
+			lbl_notification.setText("Please fill in missing info.");
+    	}
+    	
+    	//Clear all fields.
+    	txtFieldTaskName.clear();
+    	txtAreaDescription.clear();
+    	datePicker.setValue(null);
+    	checkBoxCompleted.setSelected(false);
     }
 
-    @FXML
-    void back(ActionEvent event) throws Exception {
+	//Go back to dashboard.
+	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
+		//Load the dashboard and set the neccessary parameters.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
@@ -90,13 +107,14 @@ public class newTaskController {
 		User user = model.getUserDAO().getUser(userID);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userID);
-		dashboardController.loadUser(user);
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
-	
+		dashboardController.loadUser(user);
+		
+		//Go to dashboard.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-    }
+	}
 
 }

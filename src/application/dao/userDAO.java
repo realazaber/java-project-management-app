@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import application.domains.User;
 
+//Interface for userDAOImpl
 public interface userDAO {
 	public User getUser(int userID) throws SQLException; 
 	

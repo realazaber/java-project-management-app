@@ -38,6 +38,7 @@ public class editProjectController {
 	@FXML
 	private Label lbl_notification;
 	
+	//Load project details and display them in input fields.
 	public void loadProject(Project project) {
 		this.project = project;
 		txtFieldProjectName.setText(project.getProjectName());
@@ -50,6 +51,7 @@ public class editProjectController {
 		}	
 	}
 	
+	//Save changes to project.
 	public void saveProjectChanges(ActionEvent event) throws SQLException {
 		model.getProjectDAO().saveProjectChanges(project.getProjectID(), project.getUserID(), txtFieldProjectName.getText(), checkBox_default.isSelected());
 		System.out.println("Saved changes to project " + project.getProjectID());
@@ -57,9 +59,11 @@ public class editProjectController {
 		lbl_notification.setText("Saved changes");
 	}
 	
+	//Go back to dashboard
 	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
+		//Load the dashboard and set the neccessary parameters.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
@@ -67,15 +71,13 @@ public class editProjectController {
 		
 		User user = model.getUserDAO().getUser(project.getUserID());
 		dashboardController.setUserID(project.getUserID());
-		
-		
-		
+				
 		dashboardController.loadUser(user);
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(project.getUserID());
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
 		
-		
+		//Go to dashboard.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
