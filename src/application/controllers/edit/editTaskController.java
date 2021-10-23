@@ -76,10 +76,12 @@ public class editTaskController {
     
     ArrayList<String> columnNames = new ArrayList<String>();
     
+    //Load task details for this page.
 	public void loadEditTask(Task task, Project project) throws SQLException {
 		this.project = project;
 		this.task = task;
 		
+		//Fill in input fields with task details.
 		txtFieldTaskName.setText(task.getTaskName());
 		txtAreaDescription.setText(task.getDescription());
 		datePicker.setValue(task.getDueDate().toLocalDate());
@@ -90,17 +92,15 @@ public class editTaskController {
 			checkBox_completed.setSelected(false);
 		}
 		
-		columns = model.getProjectDAO().loadColumns(project.getProjectID());
 		
 		
-		
+		//Show available columns in the column selecter.
+		columns = model.getProjectDAO().loadColumns(project.getProjectID());				
 		for (Column column : columns) {			
 			columnNames.add(column.getColumn_name());
 		}
 		
 		ObservableList<String> columnNameOptions = FXCollections.observableArrayList(columnNames);
-		
-		
 		
 		Column defaultColumn = model.getProjectDAO().searchColumn(task.getColumnID());
 		
@@ -125,27 +125,30 @@ public class editTaskController {
     void saveTaskChanges(ActionEvent event) throws SQLException {
     	//If all fields are filled in
     	if (txtFieldTaskName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) {
-			LocalDate tmpLocalDate = datePicker.getValue();
+			//Convert the date selected to a value that can be sent to the database.
+    		LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
+
+			//Save task changes and notify the user that it was successful.
 			model.getProjectDAO().saveTaskChanges(task.getTaskID(), txtFieldTaskName.getText(), txtAreaDescription.getText(), tmpDate, checkBox_completed.isSelected());
 			lbl_notification.setTextFill(Color.GREEN);
 			lbl_notification.setText(txtFieldTaskName.getText() + " edited successfully");
-			
-			if (changeColumn) {
-				
+
+			//If the user decides to change the task column
+			if (changeColumn) {			
 				int columnID = 0;
-				
+				//Move task to the new column.
 				for (Column column : columns) {
 					if (column.getColumn_name() == comboBoxChooseColumn.getSelectionModel().getSelectedItem().toString()) {
 						columnID = column.getColumnID();
 					}
-				}
-				
+				}				
 				
 				model.getProjectDAO().changeTaskColumn(task.getTaskID(), columnID);
 			}
 		}
     	else {
+    		//If not all neccessary fields weere filled prompt the user to fill them in.
     		lbl_notification.setTextFill(Color.ORANGE);
     		lbl_notification.setText("You didn't fill in all neccessary fields.");
     	}

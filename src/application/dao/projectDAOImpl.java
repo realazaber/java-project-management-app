@@ -7,15 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.sql.*;
-
-import org.junit.validator.PublicClassValidator;
-
-
-import application.controllers.add.newProjectController;
 import application.domains.*;
 
 public class projectDAOImpl implements projectDAO {
@@ -210,6 +202,7 @@ public class projectDAOImpl implements projectDAO {
 		return null;
 	}
 	
+	//Save changes to column.
 	public void saveColumnChanges(int project_ID, int columnID, String columnName, Date dueDate, String description) throws SQLException {
 		
 		System.out.println("Searching for column " + columnID + ": " + columnName);
@@ -230,15 +223,19 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
+	//Search for column by id.
 	public Column searchColumn(int columnID) throws SQLException {
 		System.out.println("Searching for column " + columnID);
 		try {
+			//Make template for column.
 			Column column = new Column();
 			
+			//Prepare query to find column.
 			Statement findColumnStatement = connection.createStatement();
 			String query = "SELECT `column_id`, `project_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `column_id` = '" + columnID + "'";
 			ResultSet rs = findColumnStatement.executeQuery(query);
 			
+			//Save the found column details to column template.
 			while (rs.next()) {
 				column.setColumnID(rs.getInt(1));
 				column.setProjectID(rs.getInt(2));
@@ -255,20 +252,22 @@ public class projectDAOImpl implements projectDAO {
 		return null;
 	}
 	
-	
+	//Delete column
 	public void deleteColumn(int columnID) throws SQLException {
 		System.out.println("Deleting column " + columnID);
 		try {			
 			//Delete column
-			String queryDeleteColumn =  "DELETE FROM `columns` WHERE `column_id` = ?";
+			String queryDeleteColumn = "DELETE FROM `columns` WHERE `column_id` = ?";
 			PreparedStatement statementDeleteColumn = connection.prepareStatement(queryDeleteColumn);
 			statementDeleteColumn.setInt(1, columnID);
 			statementDeleteColumn.execute();
-			//Delete tasks
 			
+			//Delete tasks linked to column			
 			ArrayList<Task> tasks = loadTasks(columnID);
 			for (Task task : tasks) {
 				deleteTask(task.getTaskID());
+				
+				//Delete checklist linked to task.
 				Checklist tmpChecklist = loadChecklist(task.getTaskID());
 				deleteCheckList(tmpChecklist.getCheckListID());
 			}
@@ -279,14 +278,17 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
+	//Add task to column
 	public boolean addTask(int columnID, String taskName, String description, Date dueDate, boolean completed) throws SQLException {
 		System.out.println("Adding task " + taskName + "to column " + columnID);
 		
 		try {
+			//Check if task already exists.
 			String query = "SELECT * FROM `tasks` WHERE `task_name` = '" + taskName + "' && `column_id` = '" + columnID + "'";
-			PreparedStatement checkTasks = connection.prepareStatement(query);
-			
+			PreparedStatement checkTasks = connection.prepareStatement(query);		
 			ResultSet rs_checkTasks = checkTasks.executeQuery();
+			
+			//If task doesn't already exist then add it to the column.
 			if (!rs_checkTasks.next()) {
 				String queryNewTask = "INSERT INTO `tasks` (`task_id`, `column_id`, `task_name`, `description`, `due_date`, `completed`) VALUES (null, ?, ?, ?, ?, ?)";
 				PreparedStatement statement = connection.prepareStatement(queryNewTask, Statement.RETURN_GENERATED_KEYS);
@@ -297,6 +299,7 @@ public class projectDAOImpl implements projectDAO {
 				statement.setBoolean(5, completed);				
 				statement.execute();
 				
+				//Add checklist to the new task.
 				ResultSet rs_newTaskID = statement.getGeneratedKeys();
 				int newTaskID = 0;
 				if (rs_newTaskID.next()) {
@@ -314,26 +317,28 @@ public class projectDAOImpl implements projectDAO {
 		return false;
 	}
 	
+	//Load tasks linked to a column.
 	public ArrayList<Task> loadTasks(int columnID) throws SQLException {
 		
 		System.out.println("Loading tasks for column " + columnID);
-		
 		try {
+			//Create list for the tasks
 			ArrayList<Task> tasks = new ArrayList<Task>();
 			
+			//Prepare query to retrieve the tasks
 			String query = "SELECT `task_id`, `column_id`, `task_name`, `description`, `due_date`, `completed` FROM `tasks` WHERE `column_id` = '" + columnID + "'";
 			PreparedStatement loadTasksStatement = connection.prepareStatement(query);
 			
-			ResultSet rs = loadTasksStatement.executeQuery();
-			
-			while (rs.next()) {
+			//Get the tasks and add them to the task list.
+			ResultSet rs_loadTasks = loadTasksStatement.executeQuery();			
+			while (rs_loadTasks.next()) {
 				Task tmpTask = new Task();
-				tmpTask.setTaskID(rs.getInt(1));
-				tmpTask.setColumnID(rs.getInt(2));
-				tmpTask.setTaskName(rs.getString(3));
-				tmpTask.setDescription(rs.getString(4));
-				tmpTask.setDueDate(rs.getDate(5));
-				tmpTask.setCompleted(rs.getBoolean(6));
+				tmpTask.setTaskID(rs_loadTasks.getInt(1));
+				tmpTask.setColumnID(rs_loadTasks.getInt(2));
+				tmpTask.setTaskName(rs_loadTasks.getString(3));
+				tmpTask.setDescription(rs_loadTasks.getString(4));
+				tmpTask.setDueDate(rs_loadTasks.getDate(5));
+				tmpTask.setCompleted(rs_loadTasks.getBoolean(6));
 				
 				tasks.add(tmpTask);
 			}
@@ -346,19 +351,30 @@ public class projectDAOImpl implements projectDAO {
 		return null;
 	}
 	
+	//Check if all tasks are completed in a column.
 	public boolean tasksCompleted(int columnID) throws SQLException {
 		System.out.println("Checking if tasks are completed for column " + columnID);
 		
 		try {
+			//Load all the tasks in the column.
 			ArrayList<Task> tasks = loadTasks(columnID);
 			boolean allComplete = true;
+			
+			//Check each task if they are complete.
 			for (Task task : tasks) {
+				//If one task is not task is not complete then the column is incomplete.
 				if (task.isCompleted() == false) {
 					return false;
 				}
-				allComplete = true;
+				
+				//Check if all action items are complete.
 				Checklist tmpChecklist = loadChecklist(task.getTaskID());
 				ArrayList<ActionItem> tmpActionItems = loadActionItems(tmpChecklist.getCheckListID());
+				/*
+				 * If there are action items 
+				 * and they are all complete 
+				 * then that task is complete.
+				 */
 				if (tmpActionItems.size() > 0) {
 					for (ActionItem actionItem : tmpActionItems) {
 						if (actionItem.isCompleted() == false) {
@@ -366,6 +382,10 @@ public class projectDAOImpl implements projectDAO {
 						}
 					}
 				}
+				/*
+				 * If there are no action items 
+				 * then the task is complete.
+				 */
 				else {
 					allComplete = true;
 				}
@@ -379,10 +399,12 @@ public class projectDAOImpl implements projectDAO {
 		return false;
 	}
 	
+	//Save task changes.
 	public void saveTaskChanges(int taskID, String taskName, String description, Date dueDate, boolean completed) throws SQLException {
 		System.out.println("Saving task changes to " + taskID);
 		
 		try {
+			//Apply the changes to the task in the database.
 			PreparedStatement ps_saveTaskChanges = connection.prepareStatement("UPDATE `tasks` SET `task_name` = ?, `description` = ?, `due_date` = ?, `completed` = ? WHERE `task_id` = ?");
 			ps_saveTaskChanges.setString(1, taskName);
 			ps_saveTaskChanges.setString(2, description);
@@ -396,11 +418,12 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
-
+	//Change the column the task is in
 	public void changeTaskColumn(int taskID, int columnID) throws SQLException {
-		System.out.println("Save changes to task");
+		System.out.println("Movving task " + taskID + " to column " + columnID);
 		
 		try {
+			//Move the task to another column by changing its column id.
 			PreparedStatement ps_changeTaskColumn = connection.prepareStatement("UPDATE `tasks` SET `column_id` = ? WHERE `task_id` = ?");
 			ps_changeTaskColumn.setInt(1, columnID);
 			ps_changeTaskColumn.setInt(2, taskID);
@@ -411,18 +434,18 @@ public class projectDAOImpl implements projectDAO {
 		}	
 	}
 	
-
-	
+	//Delete task
 	public void deleteTask(int taskID) throws SQLException {
 		System.out.println("Deleting task " + taskID);
 		
 		try {
-			//Delete columns
+			//Delete task
 			String queryDeleteTasks = "DELETE FROM `tasks` WHERE `task_id` = ?";
 			PreparedStatement statementDeleteTasks = connection.prepareStatement(queryDeleteTasks);
 			statementDeleteTasks.setInt(1, taskID);
 			statementDeleteTasks.execute();
 			
+			//Delete checklist linked to this task.
 			deleteCheckList(taskID);
 			
 		} catch (Exception e) {
@@ -431,12 +454,16 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
+	//Add checklist to database.
 	public boolean addCheckList(int taskID) throws SQLException {
 		System.out.println("Adding checklist to task " + taskID);
 		
 		try {
+			//Check if checklist already exists.
 			String query = "SELECT * FROM `checklists` WHERE `task_id` = '" + taskID + "'";
 			PreparedStatement checkTasks = connection.prepareStatement(query);
+	
+			//If checklist does not already exist then add it to the database.
 			ResultSet rs_checkTasks = checkTasks.executeQuery();
 			if (!rs_checkTasks.next()) {
 				String queryNewChecklist = "INSERT INTO `checklists` (`checklist_id`, `task_id`) VALUES (null, ?)";
@@ -454,18 +481,25 @@ public class projectDAOImpl implements projectDAO {
 		return false;
 	}
 	
+	//Get the checklist.
 	public Checklist loadChecklist(int taskID) throws SQLException {
 		System.out.println("Load checklist for task " + taskID);
 		
 		try {
+			//Create a template for the chekclist.
 			Checklist checklist = new Checklist();
 			
+			//Prepare query to find the check list in the database.
 			String query = "SELECT `checklist_id`, `task_id` FROM `checklists` WHERE `task_id` = '" + taskID + "'";
 			PreparedStatement loadChecklistStatement = connection.prepareStatement(query);
 			
-			ResultSet rs_loadChecklist = loadChecklistStatement.executeQuery();
-			
+			//Find the check list in the database.
+			ResultSet rs_loadChecklist = loadChecklistStatement.executeQuery();			
 			while (rs_loadChecklist.next()) {
+				/*
+				 * Assign the values found to the checklist found and
+				 * return it.
+				 */
 				checklist.setCheckListID(rs_loadChecklist.getInt(1));
 				checklist.setTaskID(rs_loadChecklist.getInt(2));			
 			}
@@ -478,17 +512,18 @@ public class projectDAOImpl implements projectDAO {
 		return null;
 	}
 	
+	//Delete checklist.
 	public void deleteCheckList(int checkListID) throws SQLException {
 		System.out.println("Delete checklist " + checkListID);
 		
 		try {
-			//Delete checklist
+			//Delete checklist.
 			String queryDeleteChecklist = "DELETE FROM `checklists` WHERE `checklist_id` = ?";
 			PreparedStatement statementDeleteChecklist = connection.prepareStatement(queryDeleteChecklist);
 			statementDeleteChecklist.setInt(1, checkListID);
 			statementDeleteChecklist.execute();
 			
-			//Delete action items
+			//Delete action items in the checklist.
 			ArrayList<ActionItem> actionItems = loadActionItems(checkListID);
 			for (ActionItem actionItem : actionItems) {
 				deleteActionItem(actionItem.getActionitemID());
@@ -500,13 +535,17 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
+	//Create new action item.
 	public boolean addActionItem(int checkListID, String name, String description, boolean completed) throws SQLException {
 		System.out.println("Adding action item");
 		
 		try {
+			//First check if the action item already exists.
 			String query = "SELECT * FROM `action_items` WHERE `checklist_id` = '" + checkListID + "' AND `name` = '" + name + "'";
 			PreparedStatement checkTasks = connection.prepareStatement(query);
 			ResultSet rs_checkTasks = checkTasks.executeQuery();
+			
+			//if the action item doesn't exist then add it to the database.
 			if (!rs_checkTasks.next()) {
 				String queryNewActionItem = "INSERT INTO `action_items` (`actionitem_id`, `checklist_id`, `name`, `description`, `completed`) VALUES (null, ?, ?, ?, ?)";
 				PreparedStatement statement = connection.prepareStatement(queryNewActionItem);
@@ -526,10 +565,12 @@ public class projectDAOImpl implements projectDAO {
 		return false;
 	}
 	
+	//Load action items.
 	public ArrayList<ActionItem> loadActionItems(int checkListID) throws SQLException {
 		System.out.println("Loading action items for checklist " + checkListID);
 		
 		try {
+			//Prepare the arraylist for the action items.
 			ArrayList<ActionItem> actionItems = new ArrayList<ActionItem>();
 			
 			String query = "SELECT `actionitem_id`, `checklist_id`, `name`, `description`, `completed`h FROM `action_items` WHERE `checklist_id` = '" + checkListID + "'";
@@ -537,6 +578,7 @@ public class projectDAOImpl implements projectDAO {
 			
 			ResultSet rs_actionItems = loadActionItemsStatement.executeQuery();
 			
+			//For each action item found add it to the array list.
 			while (rs_actionItems.next()) {
 				
 				ActionItem tmpActionItem = new ActionItem();
@@ -558,9 +600,11 @@ public class projectDAOImpl implements projectDAO {
 
 	}
 	
+	//Save changes to action item.
 	public void changeActionItem(int actionItemID, String name, String description, boolean completed) throws SQLException {
 		System.out.println("Saving changes to action item " + actionItemID);
 		
+		//Save changes to the action item.
 		try {
 			String query = "UPDATE `action_items` SET `name` = ?, `description` = ?, `completed` = ? WHERE `actionitem_id` = ?";
 			PreparedStatement ps_saveActionItemChanges = connection.prepareStatement(query);
@@ -577,6 +621,7 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
+	//Delete action item
 	public void deleteActionItem(int actionItemID) throws SQLException {
 		System.out.println("Deleting action item " + actionItemID);
 		

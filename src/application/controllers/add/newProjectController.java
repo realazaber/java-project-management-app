@@ -85,6 +85,7 @@ public class newProjectController {
 	}
 	
 	//Go back to dashboard.
+	@FXML
 	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		

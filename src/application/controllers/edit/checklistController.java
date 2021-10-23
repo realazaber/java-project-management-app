@@ -90,15 +90,19 @@ public class checklistController {
     
     ArrayList<ActionItem> actionItems = new ArrayList<ActionItem>();
     
+    //Load checklist details on the table.
     public void loadChecklist(int checkListID, int userID) throws SQLException {
     	
-    	this.userID = userID;
-    	
+    	this.userID = userID;    	
     	this.checkListID = checkListID;
     	
+    	//Load action items and display them on the table.
+    	
+    	//Load action items and convert them to a format that can be shown in the table.
     	actionItems = model.getProjectDAO().loadActionItems(checkListID);
     	ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
     	
+    	//Assign action item values to each column.
     	col_actItemID.setCellValueFactory(new PropertyValueFactory<ActionItem, Integer>("actionitemID"));
     	
     	col_actItemName.setCellValueFactory(new PropertyValueFactory<ActionItem, String>("name"));
@@ -109,11 +113,16 @@ public class checklistController {
     	
     	col_actItemCompleted.setCellValueFactory(new PropertyValueFactory<ActionItem, Boolean>("completed"));
     	
-    	
+    	//If the user clicks the mouse on a row.
     	table_actionItems.setOnMouseClicked((MouseEvent event) -> {
-    		if (event.getClickCount() > 0) {
-    			
+    		if (event.getClickCount() > 0) {    			
     			try {
+    				/*
+    				 * If they did not click on an empty
+    				 * row then load the row details into
+    				 * the input fields so the user can 
+    				 * edit the action item.
+    				 */
         	    	btn_addActionItem.setVisible(false);
         	    	btn_saveActionItem.setVisible(true);
         			
@@ -129,40 +138,53 @@ public class checklistController {
     					checkBoxCompleted.setSelected(false);
     				}
 				} catch (Exception e) {
+					//Empty row.
 					System.out.println("Empty row.");
-				}
-				
+				}				
 			}
     	});
     	
-    	table_actionItems.setItems(tableActionItems);
-    	
+    	/*
+    	 * Show the save option to the user.
+    	 */
+    	table_actionItems.setItems(tableActionItems);    	
     	btn_addActionItem.setVisible(true);
     	btn_saveActionItem.setVisible(false);
     	
     
     }
     
+    //Create action item.
     @FXML
     void createActionItem(ActionEvent event) {
     	try {    		
-    		
-    		if (!model.getProjectDAO().addActionItem(checkListID, textField_actItemName.getText(), textArea_actItemDescription.getText(), checkBoxCompleted.isSelected())) {
-				System.out.println(textField_actItemName.getText() + " already exists!");
-				Alert alertActionItemExists = new Alert(AlertType.ERROR);
-				alertActionItemExists.setTitle(textField_actItemName.getText() + " already exists!");
-				alertActionItemExists.setHeaderText(textField_actItemName.getText() + " already exists!");
-				alertActionItemExists.showAndWait();
+    		//If require text fields are filled in add the action item to the database.
+    		if (textField_actItemName.getText() != "" && textArea_actItemDescription.getText() != "") {
+    			//If the action item already exists do not add it to database and let the user now.
+        		if (!model.getProjectDAO().addActionItem(checkListID, textField_actItemName.getText(), textArea_actItemDescription.getText(), checkBoxCompleted.isSelected())) {
+    				System.out.println(textField_actItemName.getText() + " already exists!");
+    				Alert alertActionItemExists = new Alert(AlertType.ERROR);
+    				alertActionItemExists.setTitle(textField_actItemName.getText() + " already exists!");
+    				alertActionItemExists.setHeaderText(textField_actItemName.getText() + " already exists!");
+    				alertActionItemExists.showAndWait();
+    			}
+        		//If action item doesn't exist then add it to the database.
+        		else {
+        			System.out.println(textField_actItemName.getText() + " added to checklist.");
+        			textField_actItemName.clear();
+        			textArea_actItemDescription.clear();
+        			checkBoxCompleted.setSelected(false);
+        		}
+        		        		
+        		refreshTable();
 			}
+    		//If required fields are not filled in, prompt the user to fill them in.
     		else {
-    			System.out.println(textField_actItemName.getText() + " added to checklist.");
-    			textField_actItemName.clear();
-    			textArea_actItemDescription.clear();
-    			checkBoxCompleted.setSelected(false);
+				Alert alertFillInAllFields= new Alert(AlertType.ERROR);
+				alertFillInAllFields.setTitle("Fill in all fields");
+				alertFillInAllFields.setHeaderText("Please fill in all fields");
+				alertFillInAllFields.showAndWait();
     		}
-    		
-    		
-    		refreshTable();
     		
 		} catch (Exception e) {
 			System.out.println("Error: " + e);
@@ -190,34 +212,41 @@ public class checklistController {
     	refreshTable();
     }
     
-    
+    //Refreshs the table.
     public void refreshTable() throws SQLException {
 		actionItems = model.getProjectDAO().loadActionItems(checkListID);
 		ObservableList<ActionItem> tableActionItems = FXCollections.observableArrayList(actionItems);
 		table_actionItems.setItems(tableActionItems);
     }
     
+    //Delete action item.
     @FXML
     void deleteActionItem(ActionEvent event) throws SQLException {
+    	//Delete the action item.
     	model.getProjectDAO().deleteActionItem(selectedActionItem.getActionitemID());
+    	
+    	//Clear input fields.
 		textField_actItemName.clear();
 		textArea_actItemDescription.clear();
 		checkBoxCompleted.setSelected(false);
+		
 		//Reset the buttons.
     	btn_addActionItem.setVisible(true);
     	btn_saveActionItem.setVisible(false);
+    	
     	refreshTable();
     	
     }
 
+    //Delete the checklist and all items in the checklist.
     @FXML
     void deleteChecklist(ActionEvent event) throws Exception {
-		System.out.println(textField_actItemName.getText() + " already exists!");
 		Alert alertDeleteChecklist = new Alert(AlertType.CONFIRMATION);
 		alertDeleteChecklist.setTitle("Delete this checklist?");
 		alertDeleteChecklist.setHeaderText("Are you sure you want to delete this checklist?");
 		Optional<ButtonType> choice = alertDeleteChecklist.showAndWait();
 		
+		//If user chooses to delete checklist, delete it and go back to dashboard.
 		if (choice.isPresent() && choice.get() == ButtonType.OK) {
 			model.getProjectDAO().deleteCheckList(checkListID);
 			for (ActionItem actionItem : actionItems) {
@@ -227,31 +256,28 @@ public class checklistController {
 		}
     }
     
-    @FXML
-	public void back(ActionEvent event) throws Exception {
+    
+	//Go back to dashboard.
+	@FXML
+	void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
+		//Load the dashboard and set the neccessary parameters.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
 		dashboardController.setUserID(userID);
-		
-		User user = model.getUserDAO().getUser(userID);
-		
-		dashboardController.loadUser(user);
+		User user = model.getUserDAO().getUser(userID);		
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(userID);
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+		dashboardController.loadUser(user);
 		
-		
-		
+		//Go to dashboard.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
-
-
-
 }
