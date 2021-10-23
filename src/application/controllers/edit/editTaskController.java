@@ -109,6 +109,7 @@ public class editTaskController {
 		
 	}
 	
+	//Switch task column.
 	@FXML
 	void choseOption(ActionEvent event) {
 		
@@ -117,11 +118,12 @@ public class editTaskController {
 			changeColumn = true;
 		}
 		
-		
 	}
 
+	//Save changes to task.
     @FXML
     void saveTaskChanges(ActionEvent event) throws SQLException {
+    	//If all fields are filled in
     	if (txtFieldTaskName.getText() != "" && txtAreaDescription.getText() != "" && datePicker.getValue() != null) {
 			LocalDate tmpLocalDate = datePicker.getValue();
 			Date tmpDate = Date.valueOf(tmpLocalDate);
@@ -143,6 +145,10 @@ public class editTaskController {
 				model.getProjectDAO().changeTaskColumn(task.getTaskID(), columnID);
 			}
 		}
+    	else {
+    		lbl_notification.setTextFill(Color.ORANGE);
+    		lbl_notification.setText("You didn't fill in all neccessary fields.");
+    	}
     }
     
 	//Go back to dashboard.
