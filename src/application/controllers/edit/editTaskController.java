@@ -45,8 +45,6 @@ public class editTaskController {
 	private Project project;
 	
 	private Model model = new Model();
-	
-
 
     @FXML
     private Label lbl_heading;
@@ -147,30 +145,28 @@ public class editTaskController {
 		}
     }
     
+	//Go back to dashboard.
     @FXML
-    void back(ActionEvent event) throws Exception {
+	public void back(ActionEvent event) throws Exception {
 		System.out.println("Back to dashboard");
 		
+		//Load the dashboard and set the neccessary parameters.
 		FXMLLoader dashboardScene = new FXMLLoader(getClass().getResource("/application/views/Dashboard.fxml"));
 		Parent root = dashboardScene.load();
 		dashboardController dashboardController = dashboardScene.getController();
 		dashboardController.setQuote();
-		
-		User user = model.getUserDAO().getUser(project.getUserID());
 		dashboardController.setUserID(project.getUserID());
-		
-		
-		
-		dashboardController.loadUser(user);
+		User user = model.getUserDAO().getUser(project.getUserID());
 		dashboardController.setWelcomeMessage(user.getFirstName());
 		dashboardController.showProjects(project.getUserID());
 		dashboardController.tabpane_mainTab.getSelectionModel().select(1);
+		dashboardController.loadUser(user);
 		
-		
+		//Go to dashboard.
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-    }
+	}
 
 }

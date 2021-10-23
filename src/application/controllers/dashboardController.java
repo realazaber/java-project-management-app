@@ -368,10 +368,6 @@ public class dashboardController {
 					
 					//Calculate how much time there is until all tasks are due.
 					
-					
-					
-					
-					
 					Label lbl_date = dateDifference(column.getDue_date(), model.getProjectDAO().tasksCompleted(column.getColumnID()));
 					
 					//Create buttons for managing the column.
@@ -481,6 +477,13 @@ public class dashboardController {
 							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
 							ArrayList<ActionItem> actionItems = model.getProjectDAO().loadActionItems(checklist.getCheckListID());
 							
+							
+							/*
+							 * Show the due date and set the color
+							 * depending on how far the due date is 
+							 */
+							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
+							
 							//Check whether the task is completed and set the label accordingly
 							Label taskCompleted = new Label();
 							boolean actionItemsCompleted = true;
@@ -492,16 +495,14 @@ public class dashboardController {
 							}
 							if (task.isCompleted() && actionItemsCompleted) {		
 								taskCompleted.setText("Completed");
+								taskDueDate.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
+								
 							}
 							else {
 								taskCompleted.setText("Not finished yet");
 							}
 							
-							/*
-							 * Show the due date and set the color
-							 * depending on how far the due date is 
-							 */
-							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
+
 							
 							
 							//Contains buttons and labels relating to checklist.

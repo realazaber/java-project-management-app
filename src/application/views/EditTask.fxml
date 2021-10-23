@@ -23,8 +23,9 @@
       <Button layoutX="187.0" layoutY="264.0" mnemonicParsing="false" onAction="#back" prefHeight="34.0" prefWidth="127.0" text="Back to dashboard" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="360.0" />
       <TextArea fx:id="txtAreaDescription" layoutX="175.0" layoutY="76.0" prefHeight="101.0" prefWidth="240.0" promptText="Description" AnchorPane.bottomAnchor="223.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="76.0" />
       <DatePicker fx:id="datePicker" layoutX="201.0" layoutY="184.0" promptText="Please select a date" />
-      <Label fx:id="lbl_notification" alignment="CENTER" textAlignment="CENTER" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="270.0" />
+      <Label fx:id="lbl_notification" alignment="CENTER" layoutY="290.0" prefHeight="25.0" prefWidth="600.0" textAlignment="CENTER" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />
       <CheckBox fx:id="checkBox_completed" layoutX="248.0" layoutY="216.0" mnemonicParsing="false" text="Completed" />
-      <ComboBox fx:id="comboBoxChooseColumn" layoutX="182.0" layoutY="258.0" onAction="#choseOption" prefHeight="24.0" prefWidth="233.0" promptText="Select column" />
+      <ComboBox fx:id="comboBoxChooseColumn" layoutX="182.0" layoutY="259.0" onAction="#choseOption" prefHeight="24.0" prefWidth="233.0" promptText="Select column" />
+      <Label alignment="CENTER" layoutX="277.0" layoutY="241.0" text="Change column" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>
