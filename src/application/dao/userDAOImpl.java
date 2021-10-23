@@ -55,8 +55,9 @@ public class userDAOImpl implements userDAO {
 	@Override
 	public User loginUser(String username, String password) throws SQLException {
 		User currentUser = new User();
-		Statement loginStatement = baseDao.connect().createStatement();
-		ResultSet rs_login = loginStatement.executeQuery("SELECT * FROM `users` WHERE `username` = '" + username + "' AND `password` = '" + password + "'");
+		String query = "SELECT * FROM `users` WHERE `username` = '" + username + "' AND `password` = '" + password + "'";
+		PreparedStatement loginStatement = baseDao.connect().prepareStatement(query);
+		ResultSet rs_login = loginStatement.executeQuery(query);
 		
 		if (rs_login.next()) {
 			currentUser.setUserID(rs_login.getInt(1));
@@ -74,7 +75,8 @@ public class userDAOImpl implements userDAO {
 	
 	@Override
 	public void addUser(String firstName, String lastName, String username, String password, InputStream profileImage) throws SQLException {
-		PreparedStatement ps_addUser = baseDao.connect().prepareStatement("INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)");
+		String query = "INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `profile`) VALUES (null,?,?,?,?,?)";
+		PreparedStatement ps_addUser = baseDao.connect().prepareStatement(query);
 	
 		if (profileImage == null) {
 			System.out.println("Using default image");
@@ -93,7 +95,8 @@ public class userDAOImpl implements userDAO {
 	
 	@Override
 	public void saveProfileChanges(int user_id, String firstName, String lastName, InputStream newProfile) throws SQLException {
-		PreparedStatement ps_saveProfileChanges = baseDao.connect().prepareStatement("UPDATE `users` SET `first_name` = ?, `last_name` = ?, `profile` = ? WHERE `user_id` = ?");
+		String query = "UPDATE `users` SET `first_name` = ?, `last_name` = ?, `profile` = ? WHERE `user_id` = ?";
+		PreparedStatement ps_saveProfileChanges = baseDao.connect().prepareStatement(query);
 		ps_saveProfileChanges.setString(1, firstName);
 		ps_saveProfileChanges.setString(2, lastName);
 		ps_saveProfileChanges.setBinaryStream(3, newProfile);
