@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 20, 2021 at 10:39 PM
+-- Generation Time: Oct 23, 2021 at 04:49 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -24,25 +24,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `projects`
+-- Table structure for table `action_items`
 --
 
-CREATE TABLE `projects` (
-  `project_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `project_name` varchar(50) NOT NULL
+CREATE TABLE `action_items` (
+  `actionitem_id` int(11) NOT NULL,
+  `checklist_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `description` text NOT NULL,
+  `completed` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taskColumns`
+-- Table structure for table `checklists`
 --
 
-CREATE TABLE `taskColumns` (
-  `task_id` int(11) NOT NULL,
+CREATE TABLE `checklists` (
+  `checklist_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `columns`
+--
+
+CREATE TABLE `columns` (
+  `column_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `task_name` varchar(50) NOT NULL,
+  `column_name` text NOT NULL,
   `due_date` date NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -50,13 +63,28 @@ CREATE TABLE `taskColumns` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taskItems`
+-- Table structure for table `projects`
 --
 
-CREATE TABLE `taskItems` (
-  `taskItem_id` int(11) NOT NULL,
+CREATE TABLE `projects` (
+  `project_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `project_name` text NOT NULL,
+  `is_default` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+
+CREATE TABLE `tasks` (
   `task_id` int(11) NOT NULL,
+  `column_id` int(11) NOT NULL,
+  `task_name` text NOT NULL,
   `description` text NOT NULL,
+  `due_date` date NOT NULL,
   `completed` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -67,17 +95,36 @@ CREATE TABLE `taskItems` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `profile` blob NOT NULL
+  `user_id` int(11) NOT NULL,
+  `first_name` text NOT NULL,
+  `last_name` text NOT NULL,
+  `username` text NOT NULL,
+  `password` text NOT NULL,
+  `profile` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `action_items`
+--
+ALTER TABLE `action_items`
+  ADD PRIMARY KEY (`actionitem_id`);
+
+--
+-- Indexes for table `checklists`
+--
+ALTER TABLE `checklists`
+  ADD PRIMARY KEY (`checklist_id`);
+
+--
+-- Indexes for table `columns`
+--
+ALTER TABLE `columns`
+  ADD PRIMARY KEY (`column_id`),
+  ADD KEY `task_id` (`column_id`);
 
 --
 -- Indexes for table `projects`
@@ -86,50 +133,56 @@ ALTER TABLE `projects`
   ADD PRIMARY KEY (`project_id`);
 
 --
--- Indexes for table `taskColumns`
+-- Indexes for table `tasks`
 --
-ALTER TABLE `taskColumns`
+ALTER TABLE `tasks`
   ADD PRIMARY KEY (`task_id`);
-
---
--- Indexes for table `taskItems`
---
-ALTER TABLE `taskItems`
-  ADD PRIMARY KEY (`taskItem_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `action_items`
+--
+ALTER TABLE `action_items`
+  MODIFY `actionitem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+
+--
+-- AUTO_INCREMENT for table `checklists`
+--
+ALTER TABLE `checklists`
+  MODIFY `checklist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `columns`
+--
+ALTER TABLE `columns`
+  MODIFY `column_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+
+--
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
 
 --
--- AUTO_INCREMENT for table `taskColumns`
+-- AUTO_INCREMENT for table `tasks`
 --
-ALTER TABLE `taskColumns`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `taskItems`
---
-ALTER TABLE `taskItems`
-  MODIFY `taskItem_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tasks`
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
