@@ -142,12 +142,17 @@ public class projectDAOImpl implements projectDAO {
 		}
 	}
 	
+	//Add column to project.
 	public boolean addColumn(int projectID, String columnName, Date dueDate, String description) throws SQLException {
 		
 		try {
+			
+			//Check if column already exists.
 			String query = "SELECT * FROM `columns` WHERE `column_name` = '" + columnName + "' && `project_id` = '" + projectID + "'";
 			PreparedStatement checkColumns = connection.prepareStatement(query);
 			ResultSet rs = checkColumns.executeQuery();
+			
+			//If the column does not exist then add it to the project.
 			if (!rs.next()) {
 				String queryInsertColumn = "INSERT INTO `columns` (`column_id`, `project_id`, `column_name`, `due_date`, `description`) VALUES (null, ?, ?, ?, ?)";
 				PreparedStatement statement = connection.prepareStatement(queryInsertColumn);
@@ -157,7 +162,6 @@ public class projectDAOImpl implements projectDAO {
 				statement.setString(4, description);
 				statement.execute();
 				return true;
-				
 			}
 		} 
 		catch (Exception e) {
@@ -167,31 +171,31 @@ public class projectDAOImpl implements projectDAO {
 		return false;
 	}
 	
+	//Load columns for a project.
 	public ArrayList<Column> loadColumns(int projectID) throws SQLException {
 		System.out.println("Loading columns for project " + projectID);
 		
 		try {
+			//Make a list for the columns.
 			ArrayList<Column> columns = new ArrayList<Column>();
 			
+			//Prepare query to load teh columns.
 			String query = "SELECT `column_id`, `column_name`, `due_date`, `description` FROM `columns` WHERE `project_id` = '" + projectID + "'";
 			PreparedStatement loadColumnsStatement = connection.prepareStatement(query);
 			
-			ResultSet rs = loadColumnsStatement.executeQuery();
-			
-			while (rs.next()) {
+			//For each column found add them to the list.
+			ResultSet rs_loadColumns = loadColumnsStatement.executeQuery();
+			while (rs_loadColumns.next()) {
 				Column tmpColumn = new Column();
 				tmpColumn.setProjectID(projectID);
-				tmpColumn.setColumnID(rs.getInt(1));
-				tmpColumn.setColumn_name(rs.getString(2));
-				tmpColumn.setDue_date(rs.getDate(3));
-				tmpColumn.setDescription(rs.getString(4));
+				tmpColumn.setColumnID(rs_loadColumns.getInt(1));
+				tmpColumn.setColumn_name(rs_loadColumns.getString(2));
+				tmpColumn.setDue_date(rs_loadColumns.getDate(3));
+				tmpColumn.setDescription(rs_loadColumns.getString(4));
 				System.out.println("Column name: " + tmpColumn.getColumn_name());
 				System.out.println("Due date: " + tmpColumn.getDue_date());
 				System.out.println("Description: " + tmpColumn.getDescription());
 				columns.add(tmpColumn);
-				
-				System.out.println("=============================");
-
 			}
 			
 			return columns;
@@ -207,8 +211,7 @@ public class projectDAOImpl implements projectDAO {
 		
 		System.out.println("Searching for column " + columnID + ": " + columnName);
 		
-		System.out.println("Saving changes to column " + columnID);
-		
+		//Apply changes to column.
 		try {
 			PreparedStatement ps_saveColumnChanges = connection.prepareStatement("UPDATE `columns` SET `column_name` = ?, `due_date` = ?, `description` = ? WHERE `column_id` = ? AND `project_id` = ?");
 			ps_saveColumnChanges.setString(1, columnName);
