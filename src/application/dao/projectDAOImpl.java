@@ -20,14 +20,23 @@ public class projectDAOImpl implements projectDAO {
 		
 	}
 	
+	//Add project to database.
 	public boolean addProject(int userID, String projectName, boolean isDefault) throws SQLException {
 		System.out.println("Adding project to user " + userID);
 		try {
+			//Check if project already exists.
 			String query = "SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'";				
 			PreparedStatement checkProjects = connection.prepareStatement(query);
-			ResultSet rs = checkProjects.executeQuery();
-			if (!rs.next()) {
+			ResultSet rs_checkProjects = checkProjects.executeQuery();
+			
+			//If the project does not exist add it.
+			if (!rs_checkProjects.next()) {
 				
+				/*
+				 * If this project is selected to be
+				 * default make sure all the others
+				 * are non default.
+				 */
 				if (isDefault) {
 					//Change others to non default
 					PreparedStatement ps_checkForDefault = connection.prepareStatement("UPDATE `projects` SET `is_default` = 0 WHERE `user_id` = '" + userID + "'");
@@ -53,22 +62,25 @@ public class projectDAOImpl implements projectDAO {
 		return false;
 	}
 	
+	//Load user's projects.
 	public ArrayList<Project> loadProjects(int userID) throws SQLException {
 		System.out.println("Loading projects for user: " + userID);
 		try {
+			//Prepare list for the projects.
 			ArrayList<Project> projects = new ArrayList<Project>();
 			
+			//Prepare query for the projects.
 			String query = "SELECT `project_id`, `user_id`, `project_name`, `is_default` FROM `projects` WHERE `user_id` = '" + userID + "'";
 			PreparedStatement loadProjectStatement = connection.prepareStatement(query);
 			
-			ResultSet rs = loadProjectStatement.executeQuery();
-			
-			while (rs.next()) {
+			//Load the projects and add them to the list.
+			ResultSet rs_loadProjects = loadProjectStatement.executeQuery();			
+			while (rs_loadProjects.next()) {
 				Project tmpProject = new Project();
-				tmpProject.setProjectID(rs.getInt(1));
-				tmpProject.setUserID(rs.getInt(2));
-				tmpProject.setProjectName(rs.getString(3));
-				tmpProject.setDefault(rs.getBoolean(4));
+				tmpProject.setProjectID(rs_loadProjects.getInt(1));
+				tmpProject.setUserID(rs_loadProjects.getInt(2));
+				tmpProject.setProjectName(rs_loadProjects.getString(3));
+				tmpProject.setDefault(rs_loadProjects.getBoolean(4));
 				projects.add(tmpProject);
 				
 				System.out.println("=============================");
@@ -84,13 +96,19 @@ public class projectDAOImpl implements projectDAO {
 		return null;
 	}
 	
+	//Save changes to project.
 	public void saveProjectChanges(int projectID, int userID, String projectName, boolean isDefault) throws SQLException {
 		System.out.println("Saving project changes for project " + projectID);
 		
 		try {
-			String query = "SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "' && `is_default` = true";
+			//Prepare query to save changes.
+			String query = "SELECT * FROM `projects` WHERE `project_name` = '" + projectName + "' && `user_id` = '" + userID + "'";
 			PreparedStatement checkProjects = connection.prepareStatement(query);
 			
+			/*
+			 * If the user chose to make this project
+			 * default then set it as default,
+			 */
 			if (isDefault) {
 
 				ResultSet rs_checkProjects = checkProjects.executeQuery();
@@ -101,6 +119,7 @@ public class projectDAOImpl implements projectDAO {
 				}
 			}
 			
+			//Apply changes to project in the database.
 			PreparedStatement ps_saveProjectChanges = connection.prepareStatement("UPDATE `projects` SET `project_name` = ?, `is_default` = ? WHERE `project_id` = ?");
 			ps_saveProjectChanges.setString(1, projectName);
 			ps_saveProjectChanges.setBoolean(2, isDefault);
@@ -110,24 +129,22 @@ public class projectDAOImpl implements projectDAO {
 		catch (Exception e) {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
-		}
-		
-
+		}		
 	}
 	
+	//Delete project.
 	public void deleteProject(int projectID) throws SQLException {
 		System.out.println("Deleting project " + projectID);
 		
 		try {			
-			//Delete project
+			//Delete project.
 			String queryDeleteProject =  "DELETE FROM `projects` WHERE `projects`.`project_id` = ?";
 			PreparedStatement statementDeleteProject = connection.prepareStatement(queryDeleteProject);
 			statementDeleteProject.setInt(1, projectID);
 			statementDeleteProject.execute();
 			
 			//Delete columns and tasks that are connected to the project.
-			ArrayList<Column> columns = loadColumns(projectID);
-			
+			ArrayList<Column> columns = loadColumns(projectID);			
 			for (Column column : columns) {
 				deleteColumn(column.getColumnID());
 				ArrayList<Task> tasks = loadTasks(column.getColumnID());
