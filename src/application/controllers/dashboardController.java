@@ -501,10 +501,7 @@ public class dashboardController {
 							else {
 								taskCompleted.setText("Not finished yet");
 							}
-							
 
-							
-							
 							//Contains buttons and labels relating to checklist.
 							HBox hboxChecklistItems = new HBox(50);
 						
@@ -726,20 +723,7 @@ public class dashboardController {
 			
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	//Refresh the page.
 	public void refresh(ActionEvent event, int userID) throws Exception {
 						

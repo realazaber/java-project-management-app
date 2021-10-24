@@ -155,14 +155,11 @@ public class homeController {
 					lbl_notification.setTextFill(Color.ORANGE);
 					lbl_notification.setText("Account has already been created!");
 				}
-		        else { //If user account doesn't exist then add user to database.
-					
-					try {									
-											
+		        else { //If user account doesn't exist then add user to database.					
+					try {																				
 						//Add user to database.
 						model.getUserDAO().addUser(textField_FName.getText(), textField_LName.getText(), textField_Username.getText(), passField_Password.getText(), input);
 						//Let the user know that the account has been created.
-
 					}
 					catch (Exception e) {
 						System.out.println("Error: " + e);
@@ -179,8 +176,7 @@ public class homeController {
 						lbl_notification.setText("Successfully registered!");
 						
 					}
-		        }
-								
+		        }								
 			}
 			else {
 				//Prompt the user to fill in all fields.
@@ -218,17 +214,13 @@ public class homeController {
         	dashboardController.setWelcomeMessage(currentUser.getFirstName());
         	dashboardController.setQuote();
         	dashboardController.showProjects(currentUser.getUserID());
-        	
-        	
-        	
+
         	System.out.println("Logging in...");
-        	System.out.println("User id: " + dashboardController.getUserId());
-        	
+        	System.out.println("User id: " + dashboardController.getUserId());        	
 			
         	System.out.println("User exists.");
 			lbl_loginStatus.setText("Logging in!");
-			
-			
+						
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
