@@ -78,13 +78,13 @@ public class ChecklistTests {
 		Checklist newChecklist = model.getProjectDAO().loadChecklist(testChecklist.getTaskID());
 		
 		//Create action item template.
-		ActionItem actionItem = new ActionItem();
-		actionItem.setcheckListID(newChecklist.getCheckListID());
-		actionItem.setActionitemID(0);
-		actionItem.setName("Test name");
-		actionItem.setDescription("Test description");
-		actionItem.setCompleted(false);		
-		model.getProjectDAO().addActionItem(actionItem.getcheckListID(), actionItem.getName(), actionItem.getDescription(), actionItem.isCompleted());
+		ActionItem testActionItem = new ActionItem();
+		testActionItem.setcheckListID(newChecklist.getCheckListID());
+		testActionItem.setActionitemID(0);
+		testActionItem.setName("Test name");
+		testActionItem.setDescription("Test description");
+		testActionItem.setCompleted(false);		
+		model.getProjectDAO().addActionItem(testActionItem.getcheckListID(), testActionItem.getName(), testActionItem.getDescription(), testActionItem.isCompleted());
 		
 		//Delete checklist.
 		model.getProjectDAO().deleteCheckList(newChecklist.getCheckListID());
