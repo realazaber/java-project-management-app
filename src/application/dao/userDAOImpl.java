@@ -2,16 +2,23 @@ package application.dao;
 
 import java.io.File;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import org.junit.validator.PublicClassValidator;
+
+import application.domains.Project;
 import application.domains.User;
 
 public class userDAOImpl implements userDAO {
 	
 	baseDao baseDao = new baseDao();
+	
+	Connection connection = baseDao.connect();
 	
 	public userDAOImpl() {
 		
@@ -177,5 +184,56 @@ public class userDAOImpl implements userDAO {
 			System.out.println("Error connecting to database." + e);
 			System.exit(0);
 		}
+	}
+	
+	
+	
+	
+	//Delete user (just used for testing).
+	@Override
+	public void deleteUser(int userID) throws SQLException {
+		try {
+			//Delete user.
+			String queryDeleteUser =  "DELETE FROM `users` WHERE `user_id` = ?";
+			PreparedStatement statementDeleteUser = connection.prepareStatement(queryDeleteUser);
+			statementDeleteUser.setInt(1, userID);
+			statementDeleteUser.execute();
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
+		
+	}
+	
+	//Load users (just used for testing).
+	@Override
+	public ArrayList<User> loadUsers() throws SQLException {
+		
+		try {
+			//Prepare list for the users.
+			ArrayList<User> users = new ArrayList<User>();
+			
+			//Prepare query for the projects.
+			String query = "SELECT `user_id`, `first_name`, `last_name`, `password`, `profile` FROM `users`";			
+			PreparedStatement loadUsersStatement = connection.prepareStatement(query);
+			
+			//Load the projects and add them to the list.
+			ResultSet rs_loadUsers = loadUsersStatement.executeQuery();			
+			while (rs_loadUsers.next()) {
+				User tmpUser = new User();
+				tmpUser.setUserID(rs_loadUsers.getInt(1));
+				tmpUser.setFirstName(rs_loadUsers.getString(2));
+				tmpUser.setLastName(rs_loadUsers.getString(3));
+				tmpUser.setPassword(rs_loadUsers.getString(4));
+				tmpUser.setProfilePicture(rs_loadUsers.getBinaryStream(5));
+				users.add(tmpUser);
+
+			}					
+			return users;				
+		} catch (Exception e) {
+			System.out.println("Error connecting to database." + e);
+			System.exit(0);
+		}
+		return null;
 	}
 }

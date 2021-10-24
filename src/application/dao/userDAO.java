@@ -3,6 +3,8 @@ package application.dao;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import application.domains.User;
 
 //Interface for userDAOImpl
@@ -17,5 +19,7 @@ public interface userDAO {
 			throws SQLException;
 
 	User loginUser(String username, String password) throws SQLException;
-
+	
+	public void deleteUser(int userID) throws SQLException;
+	public ArrayList<User> loadUsers() throws SQLException;
 }
