@@ -19,3 +19,9 @@ Instructions to run the application.
 4. Running tests.
 
 - Run the "TestSuite" Junit test suite file to run all tests.
+
+Extra TODOs
+
+- Save data to local pc and the database.
+- Drag and drop functionality for moving tasks and columns around.
+- Making the code neater.
