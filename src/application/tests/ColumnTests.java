@@ -96,6 +96,45 @@ public class ColumnTests {
 		model.getProjectDAO().deleteColumn(columnID);
 	}
 	
+	//Test if column can be edited.
+	@Test
+	public void editColumn() throws SQLException {
+		boolean output = false;
+		
+		//Add test column.
+		Column testColumn = new Column();
+		testColumn.setProjectID(0);
+		testColumn.setColumn_name("Test name");
+		testColumn.setDescription("Test description");
+		Date date = new Date(0);
+		testColumn.setDue_date(date);
+		
+		
+		//Try to add the column.
+		model.getProjectDAO().addColumn(testColumn.getProjectID(), testColumn.getColumn_name(), testColumn.getDue_date(), testColumn.getDescription());
+				
+		//Load column from database.
+		ArrayList<Column> columns = model.getProjectDAO().loadColumns(testColumn.getProjectID());
+		Column newColumn = columns.get(columns.size() - 1);
+		
+		//Change column name.
+		model.getProjectDAO().saveColumnChanges(newColumn.getProjectID(), newColumn.getColumnID(), "Edited name", newColumn.getDue_date(), newColumn.getDescription());
+		
+		//Check if the changes were applied.
+		columns = model.getProjectDAO().loadColumns(testColumn.getProjectID());
+		if (columns.size() == 1) {
+			for (Column column : columns) {
+				if (column.getColumn_name().equals("Edited name")) {
+					output = true;
+				}
+			}
+		}
+		assertTrue(output);
+		model.getProjectDAO().deleteColumn(newColumn.getColumnID());
+		
+		
+	}
+	
 	
 	//Test if delete column also deletes it's tasks.
 	@Test

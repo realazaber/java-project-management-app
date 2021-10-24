@@ -14,6 +14,8 @@ public class TaskTests {
 	
 	//Test if duplicate task can be added.
 	
+	//Test if edit task works.
+	
 	//Test if delete task also deletes it's checklists.
 
 }
