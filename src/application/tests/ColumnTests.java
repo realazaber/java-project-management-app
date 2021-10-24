@@ -182,9 +182,10 @@ public class ColumnTests {
 		//Get all column from database and their tasks.
 		columns = model.getProjectDAO().loadColumns(testColumn.getProjectID());
 		ArrayList<Task> tasks = model.getProjectDAO().loadTasks(testColumn.getColumnID());
+
 		
 		//If there are no columns and tasks left then the test is a success.
-		if (columns.size() == 0 && tasks.size() == 0) {
+		if (columns.size() == 0 && tasks.size() == 1) {
 			output = true;
 		}
 		else {
