@@ -21,17 +21,6 @@ public class ColumnTests {
 	User user = new User();
 	
 	
-	//Clear the columns table.
-	void clearColumns(int userID) throws SQLException {
-		
-		ArrayList<Project> projects = model.getProjectDAO().loadProjects(userID);
-				
-	}
-	
-
-
-	
-	
 	//Test if column can be added.
 	@Test
 	public void addColumnNoDup() throws SQLException {
