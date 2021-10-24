@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Java Project Management App
 
 You can use the [editor on GitHub](https://github.com/therealcoolpup/java-project-management-app/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
