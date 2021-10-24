@@ -22,6 +22,8 @@ Instructions to run the application.
 
 Extra TODOs
 
+- Fix error where ' makes you unable to submit a query.
+- Fix error where jpgs do not work and gifs do not animate.
 - Save data to local pc and the database.
 - Drag and drop functionality for moving tasks and columns around.
 - Making the code neater.
