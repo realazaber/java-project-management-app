@@ -623,7 +623,7 @@ public class dashboardController {
 											model.getProjectDAO().deleteTask(task.getTaskID());						
 											System.out.println("Task " + task.getTaskID() + " deleted.");
 											
-											//Delete checklist connect to this task.
+											//Delete checklist connected to this task.
 											model.getProjectDAO().deleteCheckList(checklist.getCheckListID());
 											refresh(event, userID);
 											
