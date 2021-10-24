@@ -24,42 +24,6 @@ public class ProjectTests {
 		}
 	}
 	
-	//Test if program will not add project if there is a duplicate.
-	@Test
-	public void addProjectDuplicateDetails() throws SQLException {
-		
-		//Create template project.
-		Project tmpProject = new Project();
-		
-		tmpProject.setUserID(1);
-		tmpProject.setProjectName("Test");
-		tmpProject.setDefault(false);
-		
-		clearProjects(tmpProject.getUserID());
-		
-		try {
-			//Add template to database.
-			model.getProjectDAO().addProject(tmpProject.getUserID(), tmpProject.getProjectName(), tmpProject.isDefault());
-		} catch (Exception e) {
-			System.out.println("Database error: " + e);
-		}
-		
-		//Detect template that was already added and do not add the new project.
-		boolean output = false;
-		if (!model.getProjectDAO().addProject(tmpProject.getUserID(), tmpProject.getProjectName(), tmpProject.isDefault())) {
-			output = true;
-		}
-		else {
-			output = false;
-		}
-		
-		assertTrue(output);
-		
-		clearProjects(tmpProject.getUserID());
-		
-		
-	}
-	
 	//Test if project will be added if there are no duplicates.
 	@Test
 	public void addProjectNoDup() throws SQLException {
@@ -100,6 +64,40 @@ public class ProjectTests {
 		clearProjects(tmpProject.getUserID());		
 	}
 	
+	//Test if program will not add project if there is a duplicate.
+	@Test
+	public void addProjectDup() throws SQLException {
+		
+		//Create template project.
+		Project tmpProject = new Project();
+		
+		tmpProject.setUserID(1);
+		tmpProject.setProjectName("Test");
+		tmpProject.setDefault(false);
+		
+		clearProjects(tmpProject.getUserID());
+		
+		try {
+			//Add template to database.
+			model.getProjectDAO().addProject(tmpProject.getUserID(), tmpProject.getProjectName(), tmpProject.isDefault());
+		} catch (Exception e) {
+			System.out.println("Database error: " + e);
+		}
+		
+		//Detect template that was already added and do not add the new project.
+		boolean output = false;
+		if (!model.getProjectDAO().addProject(tmpProject.getUserID(), tmpProject.getProjectName(), tmpProject.isDefault())) {
+			output = true;
+		}
+		else {
+			output = false;
+		}
+		
+		assertTrue(output);
+		
+		clearProjects(tmpProject.getUserID());
+			
+	}
 	
 	//Test if project can be edited.
 	@Test
