@@ -2,6 +2,11 @@ body {
     
     font-family: 'Courier New', Courier, monospace;
     color: #0099ff;
+    margin: 0;
+}
+
+hr {
+    border: 1px solid #0099ff;
 }
 
 #Heading, #Download {
@@ -14,9 +19,8 @@ body {
     
     text-align: right;
     padding-right: 25px;
+    
 }
-
-
 
 #Nav, a {
   
@@ -26,6 +30,7 @@ body {
 }
 
 #FAQ {
+    
     padding-top: 40px;
     
 }
@@ -56,22 +61,17 @@ body {
     text-align: center;
     margin: auto;
     font-size: large;
+    background-color: #0099ff;
+    
 }
+
+
 
 .wave {
-    overflow: hidden;
-    background-size: contain;
-    object-fit: fill;
-    width: 100%;
+    
+    width: auto;
 }
 
-.bottomwave {
-
-}
-
-.wave, .bottomwave {
-    width: 100%;
-}
 
 form {
     background-color: #fff;
@@ -111,4 +111,34 @@ button {
 
 footer {
     color: white;
+}
+
+#galleryView {
+    display: grid;
+    gap: 10px;
+    margin: auto;
+    width: 80%;
+    height: auto;
+}
+
+.galleryImage {
+    
+    border: 1px solid transparent;
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+}
+
+/* Desktop */
+@media(min-width: 1000px) {
+    #galleryView {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mobile. */
+@media(max-width: 1000px) {
+    #galleryView {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
