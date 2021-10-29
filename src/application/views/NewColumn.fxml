@@ -19,7 +19,7 @@
       <Button fx:id="btn_createColumn" layoutX="189.0" layoutY="188.0" mnemonicParsing="false" onAction="#addColumn" prefHeight="34.0" prefWidth="127.0" text="Create column" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="320.0" />
       <Label fx:id="lbl_notification" layoutX="209.0" layoutY="140.0" prefHeight="16.0" prefWidth="220.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" />
       <Button layoutX="187.0" layoutY="264.0" mnemonicParsing="false" onAction="#back" prefHeight="34.0" prefWidth="127.0" text="Back to dashboard" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="360.0" />
-      <TextArea fx:id="txtAreaDescription" layoutX="214.0" layoutY="123.0" prefHeight="134.0" prefWidth="172.0" promptText="Description" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="90.0" />
+      <TextArea fx:id="txtAreaDescription" layoutX="214.0" layoutY="123.0" prefHeight="134.0" prefWidth="172.0" promptText="Description" wrapText="true" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="90.0" />
       <DatePicker fx:id="datePicker" layoutX="201.0" layoutY="238.0" promptText="Please select a date" />
       <Label fx:id="lbl_notification" alignment="CENTER" textAlignment="CENTER" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="270.0" />
    </children>
