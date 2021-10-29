@@ -144,6 +144,8 @@ public class checklistController {
 			}
     	});
     	
+    	textArea_actItemDescription.setWrapText(true);
+    	
     	/*
     	 * Show the save option to the user.
     	 */

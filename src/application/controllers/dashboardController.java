@@ -364,6 +364,7 @@ public class dashboardController {
 					//Show main details about the column.					
 					Label lbl_columnTitle = new Label("Name: " + column.getColumn_name());
 					Label lbl_description = new Label("Description: \n" + column.getDescription());
+					lbl_description.setMaxWidth(200);
 					lbl_description.setWrapText(true);			
 					
 					//Calculate how much time there is until all tasks are due.
@@ -470,8 +471,10 @@ public class dashboardController {
 							VBox taskVbox = new VBox(3);
 							
 							//Main task details.
-							Label taskName = new Label("Task name: " + task.getTaskName());
-							Label taskDescription = new Label("Task description: " + task.getDescription());							
+							Label lbl_taskName = new Label("Task name: " + task.getTaskName());
+							Label lbl_taskDescription = new Label("Task description: \n" + task.getDescription());			
+							lbl_taskDescription.setWrapText(true);
+							lbl_taskDescription.maxWidth(200);
 							
 							
 							Checklist checklist = model.getProjectDAO().loadChecklist(task.getTaskID());
@@ -482,10 +485,10 @@ public class dashboardController {
 							 * Show the due date and set the color
 							 * depending on how far the due date is 
 							 */
-							Label taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
+							Label lbl_taskDueDate = dateDifference(task.getDueDate(), task.isCompleted());
 							
 							//Check whether the task is completed and set the label accordingly
-							Label taskCompleted = new Label();
+							Label lbl_taskCompleted = new Label();
 							boolean actionItemsCompleted = true;
 							for (ActionItem actionItem : actionItems) {
 								if (!actionItem.isCompleted()) {
@@ -494,12 +497,12 @@ public class dashboardController {
 								}
 							}
 							if (task.isCompleted() && actionItemsCompleted) {		
-								taskCompleted.setText("Completed");
-								taskDueDate.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
+								lbl_taskCompleted.setText("Completed");
+								lbl_taskDueDate.setStyle("-fx-background-color: lightgreen; -fx-padding: 5px;");
 								
 							}
 							else {
-								taskCompleted.setText("Not finished yet");
+								lbl_taskCompleted.setText("Not finished yet");
 							}
 
 							//Contains buttons and labels relating to checklist.
@@ -642,7 +645,7 @@ public class dashboardController {
 							//Add all nodes to the screen.
 							hboxTaskButtons.getChildren().addAll(btn_taskEdit, btn_taskDelete);
 							
-							taskVbox.getChildren().addAll(taskName, taskDescription, taskDueDate, taskCompleted, hboxChecklistItems, hboxTaskButtons);														
+							taskVbox.getChildren().addAll(lbl_taskName, lbl_taskDescription, lbl_taskDueDate, lbl_taskCompleted, hboxChecklistItems, hboxTaskButtons);														
 							taskPane.getChildren().addAll(taskVbox);
 							taskPane.setStyle("-fx-border-color: lightgrey; -fx-background-color: white;");							
 							taskPanes.add(taskPane);														
