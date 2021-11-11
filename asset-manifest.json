@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/java-project-management-app/static/css/main.cf95eacb.chunk.css",
+    "main.js": "/java-project-management-app/static/js/main.dd8e4d0b.chunk.js",
+    "main.js.map": "/java-project-management-app/static/js/main.dd8e4d0b.chunk.js.map",
+    "runtime-main.js": "/java-project-management-app/static/js/runtime-main.75d54f56.js",
+    "runtime-main.js.map": "/java-project-management-app/static/js/runtime-main.75d54f56.js.map",
+    "static/js/2.3ee610a1.chunk.js": "/java-project-management-app/static/js/2.3ee610a1.chunk.js",
+    "static/js/2.3ee610a1.chunk.js.map": "/java-project-management-app/static/js/2.3ee610a1.chunk.js.map",
+    "index.html": "/java-project-management-app/index.html",
+    "static/css/main.cf95eacb.chunk.css.map": "/java-project-management-app/static/css/main.cf95eacb.chunk.css.map",
+    "static/js/2.3ee610a1.chunk.js.LICENSE.txt": "/java-project-management-app/static/js/2.3ee610a1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.75d54f56.js",
+    "static/js/2.3ee610a1.chunk.js",
+    "static/css/main.cf95eacb.chunk.css",
+    "static/js/main.dd8e4d0b.chunk.js"
+  ]
+}
