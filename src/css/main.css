@@ -1,0 +1,219 @@
+:root {
+    --primary: #0099ff;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--primary);
+    margin: 0;
+}
+
+hr {
+    border: 1px solid var(--primary);
+}
+
+#Heading, #Download {
+    padding-top: 20px;
+    margin: auto;
+    text-align: center;
+}
+
+#Nav, a {
+  
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#Nav {
+
+    background-color: #fff;
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+
+#FAQ {
+    
+    padding-top: 60px;
+    height: 50vh;
+    
+    
+}
+
+.right {
+    padding-right: 50px;
+    text-align: right;
+    margin-top: 30px;
+}
+
+.left {
+    padding-left: 50px;
+    text-align: left;
+
+}
+
+#contact {
+    padding: 30px;
+    
+}
+
+#contact h2 {
+    color: var(--primary);
+    margin-top: 20px;
+}
+
+#contact h3 {
+    color: var(--primary);
+}
+
+#Gallery, #contact, #footer {
+
+    background-color: var(--primary);
+    color: white;
+}
+
+#Gallery {
+    text-align: center;
+    margin: auto;
+    font-size: large;
+    background-color: var(--primary);
+    
+}
+
+.wave {
+    
+    width: 100%;
+    margin: 0;
+    margin-bottom: -8px;
+}
+
+
+form {
+    background-color: #fff;
+    margin: auto;
+    text-align: center;
+    border-radius: 20px;
+    width: 60%;
+    height: auto;
+    padding: 20px;
+}
+
+input {
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    width: 80%;
+    font-size: large;
+    padding: 20px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+}
+
+input:focus, textarea:focus {
+    border: 1px solid lightgray;
+    border-bottom: 5px solid var(--primary);
+}
+
+button {
+    margin-top: 30px;
+    width: 160px;
+    height: 80px;
+    color: white;
+    font-size: large;
+    background-color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+
+}
+
+footer {
+    color: white;
+}
+
+#galleryView {
+    display: grid;
+    gap: 10px;
+    margin: auto;
+    width: 80%;
+    height: auto;
+}
+
+.galleryImage {
+    
+    border: 1px solid transparent;
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+}
+
+/* Desktop */
+@media(min-width: 1000px) {
+
+    #Nav {
+    
+        position: fixed;
+        right: 20px;
+        top: 150px;
+
+        text-align: right;
+        padding-right: 25px;
+    }
+    
+    #Nav, a {
+      
+        color: var(--primary);
+        font-weight: bold;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    #galleryView {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mobile. */
+@media(max-width: 1000px) {
+
+    .left, .right {
+        padding: 0 35px;
+    }
+
+    .left {
+        text-align: left;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    #FAQ {
+        margin-bottom: 100px;
+    }
+
+    #Nav {       
+        text-align: center;
+        margin: 0 5px;
+        width: 90%;
+    }
+
+    #Nav a {
+        padding: 5px;
+        font-size: large;
+    }
+
+    input {
+        height: 20px;
+    }
+
+    form {
+        width: 90%;
+    }
+
+    #galleryView {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
