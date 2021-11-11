@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/java-project-management-app/static/css/main.cf95eacb.chunk.css",
-    "main.js": "/java-project-management-app/static/js/main.3967a710.chunk.js",
-    "main.js.map": "/java-project-management-app/static/js/main.3967a710.chunk.js.map",
+    "main.js": "/java-project-management-app/static/js/main.0eaa382d.chunk.js",
+    "main.js.map": "/java-project-management-app/static/js/main.0eaa382d.chunk.js.map",
     "runtime-main.js": "/java-project-management-app/static/js/runtime-main.75d54f56.js",
     "runtime-main.js.map": "/java-project-management-app/static/js/runtime-main.75d54f56.js.map",
-    "static/js/2.3ee610a1.chunk.js": "/java-project-management-app/static/js/2.3ee610a1.chunk.js",
-    "static/js/2.3ee610a1.chunk.js.map": "/java-project-management-app/static/js/2.3ee610a1.chunk.js.map",
+    "static/js/2.dc93f4ed.chunk.js": "/java-project-management-app/static/js/2.dc93f4ed.chunk.js",
+    "static/js/2.dc93f4ed.chunk.js.map": "/java-project-management-app/static/js/2.dc93f4ed.chunk.js.map",
     "index.html": "/java-project-management-app/index.html",
     "static/css/main.cf95eacb.chunk.css.map": "/java-project-management-app/static/css/main.cf95eacb.chunk.css.map",
-    "static/js/2.3ee610a1.chunk.js.LICENSE.txt": "/java-project-management-app/static/js/2.3ee610a1.chunk.js.LICENSE.txt"
+    "static/js/2.dc93f4ed.chunk.js.LICENSE.txt": "/java-project-management-app/static/js/2.dc93f4ed.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.75d54f56.js",
-    "static/js/2.3ee610a1.chunk.js",
+    "static/js/2.dc93f4ed.chunk.js",
     "static/css/main.cf95eacb.chunk.css",
-    "static/js/main.3967a710.chunk.js"
+    "static/js/main.0eaa382d.chunk.js"
   ]
 }
