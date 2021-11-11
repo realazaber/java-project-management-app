@@ -6,6 +6,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     color: var(--primary);
     margin: 0;
+    overflow-x: hidden;
 }
 
 hr {
@@ -30,6 +31,7 @@ hr {
     background-color: #fff;
     border: 1px solid white;
     border-radius: 20px;
+    z-index: 1;
 }
 
 
@@ -85,7 +87,11 @@ hr {
     
     width: 100%;
     margin: 0;
-    margin-bottom: -8px;
+    margin-bottom: -6px;
+}
+
+.upsideDown {
+    margin-top: -5px;
 }
 
 
@@ -179,7 +185,8 @@ footer {
 @media(max-width: 1000px) {
 
     .left, .right {
-        padding: 0 35px;
+        padding: 5px;
+        margin-bottom: 10px;
     }
 
     .left {
@@ -191,7 +198,11 @@ footer {
     }
 
     #FAQ {
-        margin-bottom: 100px;
+        margin-bottom: 30vh;
+    }
+
+    .galleryWave {
+        margin-top: 70px;
     }
 
     #Nav {       
