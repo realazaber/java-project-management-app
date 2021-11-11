@@ -1,5 +1,6 @@
 import React from 'react';
 import Screenshots from './screenshots.json';
+import Slide from 'react-reveal/Slide';
 
 function Gallery() {
     return(
@@ -9,19 +10,21 @@ function Gallery() {
             <div id="Gallery">
             Gallery
             <br />
-            <div id="galleryView">
+            <Slide bottom cascade>
+                <div id="galleryView">
 
-                {Screenshots.map((Screenshot, index) => {
-                    
-                    return (
-                        <a href={Screenshot.img}>
-                            <img className="galleryImage" src={Screenshot.img} alt={Screenshot.description} />
-                        </a>
-                    )
-                })}
+                    {Screenshots.map((Screenshot, index) => {
+                        
+                        return (
+                            <a href={Screenshot.img}>
+                                <img className="galleryImage" src={Screenshot.img} alt={Screenshot.description} />
+                            </a>
+                        )
+                    })}
 
-                <video className="galleryImage" controls src="videos/maindemo.mp4"></video>
-            </div>
+                    <video className="galleryImage" controls src="videos/maindemo.mp4"></video>
+                </div>
+                </Slide>
             </div>
         </>
     );
