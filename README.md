@@ -1,5 +1,7 @@
 Java Project Management App
+
 Video demo: TODO
+
 Description: An app made with Java, JavaFX and JDBC for project mamangement.
 
 Instructions to run the application.
