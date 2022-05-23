@@ -10,6 +10,7 @@ Instructions to run the application.
 
 - Make sure a mysql server is running.
 - Make sure the username is "root" password is "" OR change the login details in baseDao.
+- Create java-project-management-db database.
 - Import the "java-project-management-db.sql" file to the mysql server.
 
 2. Importing application to eclipse.
