@@ -1,26 +1,26 @@
 [
     {
-        "img": "/images/screenshots/Register.png",
+        "img": "/java-project-management-app/images/screenshots/Register.png",
         "description": "Register"
     },
 
     {
-        "img": "/images/screenshots/Multiple projects.png",
+        "img": "/java-project-management-app/images/screenshots/Multiple projects.png",
         "description": "Multiple Projects"
     },
 
     {
-        "img": "/images/screenshots/Edit Task.png",
+        "img": "/java-project-management-app/images/screenshots/Edit Task.png",
         "description": "Edit Task"
     },
 
     {
-        "img": "/images/screenshots/ProfileEdit.png",
+        "img": "/java-project-management-app/images/screenshots/ProfileEdit.png",
         "description": "Edit Profile"
     },
 
     {
-        "img": "/images/screenshots/Delete confirmation.png",
+        "img": "/java-project-management-app/images/screenshots/Delete confirmation.png",
         "description": "Delete confirmation"
     }
 ]
