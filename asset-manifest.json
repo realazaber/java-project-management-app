@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/java-project-management-app/static/css/main.27b6b8a5.chunk.css",
-    "main.js": "/java-project-management-app/static/js/main.80a56d99.chunk.js",
-    "main.js.map": "/java-project-management-app/static/js/main.80a56d99.chunk.js.map",
+    "main.js": "/java-project-management-app/static/js/main.a3010faf.chunk.js",
+    "main.js.map": "/java-project-management-app/static/js/main.a3010faf.chunk.js.map",
     "runtime-main.js": "/java-project-management-app/static/js/runtime-main.75d54f56.js",
     "runtime-main.js.map": "/java-project-management-app/static/js/runtime-main.75d54f56.js.map",
     "static/js/2.eead1683.chunk.js": "/java-project-management-app/static/js/2.eead1683.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.75d54f56.js",
     "static/js/2.eead1683.chunk.js",
     "static/css/main.27b6b8a5.chunk.css",
-    "static/js/main.80a56d99.chunk.js"
+    "static/js/main.a3010faf.chunk.js"
   ]
 }
